@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:context="http://www.springframework.org/schema/context" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:https="http://www.mulesoft.org/schema/mule/https" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <sfdc:config-with-oauth consumerKey="${sfdc.key}" consumerSecret="${sfdc.secret}" doc:name="Salesforce (OAuth)" name="Salesforce__OAuth_">
+        <sfdc:oauth-callback-config domain="localhost" localPort="8081" path="oauth2callback"/>
+    </sfdc:config-with-oauth>
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+
+    
+    <flow name="salesforce-oauthFlow1">
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="HTTP" path="/"/>
+
+        <sfdc:authorize accessTokenUrl="https://login.salesforce.com/services/oauth2/token" authorizationUrl="https://login.salesforce.com/services/oauth2/authorize" config-ref="Salesforce__OAuth_" display="PAGE" doc:name="Authorize at Salesforce"/>
+        <sfdc:query config-ref="Salesforce__OAuth_" doc:name="Perform a query at Salesforce" query="SELECT id,lastname,lastmodifieddate from contact limit 10"/>
+        <foreach doc:name="For Each">
+            <logger doc:name="Logger" level="INFO" message="contact: #[payload]"/>
+        </foreach>
+        <set-payload doc:name="Set Payload to formatted output" value="Salesforce query returned #[payload.size()] contacts."/>
+    </flow>
+</mule>

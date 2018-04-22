@@ -1,0 +1,816 @@
+2017-12-03 22:14:27,877 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:14:28,425 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-03 22:14:28,812 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-03 22:14:29,228 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-03 22:14:29,230 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-03 22:14:29,961 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@69e49a81: startup date [Sun Dec 03 22:14:29 IST 2017]; root of context hierarchy
+2017-12-03 22:14:33,854 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-03 22:14:36,143 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2017-12-03 22:14:37,705 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2017-12-03 22:14:37,758 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2017-12-03 22:14:38,086 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-03 22:14:38,099 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:14:38,099 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@91a2543
+2017-12-03 22:14:38,210 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:14:42,673 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:14:42,673 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:14:42,689 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:14:42,695 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-03 22:14:42,695 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-03 22:14:42,798 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-12-03 22:14:42,804 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:14:42,806 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-03 22:14:42,809 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:14:42,810 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:14:42,918 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-03 22:14:52,056 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-03 22:18:37,382 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:37,387 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:18:37,392 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:18:37,427 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-12-03 22:18:37,435 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-12-03 22:18:37,439 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-12-03 22:18:37,440 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-12-03 22:18:37,465 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '84-soap-webservice-consumer'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:37,468 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-12-03 22:18:37,474 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:18:37,476 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:18:37,479 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-12-03 22:18:37,933 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@69e49a81: startup date [Sun Dec 03 22:14:29 IST 2017]; root of context hierarchy
+2017-12-03 22:18:37,953 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "84-soap-webservice-consumer" shut down normally on:   *
+* 12/3/17 10:18 PM                                                   *
+* Up for: 0 days, 0 hours, 3 mins, 55.259 sec                        *
+**********************************************************************
+2017-12-03 22:18:38,273 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:38,290 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-03 22:18:38,315 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-03 22:18:38,369 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-03 22:18:38,370 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-03 22:18:38,381 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@6683c461: startup date [Sun Dec 03 22:18:38 IST 2017]; root of context hierarchy
+2017-12-03 22:18:39,374 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-03 22:18:39,885 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2017-12-03 22:18:39,888 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2017-12-03 22:18:39,904 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-03 22:18:39,906 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:18:39,907 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@5236a202
+2017-12-03 22:18:39,921 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:18:41,226 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:18:41,227 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:18:41,228 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:41,233 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-03 22:18:41,233 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-03 22:18:41,252 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-12-03 22:18:41,258 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:41,260 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-03 22:18:41,261 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:18:41,261 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:18:41,287 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-03 22:18:41,293 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-03 22:18:46,304 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:46,307 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:18:46,307 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:18:46,475 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-12-03 22:18:46,479 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-12-03 22:18:46,480 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-12-03 22:18:46,480 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-12-03 22:18:46,485 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '84-soap-webservice-consumer'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:46,485 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-12-03 22:18:46,486 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:18:46,486 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:18:46,488 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-12-03 22:18:46,548 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@6683c461: startup date [Sun Dec 03 22:18:38 IST 2017]; root of context hierarchy
+2017-12-03 22:18:46,598 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "84-soap-webservice-consumer" shut down normally on:   *
+* 12/3/17 10:18 PM                                                   *
+* Up for: 0 days, 0 hours, 0 mins, 5.370 sec                         *
+**********************************************************************
+2017-12-03 22:18:46,802 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:46,815 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-03 22:18:46,825 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-03 22:18:46,858 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-03 22:18:46,859 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-03 22:18:46,864 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@4b7fdcae: startup date [Sun Dec 03 22:18:46 IST 2017]; root of context hierarchy
+2017-12-03 22:18:47,426 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-03 22:18:47,640 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2017-12-03 22:18:47,642 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2017-12-03 22:18:47,658 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-03 22:18:47,660 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:18:47,660 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@1b370b51
+2017-12-03 22:18:47,673 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:18:48,741 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:18:48,741 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:18:48,743 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:48,748 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-03 22:18:48,748 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-03 22:18:48,762 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-12-03 22:18:48,767 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:48,769 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-03 22:18:48,772 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:18:48,773 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:18:48,802 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-03 22:18:48,820 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-03 22:18:58,838 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:58,842 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:18:58,842 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:18:59,026 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-12-03 22:18:59,029 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-12-03 22:18:59,030 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-12-03 22:18:59,030 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-12-03 22:18:59,033 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '84-soap-webservice-consumer'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:59,033 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-12-03 22:18:59,034 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:18:59,034 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:18:59,038 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-12-03 22:18:59,082 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@4b7fdcae: startup date [Sun Dec 03 22:18:46 IST 2017]; root of context hierarchy
+2017-12-03 22:18:59,096 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "84-soap-webservice-consumer" shut down normally on:   *
+* 12/3/17 10:18 PM                                                   *
+* Up for: 0 days, 0 hours, 0 mins, 10.351 sec                        *
+**********************************************************************
+2017-12-03 22:18:59,311 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:18:59,328 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-03 22:18:59,347 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-03 22:18:59,386 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-03 22:18:59,389 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-03 22:18:59,395 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@147e5f1b: startup date [Sun Dec 03 22:18:59 IST 2017]; root of context hierarchy
+2017-12-03 22:18:59,955 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-03 22:19:00,183 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2017-12-03 22:19:00,185 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2017-12-03 22:19:00,199 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-03 22:19:00,201 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:19:00,201 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@45d5f9cb
+2017-12-03 22:19:00,212 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:19:01,317 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:19:01,317 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:19:01,319 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:01,324 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-03 22:19:01,324 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-03 22:19:01,343 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-12-03 22:19:01,349 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:01,351 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-03 22:19:01,353 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:19:01,353 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:19:01,378 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-03 22:19:01,385 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-03 22:19:06,394 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:06,396 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:19:06,396 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:19:06,574 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-12-03 22:19:06,578 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-12-03 22:19:06,579 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-12-03 22:19:06,579 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-12-03 22:19:06,586 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '84-soap-webservice-consumer'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:06,588 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-12-03 22:19:06,592 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:19:06,594 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:19:06,598 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-12-03 22:19:06,629 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@147e5f1b: startup date [Sun Dec 03 22:18:59 IST 2017]; root of context hierarchy
+2017-12-03 22:19:06,636 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "84-soap-webservice-consumer" shut down normally on:   *
+* 12/3/17 10:19 PM                                                   *
+* Up for: 0 days, 0 hours, 0 mins, 5.316 sec                         *
+**********************************************************************
+2017-12-03 22:19:06,828 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:06,851 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-03 22:19:06,868 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-03 22:19:06,899 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-03 22:19:06,904 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-03 22:19:06,909 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@48b475e0: startup date [Sun Dec 03 22:19:06 IST 2017]; root of context hierarchy
+2017-12-03 22:19:07,519 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-03 22:19:07,727 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2017-12-03 22:19:07,728 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2017-12-03 22:19:07,736 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-03 22:19:07,738 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:19:07,738 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@64d47001
+2017-12-03 22:19:07,745 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:19:08,842 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:19:08,842 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:19:08,844 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:08,849 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-03 22:19:08,849 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-03 22:19:08,864 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-12-03 22:19:08,867 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:08,868 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-03 22:19:08,869 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:19:08,869 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:19:08,885 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-03 22:19:08,889 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-03 22:19:53,931 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:53,937 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:19:53,937 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:19:54,004 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-12-03 22:19:54,009 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-12-03 22:19:54,010 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-12-03 22:19:54,010 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-12-03 22:19:54,023 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '84-soap-webservice-consumer'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:54,023 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-12-03 22:19:54,024 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:19:54,024 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:19:54,026 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-12-03 22:19:54,047 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@48b475e0: startup date [Sun Dec 03 22:19:06 IST 2017]; root of context hierarchy
+2017-12-03 22:19:54,052 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "84-soap-webservice-consumer" shut down normally on:   *
+* 12/3/17 10:19 PM                                                   *
+* Up for: 0 days, 0 hours, 0 mins, 45.207 sec                        *
+**********************************************************************
+2017-12-03 22:19:54,126 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:54,135 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-03 22:19:54,143 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-03 22:19:54,160 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-03 22:19:54,160 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-03 22:19:54,164 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@70c39fc9: startup date [Sun Dec 03 22:19:54 IST 2017]; root of context hierarchy
+2017-12-03 22:19:54,643 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-03 22:19:55,057 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2017-12-03 22:19:55,060 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2017-12-03 22:19:55,075 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-03 22:19:55,077 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:19:55,077 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@52a7bdb3
+2017-12-03 22:19:55,086 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:19:56,231 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:19:56,231 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:19:56,233 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:56,238 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-03 22:19:56,238 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-03 22:19:56,250 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-12-03 22:19:56,255 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:19:56,256 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-03 22:19:56,257 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:19:56,257 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:19:56,275 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-03 22:19:56,283 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-03 22:20:36,319 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:20:36,321 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:20:36,322 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:20:36,366 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-12-03 22:20:36,376 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-12-03 22:20:36,379 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-12-03 22:20:36,380 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-12-03 22:20:36,399 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '84-soap-webservice-consumer'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:20:36,399 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-12-03 22:20:36,401 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:20:36,401 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:20:36,403 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-12-03 22:20:36,429 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@70c39fc9: startup date [Sun Dec 03 22:19:54 IST 2017]; root of context hierarchy
+2017-12-03 22:20:36,434 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "84-soap-webservice-consumer" shut down normally on:   *
+* 12/3/17 10:20 PM                                                   *
+* Up for: 0 days, 0 hours, 0 mins, 40.200 sec                        *
+**********************************************************************
+2017-12-03 22:20:36,510 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:20:36,517 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-03 22:20:36,524 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-03 22:20:36,540 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-03 22:20:36,540 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-03 22:20:36,544 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@39ea764c: startup date [Sun Dec 03 22:20:36 IST 2017]; root of context hierarchy
+2017-12-03 22:20:36,996 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-03 22:20:37,144 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2017-12-03 22:20:37,145 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2017-12-03 22:20:37,156 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-03 22:20:37,159 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:20:37,159 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@6848af03
+2017-12-03 22:20:37,169 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:20:38,279 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:20:38,279 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:20:38,280 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:20:38,283 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-03 22:20:38,283 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-03 22:20:38,295 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-12-03 22:20:38,298 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:20:38,299 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-03 22:20:38,300 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:20:38,300 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:20:38,315 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-03 22:20:38,320 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-03 22:20:53,334 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:20:53,336 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:20:53,337 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:20:53,418 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-12-03 22:20:53,425 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-12-03 22:20:53,428 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-12-03 22:20:53,428 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-12-03 22:20:53,435 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '84-soap-webservice-consumer'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:20:53,435 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-12-03 22:20:53,437 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:20:53,437 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:20:53,440 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-12-03 22:20:53,470 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@39ea764c: startup date [Sun Dec 03 22:20:36 IST 2017]; root of context hierarchy
+2017-12-03 22:20:53,472 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "84-soap-webservice-consumer" shut down normally on:   *
+* 12/3/17 10:20 PM                                                   *
+* Up for: 0 days, 0 hours, 0 mins, 15.192 sec                        *
+**********************************************************************
+2017-12-03 22:20:53,550 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:20:53,557 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-03 22:20:53,569 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-03 22:20:53,593 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-03 22:20:53,593 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-03 22:20:53,597 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@1e949b6b: startup date [Sun Dec 03 22:20:53 IST 2017]; root of context hierarchy
+2017-12-03 22:20:53,980 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-03 22:20:54,144 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2017-12-03 22:20:54,145 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2017-12-03 22:20:54,155 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-03 22:20:54,157 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:20:54,157 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@75b01117
+2017-12-03 22:20:54,167 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:20:55,271 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:20:55,272 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:20:55,273 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:20:55,276 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-03 22:20:55,276 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-03 22:20:55,289 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-12-03 22:20:55,292 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:20:55,293 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-03 22:20:55,294 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:20:55,294 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:20:55,310 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-03 22:20:55,314 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-03 22:21:00,323 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:21:00,326 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:21:00,326 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:21:00,514 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-12-03 22:21:00,519 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-12-03 22:21:00,520 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-12-03 22:21:00,520 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-12-03 22:21:00,523 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '84-soap-webservice-consumer'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:21:00,523 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-12-03 22:21:00,523 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:21:00,523 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:21:00,524 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-12-03 22:21:00,544 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@1e949b6b: startup date [Sun Dec 03 22:20:53 IST 2017]; root of context hierarchy
+2017-12-03 22:21:00,546 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "84-soap-webservice-consumer" shut down normally on:   *
+* 12/3/17 10:21 PM                                                   *
+* Up for: 0 days, 0 hours, 0 mins, 5.273 sec                         *
+**********************************************************************
+2017-12-03 22:21:00,674 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:21:00,689 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-03 22:21:00,701 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-03 22:21:00,731 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-03 22:21:00,731 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-03 22:21:00,735 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@3e8c48a8: startup date [Sun Dec 03 22:21:00 IST 2017]; root of context hierarchy
+2017-12-03 22:21:01,129 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-03 22:21:01,360 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2017-12-03 22:21:01,363 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2017-12-03 22:21:01,393 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-03 22:21:01,396 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:21:01,404 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@56712984
+2017-12-03 22:21:01,454 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:21:02,739 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:21:02,739 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:21:02,741 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:21:02,746 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-03 22:21:02,746 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-03 22:21:02,760 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-12-03 22:21:02,764 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:21:02,765 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-03 22:21:02,766 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:21:02,766 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:21:02,787 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-03 22:21:02,793 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-03 22:21:27,810 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:21:27,812 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:21:27,813 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:21:27,839 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-12-03 22:21:27,843 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-12-03 22:21:27,844 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-12-03 22:21:27,844 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-12-03 22:21:27,856 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '84-soap-webservice-consumer'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:21:27,856 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-12-03 22:21:27,857 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:21:27,857 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:21:27,858 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-12-03 22:21:27,876 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@3e8c48a8: startup date [Sun Dec 03 22:21:00 IST 2017]; root of context hierarchy
+2017-12-03 22:21:27,879 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "84-soap-webservice-consumer" shut down normally on:   *
+* 12/3/17 10:21 PM                                                   *
+* Up for: 0 days, 0 hours, 0 mins, 25.137 sec                        *
+**********************************************************************
+2017-12-03 22:21:27,958 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:21:27,965 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-03 22:21:27,972 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-03 22:21:27,988 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-03 22:21:27,988 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-03 22:21:27,991 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@6e271092: startup date [Sun Dec 03 22:21:27 IST 2017]; root of context hierarchy
+2017-12-03 22:21:28,310 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-03 22:21:28,439 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2017-12-03 22:21:28,439 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2017-12-03 22:21:28,447 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-03 22:21:28,448 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:21:28,448 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@53fc711b
+2017-12-03 22:21:28,455 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:21:29,544 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:21:29,544 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2017-12-03 22:21:29,545 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:21:29,548 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-03 22:21:29,548 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-03 22:21:29,563 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-12-03 22:21:29,567 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-03 22:21:29,568 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-03 22:21:29,569 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2017-12-03 22:21:29,569 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2017-12-03 22:21:29,592 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-03 22:21:29,598 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2018-01-19 17:01:15,268 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-01-19 17:01:15,818 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2018-01-19 17:01:16,290 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2018-01-19 17:01:16,651 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2018-01-19 17:01:16,652 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2018-01-19 17:01:17,154 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@76c548f: startup date [Fri Jan 19 17:01:17 IST 2018]; root of context hierarchy
+2018-01-19 17:01:20,568 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-01-19 17:01:23,305 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2018-01-19 17:01:24,801 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2018-01-19 17:01:24,870 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2018-01-19 17:01:25,136 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2018-01-19 17:01:25,148 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2018-01-19 17:01:25,148 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@ac4915e
+2018-01-19 17:01:25,243 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2018-01-19 17:01:31,280 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2018-01-19 17:01:31,280 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2018-01-19 17:01:31,291 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-01-19 17:01:31,296 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2018-01-19 17:01:31,296 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2018-01-19 17:01:31,479 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2018-01-19 17:01:31,486 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-01-19 17:01:31,488 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2018-01-19 17:01:31,491 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2018-01-19 17:01:31,492 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2018-01-19 17:01:31,589 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2018-01-19 17:01:31,629 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2018-01-19 19:41:20,836 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '84-soap-webservice-consumer'           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-01-19 19:41:21,811 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2018-01-19 19:41:22,360 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2018-01-19 19:41:22,769 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2018-01-19 19:41:22,771 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2018-01-19 19:41:24,291 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@34fe326d: startup date [Fri Jan 19 19:41:24 IST 2018]; root of context hierarchy
+2018-01-19 19:41:28,551 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-01-19 19:41:30,647 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2018-01-19 19:41:31,905 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-tx-log\tx2.log
+2018-01-19 19:41:31,943 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\84-soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2018-01-19 19:41:32,195 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2018-01-19 19:41:32,206 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2018-01-19 19:41:32,207 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@51eb0e84
+2018-01-19 19:41:32,280 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2018-01-19 19:41:37,448 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2018-01-19 19:41:37,448 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\84-soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2018-01-19 19:41:37,460 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '84-soap-webservice-consumer'               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-01-19 19:41:37,466 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2018-01-19 19:41:37,466 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2018-01-19 19:41:37,568 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2018-01-19 19:41:37,576 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-01-19 19:41:37,579 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2018-01-19 19:41:37,583 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2018-01-19 19:41:37,584 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2018-01-19 19:41:37,704 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2018-01-19 19:41:37,752 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 84-soap-webservice-consumer                           *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2018-04-11 20:48:37,826 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'soap-webservice-consumer'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-04-11 20:48:38,424 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2018-04-11 20:48:38,749 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2018-04-11 20:48:39,146 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2018-04-11 20:48:39,150 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2018-04-11 20:48:40,302 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@440eaa07: startup date [Wed Apr 11 20:48:40 IST 2018]; root of context hierarchy
+2018-04-11 20:48:43,207 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-04-11 20:48:45,218 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2018-04-11 20:48:46,505 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\soap-webservice-consumer\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\soap-webservice-consumer\queue-tx-log\tx2.log
+2018-04-11 20:48:46,540 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\soap-webservice-consumer\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\soap-webservice-consumer\queue-xa-tx-log\tx2.log
+2018-04-11 20:48:46,849 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2018-04-11 20:48:46,861 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 84-soap-webservice-consumerFlow
+2018-04-11 20:48:46,861 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@781c2497
+2018-04-11 20:48:46,952 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 84-soap-webservice-consumerFlow.stage1
+2018-04-11 20:48:52,292 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2018-04-11 20:48:52,292 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\soap-webservice-consumer\84-soap-webservice-consumer.xml'}]"
+2018-04-11 20:48:52,304 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'soap-webservice-consumer'                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-04-11 20:48:52,312 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2018-04-11 20:48:52,312 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2018-04-11 20:48:52,420 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2018-04-11 20:48:52,428 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-04-11 20:48:52,429 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2018-04-11 20:48:52,431 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 84-soap-webservice-consumerFlow
+2018-04-11 20:48:52,432 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 84-soap-webservice-consumerFlow.stage1
+2018-04-11 20:48:52,529 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2018-04-11 20:48:57,175 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: soap-webservice-consumer                              *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2018-04-11 20:50:29,218 [[soap-webservice-consumer].HTTP_Listener_Configuration.worker.01] INFO  org.mule.module.http.internal.listener.HttpListenerRegistry - No listener found for request: (GET)/json
+2018-04-11 20:50:29,219 [[soap-webservice-consumer].HTTP_Listener_Configuration.worker.01] INFO  org.mule.module.http.internal.listener.HttpListenerRegistry - Available listeners are: [(*)/soap/]

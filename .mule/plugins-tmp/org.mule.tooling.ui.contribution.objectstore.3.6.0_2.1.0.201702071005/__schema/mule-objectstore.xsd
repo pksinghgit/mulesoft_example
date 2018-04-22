@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:ns2="http://www.mulesoft.org/schema/mule/devkit" xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/objectstore" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"></xs:import>
+  <xs:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"></xs:import>
+  <xs:import namespace="http://www.mulesoft.org/schema/mule/core" schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></xs:import>
+  <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" substitutionGroup="mule:abstract-extension" name="config">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mule:abstractExtensionType">
+          <xs:annotation>
+            <xs:documentation>Object Store Global configuration settings.</xs:documentation>
+          </xs:annotation>
+          <xs:attribute type="xs:string" use="required" name="name">
+            <xs:annotation>
+              <xs:documentation>Give a name to this configuration so it can be later referenced by config-ref.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute type="xs:string" use="optional" name="partition">
+            <xs:annotation>
+              <xs:documentation>Name of the partition in the default in-memory or persistent object stores (this argument has no meaning if the object store is passed by ref using objectStore-ref)</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/objectstore" type="booleanType" use="optional" default="false" name="persistent">
+            <xs:annotation>
+              <xs:documentation>Specified whenever the required store needs to be persistent or not (this argument has no meaning if the object store is passed by ref using objectStore-ref or no partition
+name is defined)</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute type="xs:string" use="optional" name="objectStore-ref">
+            <xs:annotation>
+              <xs:documentation>Reference to an Object Store bean. This is optional and if it is not specified then the default in-memory or persistent store will be used.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/objectstore" type="integerType" use="optional" name="entryTtl">
+            <xs:annotation>
+              <xs:documentation>TimeToLive for stored values in milliseconds. MaxEntries and ExpirationInterval are mandatory for using this param. Valid values: 0 for never expire, values greater than 0
+are expiry in milliseconds.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/objectstore" type="integerType" use="optional" name="maxEntries">
+            <xs:annotation>
+              <xs:documentation>Specifies the max number of entries. EntryTTL and ExpirationInterval are mandatory for using this param.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/objectstore" type="integerType" use="optional" name="expirationInterval">
+            <xs:annotation>
+              <xs:documentation>Specifies the expiration check interval in milliseconds. EntryTTL and MaxEntries are mandatory for using this param.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/objectstore" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="ContainsType" substitutionGroup="mule:abstract-message-processor" name="contains">
+    <xs:annotation>
+      <xs:documentation>Checks whether the object store contains the given key.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ContainsType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="key">
+          <xs:annotation>
+            <xs:documentation>The identifier of the object to validate.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/objectstore" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="Dual-storeType" substitutionGroup="mule:abstract-message-processor" name="dual-store">
+    <xs:annotation>
+      <xs:documentation>Stores a value using key and also stores a key using value. If an exception is thrown rolls back both operations. This allows an option to indicate if key would be
+overwritten or not.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="Dual-storeType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="key">
+          <xs:annotation>
+            <xs:documentation>The identifier of the object to store.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="value-ref">
+          <xs:annotation>
+            <xs:documentation>The object to store. If you want this to be the payload then use value-ref="#[payload]".</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/objectstore" type="booleanType" use="optional" default="false" name="overwrite">
+          <xs:annotation>
+            <xs:documentation>True if you want to overwrite the existing object.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/objectstore" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="RemoveType" substitutionGroup="mule:abstract-message-processor" name="remove">
+    <xs:annotation>
+      <xs:documentation>Remove the object for the respective key. This operation can fail silently based on the value passed in ignoreNotExists.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RemoveType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="key">
+          <xs:annotation>
+            <xs:documentation>The identifier of the object to remove.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/objectstore" type="booleanType" use="optional" default="false" name="ignoreNotExists">
+          <xs:annotation>
+            <xs:documentation>Indicates if the operation will ignore NotExistsException from ObjectStore.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/objectstore" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="RetrieveType" substitutionGroup="mule:abstract-message-processor" name="retrieve">
+    <xs:annotation>
+      <xs:documentation>Retrieve an object from the object store and make it available in the specified property scope of a Mule Message.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RetrieveType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="key">
+          <xs:annotation>
+            <xs:documentation>The identifier of the object to retrieve.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="defaultValue-ref">
+          <xs:annotation>
+            <xs:documentation>The default value if the key does not exist.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="targetProperty">
+          <xs:annotation>
+            <xs:documentation>The Mule Message property where the retrieved value will be stored.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/objectstore" type="MulePropertyScopeEnumType" use="optional" default="INVOCATION" name="targetScope">
+          <xs:annotation>
+            <xs:documentation>The Mule Message property scope, only used when targetProperty is specified.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/objectstore" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="Retrieve-all-keysType" substitutionGroup="mule:abstract-message-processor" name="retrieve-all-keys">
+    <xs:annotation>
+      <xs:documentation>Returns a list of all the keys in the object store.
+&lt;p&gt;
+&lt;i&gt;&lt;b&gt;IMPORTANT:&lt;/b&gt; Not all stores support this method. If the method is not supported a java.lang.UnsupportedOperationException is thrown&lt;/i&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="Retrieve-all-keysType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/objectstore" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="Retrieve-and-storeType" substitutionGroup="mule:abstract-message-processor" name="retrieve-and-store">
+    <xs:annotation>
+      <xs:documentation>Retrieve and Store in the same operation.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="Retrieve-and-storeType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="key">
+          <xs:annotation>
+            <xs:documentation>The identifier of the object to retrieve.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="defaultValue-ref">
+          <xs:annotation>
+            <xs:documentation>The default value if the key does not exist.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="storeValue-ref">
+          <xs:annotation>
+            <xs:documentation>The object to store. If you want this to be the payload then use value-ref="#[payload]".</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="targetProperty">
+          <xs:annotation>
+            <xs:documentation>The Mule Message property where the retrieved value will be stored.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/objectstore" type="MulePropertyScopeEnumType" use="optional" default="INVOCATION" name="targetScope">
+          <xs:annotation>
+            <xs:documentation>The Mule Message property scope, only used when targetProperty is specified.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/objectstore" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="StoreType" substitutionGroup="mule:abstract-message-processor" name="store">
+    <xs:annotation>
+      <xs:documentation>Stores an object in the object store. This allows an option to indicate if key would be overwritten or not.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="StoreType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="key">
+          <xs:annotation>
+            <xs:documentation>The identifier of the object to store.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="value-ref">
+          <xs:annotation>
+            <xs:documentation>The object to store. If you want this to be the payload then use value-ref="#[payload]".</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/objectstore" type="booleanType" use="optional" default="false" name="overwrite">
+          <xs:annotation>
+            <xs:documentation>True if you want to overwrite the existing object.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/objectstore" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="Dispose-storeType" substitutionGroup="mule:abstract-message-processor" name="dispose-store">
+    <xs:annotation>
+      <xs:documentation>Removes a given partition without disposing the entirely Object Store. Whether using a persistent store or not, internally, this operation performs a clear() of the items,
+so a user should still be able perform other operations. For persistent stores, this operation only deletes the contents of the folder but not the folder itself.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="Dispose-storeType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="partitionName">
+          <xs:annotation>
+            <xs:documentation>The name of the object store.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="MulePropertyScopeEnumType">
+    <xs:annotation>
+      <xs:documentation>Enum for Mule Property Scopes Used for improving user experience in Studio</xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="INVOCATION">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SESSION">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="OUTBOUND">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="INBOUND">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="OnNoTokenPolicyEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="EXCEPTION"></xs:enumeration>
+          <xs:enumeration value="STOP_FLOW"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="integerType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:integer"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="decimalType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:decimal"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="floatType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:float"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="doubleType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:double"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="dateTimeType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:dateTime"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="longType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:long"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="byteType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:byte"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="booleanType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:boolean"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="anyUriType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:anyURI"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="charType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="1"></xs:minLength>
+          <xs:maxLength value="1"></xs:maxLength>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+</xs:schema>

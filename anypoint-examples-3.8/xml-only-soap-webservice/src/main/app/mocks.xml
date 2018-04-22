@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+
+<flow doc:description="Creates or locates existing patient records in the hospital's system." name="PatientService">
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="PatientService" path="PatientService"/>
+        <cxf:proxy-service doc:name="Proxy service" namespace="http://www.mule-health.com/SOA/service/patient/1.0" payload="body" port="PatientPort" service="PatientService" wsdlLocation="service/PatientService.wsdl"/>
+        <set-variable doc:name="operation" value="#[xpath('fn:local-name(/*)')]" variableName="operation"/>
+
+        <choice doc:name="Choice">
+            <when expression="#[flowVars.operation == 'upsertPatient']">
+                <dw:transform-message doc:name="upsertPatientRequest to upsertPatientResponse" metadata:id="2fde8ba3-f057-4a43-ab8d-912480d47dbf">
+                                <dw:set-payload><![CDATA[%dw 1.0
+%namespace ns0 http://www.mule-health.com/SOA/message/1.0
+%namespace ns1 http://www.mule-health.com/SOA/model/1.0
+%output application/xml
+---
+ns0#"upsertPatientResponse": {
+	ns1#"PatientId": now as :string
+}]]></dw:set-payload>
+                </dw:transform-message>
+            </when>
+            <otherwise>
+                <dw:transform-message doc:name="getPatient to getPatientResponse" metadata:id="8674aa3a-3282-448c-96ee-58a73d11768b">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%namespace ns0 http://www.mule-health.com/SOA/message/1.0
+%namespace ns1 http://www.mule-health.com/SOA/model/1.0
+%output application/xml
+---
+ns0#"getPatientResponse": {
+	ns1#"Patient": {
+		patientId: now as :string,
+		dateOfBirth: |1930-01-01|,
+		gender: "Male",
+		nationality: "USA",
+		address1: "DisneyLand",
+		lastName: "Duck",
+		firstName: "Donald",
+		nationalId: now as :string
+	}
+}]]></dw:set-payload>
+                </dw:transform-message>
+            </otherwise>
+        </choice>
+    </flow>
+    <flow doc:description="Creates or locates existing patient episodes in the hospital's system." name="EHRService">
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="EHRService" path="EHRService"/>
+        <cxf:proxy-service doc:name="Proxy service" namespace="http://www.mule-health.com/SOA/service/ehr/1.0" payload="body" port="EHRPort" service="EHRService" wsdlLocation="service/EHRService.wsdl"/>
+        <set-variable doc:name="operation" value="#[xpath('fn:local-name(/*)')]" variableName="operation"/>
+        <choice doc:name="Choice">
+            <when expression="#[flowVars.operation == 'createEpisode']">
+                <dw:transform-message doc:name="createEpisode  to createEpisodeResponse" metadata:id="745aa568-18e7-4329-bc7a-c9a5b0b5a0d0">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%namespace ns0 http://www.mule-health.com/SOA/message/1.0
+%namespace ns1 http://www.mule-health.com/SOA/model/1.0
+%output application/xml
+---
+ns0#"createEpisodeResponse": {
+	ns1#"Episode": {
+		episodeId: now as :string,
+		ns1#PatientId: payload.ns0#createEpisode.ns1#PatientId,
+		admission: "Elective",
+		startDate: now,
+		endDate: now,
+		care: "Private"
+	}
+}]]></dw:set-payload>
+                </dw:transform-message>
+            </when>
+            <otherwise>
+                <dw:transform-message doc:name="findEpisode to findEpisodeResponse" metadata:id="f3c0c744-d978-4e2b-b13c-d4c63be9e94f">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%namespace ns0 http://www.mule-health.com/SOA/message/1.0
+%namespace ns1 http://www.mule-health.com/SOA/model/1.0
+%output application/xml
+---
+ns0#"findEpisodesResponse": {
+	ns1#"Episode": {
+		ns1#PatientId: payload.ns0#findEpisodes.ns1#PatientId
+	}
+}]]></dw:set-payload>
+                </dw:transform-message>
+            </otherwise>
+        </choice>
+    </flow>
+
+</mule>

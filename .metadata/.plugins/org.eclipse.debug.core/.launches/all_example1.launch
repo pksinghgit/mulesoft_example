@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.mule.tooling.runtime.muleServerLaunchType">
+<stringAttribute key="clear_data" value="NEVER"/>
+<booleanAttribute key="consoleEnabled" value="true"/>
+<stringAttribute key="launch_mule_server_version" value="org.mule.tooling.server.3.9.0.ee"/>
+<listAttribute key="mule-project-names">
+<listEntry value="all_example1"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="all_example1"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XX:PermSize=128M -XX:MaxPermSize=256M"/>
+<intAttribute key="remote-debug-port" value="9999"/>
+<booleanAttribute key="remote-debug-suspend" value="false"/>
+</launchConfiguration>

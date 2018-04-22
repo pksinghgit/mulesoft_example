@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <flow name="flow_control_app_flowsFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration1" path="/control" doc:name="HTTP"/>
+        <expression-component doc:name="Expression"><![CDATA[flowVars.action=message.inboundProperties.'http.query.params'.action;
+flowVars.name=message.inboundProperties.'http.query.params'.name;]]></expression-component>
+        <choice doc:name="Choice">
+            <when expression="#[flowVars.action == 'stop']">
+                <scripting:component doc:name="stop">
+                    <scripting:script engine="Groovy"><![CDATA[muleContext.registry.lookupFlowConstruct(flowVars.name).stop();
+]]></scripting:script>
+                </scripting:component>
+                <set-payload value="Flow Stopped" doc:name="Set Payload"/>
+            </when>
+            <otherwise>
+                <scripting:component doc:name="start">
+                    <scripting:script engine="Groovy"><![CDATA[muleContext.registry.lookupFlowConstruct(flowVars.name).start();
+]]></scripting:script>
+                </scripting:component>
+                <set-payload value="Flow Started" doc:name="Set Payload"/>
+            </otherwise>
+        </choice>
+    </flow>
+</mule>

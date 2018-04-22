@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.6.0" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<!-- listen for requests in port 8081 -->
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+    
+    <flow name="httpRenderFlow">
+    	<!-- Listen only for GET requests in /uploadFile uri -->
+        <http:listener allowedMethods="GET" config-ref="HTTP_Listener_Configuration" doc:name="HTTP" path="/uploadFile"/>
+        <!-- Provide a form to upload the file through the browser -->
+        <parse-template doc:name="Upload file page" location="uploadFile.html"/>
+    </flow>
+    
+    <flow name="httpMultipartRequestFlow">
+    	<!-- Listen only for POST requests in /uploadFile uri -->
+        <http:listener allowedMethods="POST" config-ref="HTTP_Listener_Configuration" doc:name="HTTP" path="/uploadFile">
+            <http:response-builder reasonPhrase="File was uploaded." statusCode="200"/>
+        </http:listener>
+        <!-- Extract the original filename from the uploaded file -->
+        <expression-component doc:name="Extract attachment filename"><![CDATA[var contentDispositionHeaderValue = message.inboundAttachments['file'].dataSource.getHeader('Content-Disposition').trim();
+flowVars['attachmentFileName'] = contentDispositionHeaderValue.substring(contentDispositionHeaderValue.indexOf("filename=") + "filename=".length() + 1, contentDispositionHeaderValue.length() - 1);
+]]></expression-component>
+		<!-- Write the file content type to the log -->
+        <logger doc:name="Log file content type" level="ERROR" message="#[message.inboundAttachments['file'].dataSource.getHeader('Content-Type')]"/>
+        <!-- Set the file content as the payload -->
+        <set-payload doc:name="Set file content as payload" value="#[message.inboundAttachments['file'].dataSource.content]"/>
+        <!-- Write the file content to the file system -->
+        <file:outbound-endpoint doc:name="Store file" outputPattern="#[attachmentFileName]" path="/tmp" responseTimeout="8081"/>
+        <!-- The payload continues to be the file so it will be shown in the browser as well -->
+    </flow>
+    
+</mule>

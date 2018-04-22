@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:smtps="http://www.mulesoft.org/schema/mule/smtps" xmlns:pop3s="http://www.mulesoft.org/schema/mule/pop3s" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:pop3="http://www.mulesoft.org/schema/mule/pop3" xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:imap="http://www.mulesoft.org/schema/mule/imap" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:imaps="http://www.mulesoft.org/schema/mule/imaps" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd
+http://www.mulesoft.org/schema/mule/imap http://www.mulesoft.org/schema/mule/imap/current/mule-imap.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/imaps http://www.mulesoft.org/schema/mule/imaps/current/mule-imaps.xsd
+http://www.mulesoft.org/schema/mule/pop3 http://www.mulesoft.org/schema/mule/pop3/current/mule-pop3.xsd
+http://www.mulesoft.org/schema/mule/pop3s http://www.mulesoft.org/schema/mule/pop3s/current/mule-pop3s.xsd
+http://www.mulesoft.org/schema/mule/smtps http://www.mulesoft.org/schema/mule/smtps/current/mule-smtps.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8081" doc:name="HTTP Listener Configuration"/>
+    <smtp:gmail-connector name="Gmail" validateConnections="true" doc:name="Gmail"/>
+    <imap:connector name="IMAP" validateConnections="true" doc:name="IMAP"/>
+    <pop3:connector name="POP3" validateConnections="true" doc:name="POP3"/>
+    <pop3:connector name="POP31" validateConnections="true" doc:name="POP3"/>
+    <pop3:connector name="POP32" validateConnections="true" doc:name="POP3"/>
+    <flow name="58-smtp-flowFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/smtp" doc:name="HTTP"/>
+        <set-attachment attachmentName="attachement" value="#[payload]" contentType="text/json" doc:name="Attachment"/>
+        <smtp:outbound-endpoint host="smtp.gmail.com" port="587" user="pavanthakur.83@gmail.com" password="Maharouli@6812" connector-ref="Gmail" to="pavanthakur.83@gmail.com" from="pavanthakur.83@gmail.com" subject="test mail" responseTimeout="10000" doc:name="SMTP" replyTo="body contents"/>
+        <logger message="Message Send Successfully" level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="58-smtp-flowFlow1">
+        <pop3:inbound-endpoint host="pop.gmail.com" port="465" user="pavanthakur.83@gmail.com" password="Maharouli@6812" connector-ref="POP32" responseTimeout="10000" doc:name="POP3"/>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+    </flow>
+</mule>

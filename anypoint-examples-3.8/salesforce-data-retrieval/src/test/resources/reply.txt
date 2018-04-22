@@ -1,0 +1,6 @@
+Email=kicks+a@mulesoft.com
+Id=00520000003LtYCAA0
+Name=Mule orgA
+Email=kicks+a-integration@mulesoft.com
+Id=00520000003LtvGAAS
+Name=Mule orgA Integration

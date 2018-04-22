@@ -1,0 +1,3 @@
+dataweave.delete_associated_mapping=PROMPT
+eclipse.preferences.version=1
+org.mule.tooling.dfl.DFL.templates=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?><templates/>

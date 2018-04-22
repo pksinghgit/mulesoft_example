@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<namespace xmlns="http://www.mulesoft.org/schema/mule/tooling.attributes" xmlns:mule="http://www.mulesoft.org/schema/mule/core" url="http://www.mulesoft.org/schema/mule/oauth2-provider" prefix="oauth2-provider">
+  <global-cloud-connector versions="[3.5.4,8.0.0]" caption="OAuth provider module" description="" icon="" localId="parentConfig" image="" abstract="true" extends="http://www.mulesoft.org/schema/mule/oauth2-provider/abstractOauth2-providerConnectorGeneric"></global-cloud-connector>
+  <global-cloud-connector versions="[3.5.4,8.0.0]" caption="OAuth provider module" description="Global OAuth provider module configuration information." icon="icons/small/oauth2-provider-connector-24x16.png" localId="config" image="icons/large/oauth2-provider-connector-48x32.png" abstract="false" extends="http://www.mulesoft.org/schema/mule/oauth2-provider/parentConfig" connectivityTesting="off">
+    <attribute-category caption="General" description="Oauth2-provider configuration properties.">
+      <group id="oauth2-providerGenericProperties" caption="Basic Settings">
+        <name name="name" caption="Name" description="Give a name to this configuration so it can be later referenced by config-ref." required="true"></name>
+      </group>
+      <group id="general" caption="General">
+        <string defaultValue="localhost" name="host" caption="Host" description="The host to use when programmatically generating the inbound endpoints." required="false" javaType="java.lang.String"></string>
+        <string name="providerName" caption="Provider Name" description="The human-friendly name of this provider." required="false" javaType="java.lang.String"></string>
+        <integer defaultValue="9999" min="0" step="1" name="port" caption="Port" description="The port to use when programmatically generating the inbound endpoints." required="false" javaType="int"></integer>
+        <string name="clientStore-ref" caption="Client Store Reference" description="A store that allows retrieving client configuration information, like their
+secret. If no client store is provided, a default in memory object store is
+configured. Clients can be registered on the default object store since it
+implements the ClientRegistration interface." required="false" javaType="org.mule.modules.oauth2.provider.client.ClientStore"></string>
+        <string name="authorizationCodeStore-ref" caption="Authorization Code Store Reference" description="A store that allows storing and retrieving authorization codes. If no
+authorization code store is provided, a default in memory object store is
+configured." required="false" javaType="org.mule.modules.oauth2.provider.code.AuthorizationCodeStore"></string>
+        <string name="tokenStore-ref" caption="Token Store Reference" description="A store that allows storing and retrieving tokens. If no token store is
+provided, a default in memory object store is configured." required="false" javaType="org.mule.modules.oauth2.provider.token.TokenStore"></string>
+        <string defaultValue="token" name="accessTokenEndpointPath" caption="Access Token Endpoint Path" description="The access token endpoint path." required="false" javaType="java.lang.String"></string>
+        <string defaultValue="authorize" name="authorizationEndpointPath" caption="Authorization Endpoint Path" description="The authorization endpoint path." required="false" javaType="java.lang.String"></string>
+        <string name="defaultScopes" caption="Default Scopes" description="A space-separated list of the default scopes
+a client should have if none is defined." required="false" javaType="java.lang.String"></string>
+        <string defaultValue="org/mule/modules/oauth2/provider/www/templates/login.html" name="loginPage" caption="Login Page" description="Full path, relative path or classpath location of the HTML login page
+template." required="false" javaType="java.lang.String"></string>
+        <string name="scopes" caption="Scopes" description="A space-separated list of supported scopes." required="false" javaType="java.lang.String"></string>
+        <integer defaultValue="600" min="0" step="1" name="authorizationTtlSeconds" caption="Authorization Ttl Seconds" description="The time in seconds before an authorization grant code expires." required="false" javaType="int"></integer>
+        <integer defaultValue="86400" min="0" step="1" name="tokenTtlSeconds" caption="Token Ttl Seconds" description="The time in seconds before an access token code expires." required="false" javaType="int"></integer>
+        <string name="connector-ref" caption="Connector Reference" description="The connector for which endpoints will be generated." required="false" javaType="org.mule.api.transport.Connector"></string>
+        <string name="resourceOwnerSecurityProvider-ref" caption="Resource Owner Security Provider Reference" description="The security provider used to authenticate resource owners. Not needed if only
+the CLIENT_CREDENTIALS grant type is used." required="false" javaType="org.mule.api.security.SecurityProvider"></string>
+        <string name="clientSecurityProvider-ref" caption="Client Security Provider Reference" description="The security provider used to authenticate clients. Not needed if only public
+clients or private clients with client_secrets are used." required="false" javaType="org.mule.api.security.SecurityProvider"></string>
+        <string defaultValue="AUTHORIZATION_CODE" name="supportedGrantTypes" caption="Supported Grant Types" description="The space-separated grant types this provider will support. If none specified,
+only the authorization code grant type will be supported." required="false" javaType="java.lang.String"></string>
+        <string name="rateLimiter-ref" caption="Rate Limiter Reference" description="The rate limiter used to control access to certain operations. If none is
+specified  will be used as default." required="false" javaType="org.mule.modules.oauth2.provider.ratelimit.RateLimiter"></string>
+        <boolean defaultValue="false" name="enableRefreshToken" caption="Enable Refresh Token" description="Should refresh tokens be generated?." supportsExpressions="true" required="false" javaType="boolean"></boolean>
+        <element-controller-listOfPojo listName="clients" localName="configurable-clients" itemName="client" caption="Clients" description="A list of clients. If this field is configured then there is no need of
+configuring a client store." javaType="java.util.List&lt;org.mule.modules.oauth2.provider.client.Client&gt;"></element-controller-listOfPojo>
+      </group>
+    </attribute-category>
+  </global-cloud-connector>
+  <cloud-connector caption="Abstractoauth2-providerconnectorgeneric" description="Interact with Oauth2-provider." icon="icons/small/oauth2-provider-connector-24x16.png" localId="abstractOauth2-providerConnectorGeneric" image="icons/large/oauth2-provider-connector-48x32.png" category="org.mule.tooling.category.security" abstract="true">
+    <attribute-category caption="General" description="General.">
+      <group id="abstractOauth2-providerConnectorGeneric" caption="Basic Settings">
+        <globalRef requiredType="http://www.mulesoft.org/schema/mule/oauth2-provider/config" name="config-ref" caption="Connector Configuration" description="Specify which configuration to use for this invocation." required="true"></globalRef>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector versions="[3.5.4,8.0.0]" aliasId="org.mule.tooling.ui.modules.core.pattern.oauth2-provider" caption="OAuth provider module" description="
+OAuth2 Provider
+." icon="icons/small/oauth2-provider-connector-24x16.png" localId="oauth2-provider-connector" image="icons/large/oauth2-provider-connector-48x32.png" category="org.mule.tooling.category.security" extends="http://www.mulesoft.org/schema/mule/oauth2-provider/abstractOauth2-providerConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="oauth2-providerConnectorGeneric" caption="Basic Settings">
+        <modeSwitch alwaysCombo="true" name="Oauth2-provider operations to execute" caption="Operation" description="Operation.">
+          <mode modeId="http://www.mulesoft.org/schema/mule/oauth2-provider/create-client" modeLabel="Create client"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/oauth2-provider/delete-client" modeLabel="Delete client"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/oauth2-provider/revoke-token" modeLabel="Revoke token"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/oauth2-provider/validate" modeLabel="Validate"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/oauth2-provider/validate-client" modeLabel="Validate client"></mode>
+        </modeSwitch>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" caption="Create Client" icon="icons/small/oauth2-provider-connector-24x16.png" localId="create-client" image="icons/large/oauth2-provider-connector-48x32.png" category="org.mule.tooling.category.security" abstract="true" extends="http://www.mulesoft.org/schema/mule/oauth2-provider/abstractOauth2-providerConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="clientId" caption="Client Id" description="The Client Id." required="true" javaType="java.lang.String"></string>
+        <string name="clientName" caption="Client Name" description="A friendly name for the Client." required="false" javaType="java.lang.String"></string>
+        <string name="description" caption="Description" description="A brief description of the Client." required="false" javaType="java.lang.String"></string>
+        <string name="principal" caption="Principal" description="An optional principal to use when the ID can't be used with the security provider." required="false" javaType="java.lang.String"></string>
+        <string name="secret" caption="Secret" description="The Client secret." required="false" javaType="java.lang.String"></string>
+        <enum allowsCustom="true" name="type" caption="Type" description="Clients can be PUBLIC or CONFIDENTIAL. If Confidential the secret is required. By default Clients are PUBLIC." supportsExpressions="true" required="false" javaType="org.mule.modules.oauth2.provider.client.ClientType">
+          <option value="CONFIDENTIAL"></option>
+          <option value="PUBLIC"></option>
+        </enum>
+        <element-controller-list listName="authorized-grant-types" localName="create-client-authorized-grant-types" itemName="authorized-grant-type" caption="Authorized Grant Types" description="The Client's supported grant types." required="false" javaType="java.util.List&lt;org.mule.modules.oauth2.provider.Constants.RequestGrantType&gt;"></element-controller-list>
+        <element-controller-list listName="redirect-uris" localName="create-client-redirect-uris" itemName="redirect-uri" caption="Redirect Uris" description="A list with the Client's valid redirect uris." required="false" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+        <element-controller-list listName="scopes" localName="create-client-scopes" itemName="scope" caption="Scopes" description="The Client's supported scopes." required="false" javaType="java.util.List&lt;java.lang.String&gt;"></element-controller-list>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" caption="Delete Client" icon="icons/small/oauth2-provider-connector-24x16.png" localId="delete-client" image="icons/large/oauth2-provider-connector-48x32.png" category="org.mule.tooling.category.security" abstract="true" extends="http://www.mulesoft.org/schema/mule/oauth2-provider/abstractOauth2-providerConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="clientId" caption="Client Id" description="The Client Id." required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" caption="Revoke Token" icon="icons/small/oauth2-provider-connector-24x16.png" localId="revoke-token" image="icons/large/oauth2-provider-connector-48x32.png" category="org.mule.tooling.category.security" abstract="true" extends="http://www.mulesoft.org/schema/mule/oauth2-provider/abstractOauth2-providerConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="token" caption="Token" description="The token to revoke, it can be an access token or a refresh token." required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.api.MuleEvent" caption="Validate" icon="icons/small/oauth2-provider-connector-24x16.png" localId="validate" image="icons/large/oauth2-provider-connector-48x32.png" category="org.mule.tooling.category.security" abstract="true" extends="http://www.mulesoft.org/schema/mule/oauth2-provider/abstractOauth2-providerConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="resourceOwnerRoles" caption="Resource Owner Roles" description="Optional resource owner roles to enforce when validating the token." required="false" javaType="java.lang.String"></string>
+        <string name="scopes" caption="Scopes" description="Optional scopes to enforce when validating the token." required="false" javaType="java.lang.String"></string>
+        <boolean defaultValue="false" name="throwExceptionOnUnaccepted" caption="Throw Exception On Unaccepted" description="Whether an InvalidAccessTokenException exception should be thrown in case of an invalid access token instead of only stopping the flow execution. False by default." supportsExpressions="true" required="false" javaType="boolean"></boolean>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.api.MuleEvent" caption="Validate Client" icon="icons/small/oauth2-provider-connector-24x16.png" localId="validate-client" image="icons/large/oauth2-provider-connector-48x32.png" category="org.mule.tooling.category.security" abstract="true" extends="http://www.mulesoft.org/schema/mule/oauth2-provider/abstractOauth2-providerConnectorGeneric">
+    <attribute-category caption="General" description="General."></attribute-category>
+  </cloud-connector>
+</namespace>

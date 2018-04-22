@@ -1,0 +1,6 @@
+authenticated.users=[{"token"\:"87108eec-2c19-418b-afcf-b85d2d7a9d06","userId"\:"pksingh_1","refreshToken"\:"","baseUrl"\:"https\://anypoint.mulesoft.com/"},{"token"\:"c53b486b-d82f-4d0e-bba2-d5af3833a4b7","userId"\:"mulesoft83","refreshToken"\:"","baseUrl"\:"https\://anypoint.mulesoft.com/"}]
+current.token=87108eec-2c19-418b-afcf-b85d2d7a9d06
+current.user=pksingh_1
+eclipse.preferences.version=1
+expiration.time=300
+org.mule.tooling.amc.apps={"userProjectMap"\:{"mulesoft83"\:{"db_api_test_full_flow"\:"{\\"applicationName\\"\:\\"db-api-test-full-flow\\",\\"muleRuntime\\"\:\\"3.9.0\\",\\"properties\\"\:{}}"}}}

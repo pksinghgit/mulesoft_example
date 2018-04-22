@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json"
+	xmlns:bpm="http://www.mulesoft.org/schema/mule/bpm" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/bpm http://www.mulesoft.org/schema/mule/bpm/3.6/mule-bpm.xsd">
+
+	<bpm:drools />
+	<spring:beans>
+	<spring:bean name="noFactBean" class="java.util.ArrayList" /> </spring:beans>
+
+
+	<flow name="bpm_drool_impl_appFlow">
+		<http:listener config-ref="HTTP_Listener_Configuration1"
+			path="/bpm" doc:name="HTTP" />
+		<object-to-string-transformer doc:name="Object to String" />
+		<json:json-to-object-transformer
+			returnClass="com.drools.Customer" doc:name="JSON to Object" />
+		<bpm:rules rulesDefinition="customerGroup.drl" initialFacts-ref="noFactBean" doc:name="bpm-rules" />
+        <set-payload value="#[payload.object]" doc:name="Set Payload"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+	</flow>
+</mule>

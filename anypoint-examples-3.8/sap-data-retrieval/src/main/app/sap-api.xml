@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+	<http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="sap-api-httpListenerConfig" port="${http.port}"/>
+	<sap:connector doc:name="SAP" jcoAsHost="${sap.jco.ashost}" jcoClient="${sap.jco.client}" jcoLang="${sap.jco.lang}" jcoPasswd="${sap.jco.passwd}" jcoSysnr="${sap.jco.sysnr}" jcoUser="${sap.jco.user}" name="SapConnector" validateConnections="true"/>
+
+	<apikit:config consoleEnabled="true" consolePath="console" doc:name="Router" name="sap-api-config" raml="sap-api.raml">
+		<apikit:flow-mapping action="get" flow-ref="get:/customers:sap-api-config" resource="/customers"/>
+		<apikit:flow-mapping action="get" flow-ref="get:/salesOrders:sap-api-config" resource="/salesOrder"/>
+		<apikit:flow-mapping action="get" flow-ref="get:/materials:sap-api-config" resource="/materials"/>
+	</apikit:config>
+
+	<apikit:mapping-exception-strategy name="sap-api-apiKitGlobalExceptionMapping">
+		<apikit:mapping statusCode="404">
+			<apikit:exception value="org.mule.module.apikit.exception.NotFoundException"/>
+			<set-property doc:name="Property" propertyName="Content-Type" value="application/json"/>
+			<set-payload doc:name="Set Payload" value="{ &quot;message&quot;: &quot;Resource not found&quot; }"/>
+		</apikit:mapping>
+		<apikit:mapping statusCode="405">
+			<apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException"/>
+			<set-property doc:name="Property" propertyName="Content-Type" value="application/json"/>
+			<set-payload doc:name="Set Payload" value="{ &quot;message&quot;: &quot;Method not allowed&quot; }"/>
+		</apikit:mapping>
+		<apikit:mapping statusCode="415">
+			<apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException"/>
+			<set-property doc:name="Property" propertyName="Content-Type" value="application/json"/>
+			<set-payload doc:name="Set Payload" value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }"/>
+		</apikit:mapping>
+		<apikit:mapping statusCode="406">
+			<apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException"/>
+			<set-property doc:name="Property" propertyName="Content-Type" value="application/json"/>
+			<set-payload doc:name="Set Payload" value="{ &quot;message&quot;: &quot;Not acceptable&quot; }"/>
+		</apikit:mapping>
+		<apikit:mapping statusCode="400">
+			<apikit:exception value="org.mule.module.apikit.exception.BadRequestException"/>
+			<set-property doc:name="Property" propertyName="Content-Type" value="application/json"/>
+			<set-payload doc:name="Set Payload" value="{ &quot;message&quot;: &quot;Bad request&quot; }"/>
+		</apikit:mapping>
+	</apikit:mapping-exception-strategy>
+	<flow name="sap-api-main">
+		<http:listener config-ref="sap-api-httpListenerConfig" doc:name="HTTP" path="/api/*"/>
+		<apikit:router config-ref="sap-api-config" doc:name="APIkit Router"/>
+		<exception-strategy doc:name="Reference Exception Strategy" ref="sap-api-apiKitGlobalExceptionMapping"/>
+	</flow>
+	<flow name="get:/customers:sap-api-config">
+		<dw:transform-message doc:name="Transform Map to Xml&lt;BAPI_CUSTOMER_FIND>" metadata:id="711a1bba-68b9-4a72-9f5b-dc077ea13256">
+			<dw:input-inbound-property doc:sample="inboundProperties.dwl" propertyName="http.query.params"/>
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+{
+	"BAPI_CUSTOMER_FIND": {
+		import: {
+			"MAX_CNT": inboundProperties."http.query.params"."max_count",
+			"PL_HOLD": "X"
+		},
+		tables: {
+			"SELOPT_TAB": {
+				row: {
+					"COMP_CODE": "0001",
+					TABNAME: "KNA1",
+					FIELDNAME: "NAME1",
+					FIELDVALUE: (inboundProperties."http.query.params"."name" ++ "*") when (inboundProperties."http.query.params"."name" != null) otherwise "*"
+				}
+			}
+		}
+	}
+}]]></dw:set-payload>
+		</dw:transform-message>
+		<sap:outbound-endpoint connector-ref="SapConnector" doc:name="Get Customers" exchange-pattern="request-response" functionName="BAPI_CUSTOMER_FIND" outputXml="true" responseTimeout="10000" type="function" xmlVersion="2"/>
+
+		<dw:transform-message doc:name="Transform Xml&lt;BAPI_CUSTOMER_FIND> To JSON">
+			<dw:input-payload doc:sample="BAPI_CUSTOMER_FIND.xml"/>
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+customers: 
+	payload."BAPI_CUSTOMER_FIND".tables."RESULT_TAB".*row map {
+		($$):$
+	}]]></dw:set-payload>
+		</dw:transform-message>
+	</flow>
+	<flow name="get:/salesOrders:sap-api-config">
+
+		<dw:transform-message doc:name="Transform Map to Xml&lt;BAPI_SALESORDER_GETLIST>" metadata:id="93dc703b-4b7d-4a41-8e17-72ff01e002e4">
+			<dw:input-inbound-property doc:sample="inboundPropertiesSO.dwl" propertyName="http.query.params"/>
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+{
+	"BAPI_SALESORDER_GETLIST": {
+		import: {
+			"CUSTOMER_NUMBER": inboundProperties."http.query.params"."customer_number",
+			"SALES_ORGANIZATION": inboundProperties."http.query.params"."sales_organization"
+		}
+	}
+}]]></dw:set-payload>
+		</dw:transform-message>
+
+		<sap:outbound-endpoint connector-ref="SapConnector" doc:name="Get Sales orders" exchange-pattern="request-response" functionName="BAPI_SALESORDER_GETLIST" outputXml="true" responseTimeout="10000" type="function" xmlVersion="2"/>
+
+
+		<dw:transform-message doc:name="Transform Xml&lt;BAPI_SALESORDER_GETLIST> To JSON">
+			<dw:input-payload doc:sample="BAPI_SALESORDER_GETLIST.xml"/>
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+salesOrders: payload."BAPI_SALESORDER_GETLIST".tables."SALES_ORDERS".*row map {
+	($$):$
+} when (payload."BAPI_SALESORDER_GETLIST".tables."SALES_ORDERS" != "") otherwise {message:"No data found."}]]></dw:set-payload>
+		</dw:transform-message>
+
+	</flow>
+	<flow name="get:/materials:sap-api-config">
+
+		<dw:transform-message doc:name="Transform Map to Xml&lt;BAPI_MATERIAL_GETLIST>" metadata:id="5e52e521-e438-4120-8e41-3d659961bbd8">
+			<dw:input-inbound-property doc:sample="inboundProperties_1.dwl" propertyName="http.query.params"/>
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+{
+	"BAPI_MATERIAL_GETLIST": {
+		import: {
+			MAXROWS: inboundProperties."http.query.params"."max_count"
+		},
+		tables: {
+			MATERIALSHORTDESCSEL: {
+				row: {
+					SIGN: "I",
+					OPTION: "CP",
+					"DESCR_LOW": (inboundProperties."http.query.params"."name" ++ "*") when (inboundProperties."http.query.params"."name" != null) otherwise "*"
+				}
+			}
+		}
+	}
+}]]></dw:set-payload>
+		</dw:transform-message>
+		<sap:outbound-endpoint connector-ref="SapConnector" doc:name="Get Materials" exchange-pattern="request-response" functionName="BAPI_MATERIAL_GETLIST" outputXml="true" responseTimeout="10000" type="function" xmlVersion="2"/>
+
+		<dw:transform-message doc:name="Transform XML&lt;BAPI_MATERIAL_GETLIST> to JSON">
+			<dw:input-payload doc:sample="BAPI_MATERIAL_GETLIST.xml"/>
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+materials: payload."BAPI_MATERIAL_GETLIST".tables.MATNRLIST.*row map {
+	($$):$
+} when (payload."BAPI_MATERIAL_GETLIST".tables.MATNRLIST != "") otherwise { message:"No data found."}]]></dw:set-payload>
+		</dw:transform-message>
+
+
+	</flow>
+</mule>

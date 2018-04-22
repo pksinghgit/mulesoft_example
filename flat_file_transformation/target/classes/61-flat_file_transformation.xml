@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="product" password="product" database="product" doc:name="MySQL Configuration"/>
+    <flow name="61-flat_file_transformationFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/ffd" doc:name="HTTP"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="3d2ad17e-70a7-407d-b0ad-98cadde56e72">
+            <dw:input-payload mimeType="text/plain">
+                <dw:reader-property name="schemaPath" value="C:/Users/kavya/Desktop/Mulesoft/sgt shastry/sgt shastry/sgt_shastry_full_example.ffd"/>
+                <dw:reader-property name="structureIdent" value="BankDetails"/>
+            </dw:input-payload>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+	form: payload
+}
+]]></dw:set-payload>
+        </dw:transform-message>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <splitter expression="#[json:form/Data]" doc:name="Splitter"/>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <db:insert config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[INSERT INTO `product`.`account` (`Clearing_Code`, `Destination_Account`, `Txn_flag`, `Transaction_Code`, `Cheque_Number`, `Unique_Sequence_Number`, `Amount_in_Cents`, `Originator_Sort_Code`, `Originating_Bank_Name`, `Beneficiary_Name`, `Advised_Account_Number`, `Remitter_Account_Number`, `Remmitter_reference`, `Currency_Code`) VALUES (#[json:DataFile/Clearing Code],#[json:DataFile/Destination Account],#[json:DataFile/Txn flag],#[json:DataFile/Transaction Code],#[json:DataFile/Cheque Number],#[json:DataFile/Unique Sequence Number],#[json:DataFile/Amount in Cents],#[json:DataFile/Originator Sort Code],#[json:DataFile/Originating Bank Name],#[json:DataFile/Beneficiary Name],#[json:DataFile/Advised Account Number],#[json:DataFile/Remitter Account Number],#[json:DataFile/Remmitter reference],#[json:DataFile/Currency Code]);]]></db:parameterized-query>
+        </db:insert>
+    </flow>
+</mule>

@@ -1,0 +1,329 @@
+<!--
+
+    MuleSoft Examples
+    Copyright 2014 MuleSoft, Inc.
+
+    This product includes software developed at
+    MuleSoft, Inc. (http://www.mulesoft.com/).
+
+-->
+
+<html>
+<head>
+<link href="css/estore.css" rel="stylesheet" type="text/css" />
+<link type="text/css"
+	href="css/south-street/jquery-ui-1.8.20.custom.css" rel="stylesheet" />
+<link href="css/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.20.custom.min.js"></script>
+<script type="text/javascript" src="mule-resource/js/mule.js"></script>
+<script type="text/javascript" src="scripts/shCore.js"></script>
+<script type="text/javascript" src="scripts/shBrushXml.js"></script>
+
+<script type="text/javascript">
+	$(document)
+			.ready(
+					function() {
+						function isNumber(n) {
+							return !isNaN(parseFloat(n)) && isFinite(n);
+						}
+						
+						/*$.ajax({
+							url : "http://localhost:8091/populate"
+						});*/
+						
+						tabs = $("#tabs").tabs({
+							selected : 0
+						});
+						$('.button').button();
+
+						$('#addItemButton')
+								.click(
+										function() {
+											if ( ! isNumber($('#quantity').val())) {
+												alert("Invalid quantity");
+												$('#quantity').focus();
+											} else {
+												$('#orderItemTable tbody')
+														.append(
+																'<tr><td class="manufacturer">'
+																		+ $('#manufacturer').val()
+																		+ '</td><td class="name">'
+																		+ $(
+																				"#productName")
+																				.val()
+																		+ '</td><td class="productId">'
+																		+ $(
+																				"#productId")
+																				.val()
+																		+ '</td><td class="quantity">'
+																		+ $(
+																				"#quantity")
+																				.val()
+																		+ '</td><td><a class="deleteButton" style="background-color: red; color:white; padding: 2px 5px;">Delete</a></tr>');
+												$('.deleteButton').click(
+														function() {
+															$(this).parent('td')
+																	.parent('tr')
+																	.remove();
+														});
+												$('#newItem input').val('');
+											}
+										});
+						$('#submitButton')
+								.click(
+										function() {
+											$('#orderSummaryTable tbody tr')
+													.remove();
+											var order = {
+												orderId : $('#orderId').val(),
+												customer : {
+													firstName : $('#firstName')
+															.val(),
+													lastName : $('#lastName')
+															.val(),
+													address : $('#address')
+															.val()
+												},
+												orderItems : []
+											}
+											$('#orderItemTable tbody tr')
+													.each(
+															function() {
+																var manufacturer = $(
+																		'td.manufacturer',
+																		this)[0].innerHTML;
+																var name = $(
+																		'td.name',
+																		this)[0].innerHTML;
+																var productId = $(
+																		'td.productId',
+																		this)[0].innerHTML;
+																var quantity = $(
+																		'td.quantity',
+																		this)[0].innerHTML;
+																order.orderItems
+																		.push({
+																			"item" : {
+																				"manufacturer" : manufacturer,
+																				"name" : name,
+																				"productId" : productId,
+																				"quantity" : quantity
+																			}
+																		})
+
+															})
+											var request = JSON.stringify(order);
+											mule.rpc("/orders/request",
+													request, orderResponse);
+										});
+						$('#resetButton').click(function() {
+							$('#main input').val('');
+							$('#orderItemTable tbody tr').remove();
+						});
+						function manufacturersResponse(message, error) {
+							if (error == null) {
+								alert(message.data);
+							} else {
+								alert(error.data);
+							}
+						}
+						function orderResponse(message, error) {
+							if (error == null) {
+								orderSummary = JSON.parse(message.data);
+								for (i = 0; i < orderSummary.orderItems.length; i++) {
+									var item = orderSummary.orderItems[i].item;
+									$('#orderSummaryTable tbody')
+											.append(
+													'<tr><td>'
+															+ item.name
+															+ '</td><td>'
+															+ item.productId
+															+ '</td><td style="text-align: right;">'
+															+ item.quantity
+															+ '</td><td>'
+															+ item.purchaseReceipt.status
+															+ '</td><td style="text-align: right;">'
+															+ item.purchaseReceipt.totalPrice
+															+ '</td></tr>');
+								}
+								tabs.tabs('enable', 1);
+								tabs.tabs('select', 1);
+							} else {
+								alert(error.data);
+							}
+						}
+						$("#soapSubmitButton").click(
+								function() {
+									mule.rpc('/orders/soap', $("#soapRequest")
+											.val(), function(data) {
+										$('#soapResponse').val(data.data);
+									});
+								});
+						$("#manufacturers").click(function() {
+							mule.rpc("/orders/manufacturers", "",
+									manufacturersResponse);
+						});
+
+					});
+</script>
+</head>
+<body>
+<h1>Mule Order Processing</h1>
+<div id="tabs">
+<ul>
+	<li><a href="#form"><span>Form</span></a></li>
+	<li><a href="#confirmation"><span>Confirmation</span></a></li>
+	<li><a href="#soap"><span>Soap</span></a></li>
+</ul>
+<div id="form">
+<div id="summary" style="float: right; width: 50%; padding: 1em;">
+<a id="submitButton" class="button" style="float: right;">Submit
+&gt;&gt;</a> <a id="resetButton" class="button" style="float: right :">Reset</a>
+<p>Order Summary</p>
+<table style="width: 100%; text-align: left;" id='orderItemTable'>
+	<thead>
+		<tr>
+			<th>Manufacturer</th>
+			<th>Name</th>
+			<th>Product Id</th>
+			<th>Quantity</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody />
+</table>
+</div>
+<div id="main" style="padding: 1em;">
+<p>Customer Details</p>
+<table width='40%'>
+	<tr>
+		<td class="title">Order Id</td>
+		<td class="field"><input size="10" maxlength="16" name="orderId"
+			id="orderId" type="text" /></td>
+	</tr>
+	<tr>
+		<td class="title">First Name:</td>
+		<td class="field"><input size="30" name="firstName"
+			id="firstName" type="text" /></td>
+	</tr>
+	<tr>
+		<td class="title">Last Name:</td>
+		<td class="field"><input size="30" maxlength="100"
+			name="lastName" id="lastName" type="text" /></td>
+	</tr>
+	<tr>
+		<td class="title">Address:</td>
+		<td class="field"><input size="30" maxlength="100" name="address"
+			id="address" type="text" /></td>
+	</tr>
+</table>
+<div id="newItem" style="width: 50%;">
+<p>Add a new Order Item</p>
+<table>
+	<tr>
+		<td class="title">Manufacturer:</td>
+		<td class="field"><select id="manufacturer">
+			<option value="Samsung">Samsung</option>
+			<option value="Philips">Philips</option>
+			<option value="Sony">Sony</option>
+		</select></td>
+	</tr>
+	<tr>
+		<td class="title">Name:</td>
+		<td class="field"><input size="30" maxlength="100"
+			name="productName" id="productName" type="text" /></td>
+	</tr>
+	<tr>
+		<td class="title">Product Id:</td>
+		<td class="field"><input size="10" maxlength="100"
+			name="productId" id="productId" type="text" /></td>
+	</tr>
+	<tr>
+		<td class="title">Quantity:</td>
+		<td class="field"><input size="10" maxlength="100"
+			name="quantity" id="quantity" type="text" /></td>
+	</tr>
+
+</table>
+<a id="addItemButton" class="button">Add</a></div>
+</div>
+</div>
+<div id="confirmation">
+<p>Order Summary</p>
+<table style="width: 100%; text-align: left;" id="orderSummaryTable">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Product Id</th>
+			<th style="text-align: right;">Quantity</th>
+			<th>Status</th>
+			<th style="text-align: right;">Price</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- Order summary rows will be inserted here -->
+	</tbody>
+</table>
+</div>
+<div id="soap">
+<div id="response" style="float: right; width: 50%;">
+<h2>Response</h2>
+<textarea id="soapResponse" style="width: 100%; height: 300px;" >
+</textarea>
+</div>
+<div id="request" style="width: 50%;">
+<h2>Request</h2>
+<textarea id="soapRequest" style="width: 100%; height: 300px;">
+<soapenv:Envelope
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:ord="http://orders.se.mulesoft.com/">
+   <soapenv:Header />
+   <soapenv:Body>
+      <ord:processOrder>
+         <order>
+            <orderId>12</orderId>
+            <customer>
+               <address>x</address>
+               <firstName>x</firstName>
+               <lastName>?</lastName>
+            </customer>
+            <orderItems>
+               <item>
+                  <manufacturer>Philips</manufacturer>
+                  <name>s-1</name>
+                  <productId>33333</productId>
+                  <quantity>40</quantity>
+               </item>
+               <item>
+                  <manufacturer>Philips</manufacturer>
+                  <name>i-2</name>
+                  <productId>1234</productId>
+                  <quantity>4</quantity>
+               </item>
+               <item>
+                  <manufacturer>Philips</manufacturer>
+                  <name>s-3</name>
+                  <productId>3</productId>
+                  <quantity>4</quantity>
+               </item>
+               <item>
+                  <manufacturer>Philips</manufacturer>
+                  <name>i-4</name>
+                  <productId>4</productId>
+                  <quantity>4</quantity>
+               </item>
+            </orderItems>
+         </order>
+      </ord:processOrder>
+   </soapenv:Body>
+</soapenv:Envelope>
+</textarea> 
+<a id="soapSubmitButton" class="button">Submit &gt;&gt;</a>
+</div>
+</div>
+</div>
+</body>
+</html>

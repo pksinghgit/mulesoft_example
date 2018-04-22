@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:context="http://www.springframework.org/schema/context" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd">
+    <apikit:config consoleEnabled="true" consolePath="console" doc:name="Router" name="leagues-config" raml="leagues.raml">
+        <apikit:flow-mapping action="get" flow-ref="get:/teams:leagues-config" resource="/teams"/>
+        <apikit:flow-mapping action="post" flow-ref="post:/teams:leagues-config" resource="/teams"/>
+        <apikit:flow-mapping action="get" flow-ref="get:/teams/{teamId}:leagues-config" resource="/teams/{teamId}"/>
+        <apikit:flow-mapping action="put" flow-ref="put:/teams/{teamId}:leagues-config" resource="/teams/{teamId}"/>
+        <apikit:flow-mapping action="delete" flow-ref="delete:/teams/{teamId}:leagues-config" resource="/teams/{teamId}"/>
+        <apikit:flow-mapping action="get" flow-ref="get:/positions:leagues-config" resource="/positions"/>
+        <apikit:flow-mapping action="get" flow-ref="get:/fixture:leagues-config" resource="/fixture"/>
+        <apikit:flow-mapping action="get" flow-ref="get:/fixture/{homeTeamId}/{awayTeamId}:leagues-config" resource="/fixture/{homeTeamId}/{awayTeamId}"/>
+        <apikit:flow-mapping action="put" flow-ref="put:/fixture/{homeTeamId}/{awayTeamId}:leagues-config" resource="/fixture/{homeTeamId}/{awayTeamId}"/>
+    </apikit:config>
+    <spring:beans>
+        <spring:bean class="org.mule.examples.leagues.LeagueAPI" id="league-api" init-method="initialize"/>
+    </spring:beans>
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="httpConnector" port="${http.port}"/>
+    <apikit:mapping-exception-strategy name="leagues-apiKitGlobalExceptionMapping">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException"/>
+            <set-property doc:name="Set Content-Type" propertyName="Content-Type" value="application/json"/>
+            <set-payload doc:name="Set Payload to message" value="{ &quot;message&quot;: &quot;Resource not found&quot; }"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="405">
+            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException"/>
+            <set-property doc:name="Set Content-Type" propertyName="Content-Type" value="application/json"/>
+            <set-payload doc:name="Set Payload to message" value="{ &quot;message&quot;: &quot;Method not allowed&quot; }"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="415">
+            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException"/>
+            <set-property doc:name="Set Content-Type" propertyName="Content-Type" value="application/json"/>
+            <set-payload doc:name="Set Payload to message" value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="406">
+            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException"/>
+            <set-property doc:name="Set Content-Type" propertyName="Content-Type" value="application/json"/>
+            <set-payload doc:name="Set Payload to message" value="{ &quot;message&quot;: &quot;Not acceptable&quot; }"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="400">
+            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException"/>
+            <set-property doc:name="Set Content-Type" propertyName="Content-Type" value="application/json"/>
+            <set-payload doc:name="Set Payload to message" value="{ &quot;message&quot;: &quot;Bad request&quot; }"/>
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+    <flow name="main">
+        <http:listener config-ref="httpConnector" doc:name="Recieve HTTP request" path="/api/*"/>
+        <apikit:router config-ref="leagues-config" doc:name="APIkit Router"/>
+        <exception-strategy doc:name="Reference Exception Strategy" ref="leagues-apiKitGlobalExceptionMapping"/>
+    </flow>
+    <flow name="get:/teams:leagues-config">
+        <expression-component doc:name="Call API"><![CDATA[payload = app.registry['league-api'].getTeams(message.inboundProperties['http.query.params'].city);]]></expression-component>
+    </flow>
+    <flow name="get:/teams/{teamId}:leagues-config">
+        <expression-component doc:name="Call API"><![CDATA[payload = app.registry['league-api'].getTeam(teamId);]]></expression-component>
+    </flow>
+    <flow name="delete:/teams/{teamId}:leagues-config">
+        <expression-component doc:name="Call API"><![CDATA[app.registry['league-api'].deleteTeam(teamId);]]></expression-component>
+    </flow>
+    <flow name="put:/teams/{teamId}:leagues-config">
+        <custom-transformer class="org.mule.module.apikit.transform.PayloadNormalizerTransformer" doc:name="Java"/>
+        <expression-component doc:name="Call API"><![CDATA[payload = app.registry['league-api'].updateTeam(teamId, payload);]]></expression-component>
+        <set-payload doc:name="Set Payload to Null Payload" value="#[NullPayload.getInstance()]"/>
+    </flow>
+    <flow name="get:/positions:leagues-config">
+        <expression-component doc:name="Call API"><![CDATA[payload = app.registry['league-api'].getPositions();]]></expression-component>
+    </flow>
+    <flow name="get:/fixture:leagues-config">
+        <expression-component doc:name="Call API"><![CDATA[payload = app.registry['league-api'].getFixture();]]></expression-component>
+    </flow>
+    <flow name="get:/fixture/{homeTeamId}/{awayTeamId}:leagues-config">
+        <expression-component doc:name="Call API"><![CDATA[payload = app.registry['league-api'].getMatch(homeTeamId, awayTeamId);]]></expression-component>
+    </flow>
+    <flow name="put:/fixture/{homeTeamId}/{awayTeamId}:leagues-config">
+        <custom-transformer class="org.mule.module.apikit.transform.PayloadNormalizerTransformer" doc:name="Java"/>
+        <expression-component doc:name="Call API"><![CDATA[app.registry['league-api'].updateScore(homeTeamId, awayTeamId, payload);]]></expression-component>
+        <set-payload doc:name="Set Payload to Null Payload" value="#[NullPayload.getInstance()]"/>
+    </flow>
+    <flow name="post:/teams:leagues-config">
+        <custom-transformer class="org.mule.module.apikit.transform.PayloadNormalizerTransformer" doc:name="Java"/>
+        <set-property doc:name="Property" propertyName="Location" value="http://localhost:${http.port}/api/teams/#[payload.id]"/>
+        <expression-component doc:name="Call API"><![CDATA[app.registry['league-api'].addTeam(payload);]]></expression-component>
+        <set-payload doc:name="Set Payload to Null Payload" value="#[NullPayload.getInstance()]"/>
+    </flow>
+</mule>

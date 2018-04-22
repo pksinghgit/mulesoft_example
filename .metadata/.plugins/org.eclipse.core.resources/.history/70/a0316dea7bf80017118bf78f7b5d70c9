@@ -1,0 +1,96 @@
+#%RAML 1.0
+baseUri: https://mocksvc.mulesoft.com/mocks/1fd8deb4-d52c-41b5-8ba7-c01786ed069a
+title: product API
+version: v1.0
+
+/products:
+  get:
+    responses: 
+      200:
+        body: 
+          application/json:
+            example: |
+              {
+              "products":{
+              "name":"laptop",
+              "cost":"200000",
+              "model":"hp 2020"
+                  }
+              }
+            
+  post:
+    body: 
+      application/json:
+        description: Add product
+        example: |
+          {
+          "products":{
+          "name":"laptop",
+          "cost":"200000",
+          "model":"hp 2020"
+              }
+          }
+    responses: 
+      200:
+        body: 
+          application/json:
+            example: |
+              {
+              "message":"Product added successfully."
+              }
+  /{productId}:
+    get:
+      queryParameters: 
+        productId:
+          displayName: ProductId
+          example: 12
+          type: number
+          required: true
+          description: Product Id entered by user
+      responses: 
+        200:
+          body: 
+            application/json: 
+              example: |
+                {
+                "message" : "Product Deleted Succesfully."
+                }
+                }
+              
+          
+    put:
+      body: 
+        application/json:
+          example: |
+            {
+                "product":{
+                "name":"laptop",
+                "cost":"200000",
+                "model":"hp 2020"
+                }
+            }
+      responses: 
+        200:
+          body: 
+            application/json:
+              example: |
+                {
+                "message" : "Product added successfully."
+                }
+    delete:
+      body: 
+        application/json:
+          example: |
+            {
+            "id":"12"
+            }
+      responses: 
+        200:
+          body: 
+            application/json:
+              example: |
+                {
+                "message" : "Product Deleted Susccesfully."
+                }
+
+

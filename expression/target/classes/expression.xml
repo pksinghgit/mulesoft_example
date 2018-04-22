@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8083" doc:name="HTTP Listener Configuration"/>
+    <flow name="expressionFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/test" doc:name="HTTP"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="42daf8ac-fef0-497d-bc26-24f9599da426">
+            <dw:input-payload doc:sample="C:\Users\kavya\Desktop\Mulesoft\example\test.xml" mimeType="application/xml"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+ 
+%output application/json
+ 
+---
+//payload.employees map ((e,empindex) -> {
+   //job:(e.*job map ((j,jobindex) -> {
+     //  id : e.id,
+       //name: e.name,
+       //dob: e.name,
+       //(end_date:j.end_date) when (j.end_date?),
+       //title:j.title,
+       //start_date:j.start_date
+   //}))
+//})
+
+payload.employees map ((e,empIndex) -> {
+	job:(e.*job map (j,jobIndex) -> {
+		id:e.id,
+		name:e.name,
+		dob:e.dob,
+		(end_date:j.end_date)when (j.end_date?),
+		title:j.title,
+		start_date:j.start_date 
+	})
+})
+
+
+
+]]></dw:set-payload>
+        </dw:transform-message>
+        <set-payload value="#[payload.username]
+#[payload.age]" doc:name="Set Payload"/>
+    </flow>
+    <flow name="expressionFlow1">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/xpath" doc:name="HTTP"/>
+        <set-payload value=" #[xpath3('/user/username').text]" doc:name="Set Payload"/>
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <object-to-string-transformer doc:name="Object to String"/>
+    </flow>
+</mule>

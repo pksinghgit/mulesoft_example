@@ -1,0 +1,19 @@
+form: FLATFILE
+
+name: 'flatFile'
+
+segments:
+
+- id: 'Book'
+
+  tag: '1'
+
+  name: Book Collection
+
+  values:
+
+  - { name: 'title', type: String, length: 32 }
+
+  - { name: 'author', type: String, length: 32 }
+
+  - { name: 'amount', type: Integer, length: 5 }

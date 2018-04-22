@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:context="http://www.springframework.org/schema/context" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:mock="http://www.mulesoft.org/schema/mule/mock" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:sap="http://www.mulesoft.org/schema/mule/sap" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/current/mule-sap.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/mock http://www.mulesoft.org/schema/mule/mock/current/mule-mock.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+	<context:property-placeholder location="mule.test.properties"/>
+    <munit:config doc:name="Munit configuration" mock-connectors="false" mock-inbounds="false"/>
+    <spring:beans>
+        <spring:import resource="classpath:sap-api.xml"/>
+    </spring:beans>
+    <http:request-config name="HTTP_Request_Configuration" host="localhost" port="${http.port}" basePath="/api" doc:name="HTTP Request Configuration">
+        <http:raml-api-configuration location="sap-api.raml"/>
+    </http:request-config>
+    <munit:test name="sap-api-test-suite-get:/salesOrders:sap-api-configTest" description="Test" >
+    	<http:request config-ref="HTTP_Request_Configuration" path="/salesOrders" method="GET" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-not-null message="Payload is null!" doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="sap-api-test-suite-get:/materials:sap-api-configTest" description="Test" >
+    	<http:request responseTimeout="1000000" config-ref="HTTP_Request_Configuration" path="/materials?from_date=2015-07-13T12:29:44Z" method="GET" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-not-null message="Payload is null!" doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="sap-api-test-suite-get:/customers:sap-api-configTComplexTest" description="MUnit Test">
+        <set-variable variableName="name" value="#[&quot;SapTest&quot; + (int)(Math.random()*1000)]" doc:name="Generate random name"/>
+        <flow-ref name="prepareSAPCustomer" doc:name="Call prepareSAPCustomer"/>
+        <http:request config-ref="HTTP_Request_Configuration" path="/customers?name=#[flowVars.name]" method="GET" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <logger message="Response from server: #[payload]" level="INFO" doc:name="Log the response"/>
+        <munit:assert-true message="The payload should contain Customer name data!" condition="#[payload.contains(&quot;\&quot;FIELDVALUE\&quot;: \&quot;&quot;+ flowVars.name + &quot;*&quot; +&quot;\&quot;&quot;)]" doc:name="Assert True"/>
+        <flow-ref name="deleteSAPCustomer" doc:name="Call deleteSAPCustomer"/>
+    </munit:test>
+    <sub-flow name="prepareSAPCustomer">
+        <logger message="Creating new Customer in SAP with name - #[flowVars.name]" level="INFO" doc:name="Log the new Customer creation"/>
+        <dw:transform-message doc:name="Prepare data for new Customer">
+            <dw:input-variable doc:sample="string.dwl" variableName="name"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+ %output application/xml 
+---
+ { 
+ 	"BAPI_CUSTOMER_CREATEFROMDATA1": { 
+ 		import: { 
+ 			"PI_COPYREFERENCE": { 
+ 				SALESORG: "3020", 
+ 				"DISTR_CHAN": "30", 
+ 				DIVISION: "00", 
+ 				"REF_CUSTMR": "1000001150" 
+ 			}, 
+ 			"PI_PERSONALDATA": { 
+ 				FIRSTNAME: flowVars.name, 
+ 				LASTNAME: flowVars.name, 
+ 				CITY: "Parsippany", 
+ 				"POSTL_COD1": "07054", 
+ 				COUNTRY: "US", 
+ 				"LANGU_P": "EN", 
+ 				CURRENCY: "EUR" 
+ 			} 
+ 		} 
+ 	} 
+ }]]></dw:set-payload> 
+         </dw:transform-message> 
+         <sap:outbound-endpoint connector-ref="SapConnector" functionName="BAPI_CUSTOMER_CREATEFROMDATA1" xmlVersion="2" responseTimeout="10000" doc:name="Create Customer"  type="function"/>
+ 
+     </sub-flow> 
+     <sub-flow name="deleteSAPCustomer">
+
+        <sap:outbound-endpoint xmlVersion="2" responseTimeout="10000" doc:name="Get Customer" connector-ref="SapConnector" functionName="BAPI_CUSTOMER_FIND" type="function" exchange-pattern="request-response">
+            <sap:definition><![CDATA[<BAPI_CUSTOMER_FIND>
+	<import>
+		<MAX_CNT>0</MAX_CNT>
+		<PL_HOLD>X</PL_HOLD>
+	</import>
+  	<tables>
+		<SELOPT_TAB>
+			<row id="0">
+				<TABNAME>KNA1</TABNAME>
+				<FIELDNAME>NAME1</FIELDNAME>
+				<FIELDVALUE>#[org.apache.commons.lang3.StringEscapeUtils.escapeXml(flowVars.name + " " + flowVars.name)]</FIELDVALUE>
+			</row>
+		</SELOPT_TAB>
+	</tables>
+</BAPI_CUSTOMER_FIND>]]></sap:definition>
+        </sap:outbound-endpoint>
+
+        
+         <dw:transform-message doc:name="Transform BAPI_CUSTOMER_FIND to CustomerNumber" metadata:id="4a68cd34-99f9-4328-af97-aef95d161aa3">
+            <dw:input-payload doc:sample="BAPI_CUSTOMER_FIND_1.xml"/> 
+             <dw:set-payload><![CDATA[%dw 1.0 
+ %output application/java
+---
+{ 
+ 	CustomerNumber: payload.BAPI_CUSTOMER_FIND.tables.RESULT_TAB.row.CUSTOMER 
+	when (payload.BAPI_CUSTOMER_FIND.tables.RESULT_TAB.row != null) otherwise null
+}]]></dw:set-payload> 
+         </dw:transform-message>
+        <logger message="Customer number for delete: #[payload.CustomerNumber]" level="INFO" doc:name="Log the CustomerNumber for deletion"/>
+         
+         <sap:outbound-endpoint exchange-pattern="request-response"
+				 type="function" functionName="ZCAFM_CUSTOMER_DELETE"
+				xmlVersion="2" evaluateFunctionResponse="true"
+				responseTimeout="10000" doc:name="Delete Customer">
+				<sap:definition><![CDATA[<ZCAFM_CUSTOMER_DELETE type="function">
+	<import>
+			<PI_CUSTOMER type="field">#[payload.CustomerNumber]</PI_CUSTOMER>
+	</import>
+</ZCAFM_CUSTOMER_DELETE>
+]]></sap:definition>
+			</sap:outbound-endpoint>
+ 
+     </sub-flow>
+
+</mule>

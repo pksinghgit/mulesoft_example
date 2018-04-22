@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:context="http://www.springframework.org/schema/context" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+
+    <sfdc:config doc:name="Salesforce" name="Salesforce" password="${sfdc.password}" securityToken="${sfdc.securityToken}" username="${sfdc.user}">
+        <sfdc:connection-pooling-profile exhaustedAction="WHEN_EXHAUSTED_GROW" initialisationPolicy="INITIALISE_ONE"/>
+    </sfdc:config>
+
+    <flow doc:description="Upload a csv file of contact information into Salesforce as new contacts." name="Contacts_to_SFDC">
+        <file:inbound-endpoint doc:name="Poll files" metadata:id="d1092c1a-dfc4-4147-a2a0-a7238f229328" moveToDirectory="src/main/resources/output" path="src/main/resources/input" pollingFrequency="10000" responseTimeout="10000"/>
+        <dw:transform-message doc:name="Map CSV to Contacts" metadata:id="e7dcaea6-608a-4256-986b-f07fb9c1b9e9">
+            <dw:input-payload/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload map {
+
+	FirstName: $.firstname,
+	LastName : $.surname,
+	Email : $.email,
+	Phone : $.phone    
+}]]></dw:set-payload>
+        </dw:transform-message>
+
+        <sfdc:create config-ref="Salesforce" doc:name="Create Salesforce Contact" type="Contact">
+            <sfdc:objects ref="#[payload]"/>
+        </sfdc:create>        
+    </flow>
+</mule>

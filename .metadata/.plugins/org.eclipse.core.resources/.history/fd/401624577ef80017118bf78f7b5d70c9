@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <http:listener-config name="api-httpListenerConfig" host="0.0.0.0" port="8082" doc:name="HTTP Listener Configuration"/>
+    <apikit:config name="api-config" raml="api.raml" consoleEnabled="false" doc:name="Router"/>
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="product" password="product" database="product" doc:name="MySQL Configuration"/>
+    <flow name="api-main">
+        <http:listener config-ref="api-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
+        <apikit:router config-ref="api-config" doc:name="APIkit Router"/>
+        <exception-strategy ref="api-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="api-console">
+        <http:listener config-ref="api-httpListenerConfig" path="/console/*" doc:name="HTTP"/>
+        <apikit:console config-ref="api-config" doc:name="APIkit Console"/>
+    </flow>
+    <flow name="put:/products/{productId}:api-config">
+        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+        <db:update config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[UPDATE `product`.`product` SET `name` = #[json:name], `model` = #[json:model], `price` = #[json:price]'20001' WHERE `product`.`id` = #[message.inboundProperties['http.uri.params'].productId];]]></db:parameterized-query>
+        </db:update>
+        <set-payload value="{&#xA;&quot;message&quot; : &quot;Product added successfully.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="delete:/products/{productId}:api-config">
+        <db:delete config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[DELETE FROM `product`.`product` WHERE `product`.`id` = #[message.inboundProperties['http.uri.params'].productId]]]></db:parameterized-query>
+        </db:delete>
+        <set-payload value="{
+&quot;message&quot; : &quot;Product Deleted Susccesfully.&quot;
+}" doc:name="Set Payload"/>
+
+    </flow>
+    <flow name="get:/products:api-config">
+        <set-payload value="{&#xA;&quot;products&quot;:{&#xA;&quot;name&quot;:&quot;laptop&quot;,&#xA;&quot;cost&quot;:&quot;200000&quot;,&#xA;&quot;model&quot;:&quot;hp 2020&quot;&#xA;    }&#xA;}" doc:name="Set Payload"/>
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT * FROM `product`]]></db:parameterized-query>
+        </db:select>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+    </flow>
+    <flow name="get:/products/{productId}:api-config">
+        <flow-ref name="get:/products/{productId}" doc:name="Flow Reference"/>
+
+    </flow>
+    <flow name="get:/products/{productId}">
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[SELECT `id`, `name`, `model`, `price` FROM `product` WHERE id=#[message.inboundProperties['http.uri.params'].productId]]]></db:parameterized-query>
+        </db:select>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+    </flow>
+    <flow name="post:/products:api-config">
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <db:insert config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[INSERT INTO `product`.`product` (`name`, `model`, `price`) VALUES (#[json:name], #[json:model], #[json:price]);]]></db:parameterized-query>
+        </db:insert>
+        <set-payload value="{
+&quot;message&quot;:&quot;Product added successfully.&quot;
+}" doc:name="Set Payload"/>
+
+    </flow>
+    <apikit:mapping-exception-strategy name="api-apiKitGlobalExceptionMapping">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="405">
+            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Method not allowed&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="415">
+            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="406">
+            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="400">
+            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+</mule>

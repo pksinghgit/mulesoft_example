@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <http:request-config name="HTTP_Request_Configuration" host="ilt.mulesoft-training.com" port="80" doc:name="HTTP Request Configuration"/>
+    <flow name="85-rest-webservice-consumerFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/rest" doc:name="HTTP"/>
+        <set-variable variableName="destination" value="#[message.inboundProperties['http.query.params'].destination]" doc:name="Variable"/>
+        <http:request config-ref="HTTP_Request_Configuration" path="/essentials/united/flights/{destination}" method="GET" doc:name="HTTP">
+            <http:request-builder>
+                <http:uri-param paramName="destination" value="#[flowVars.destination]"/>
+            </http:request-builder>
+        </http:request>
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+	flights:payload
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+</mule>

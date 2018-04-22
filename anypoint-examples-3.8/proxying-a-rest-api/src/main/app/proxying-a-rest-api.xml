@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:https="http://www.mulesoft.org/schema/mule/https" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tcp="http://www.mulesoft.org/schema/mule/tcp" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+    
+    <http:request-config doc:name="HTTP Request Configuration" host="api.box.com" name="HTTP_Request_Configuration" port="443" protocol="HTTPS">        
+        <tls:context>
+            <tls:key-store keyPassword="${keystore.password}" password="${keystore.key}" path="keystore.jks"/>
+        </tls:context>
+    </http:request-config>
+    
+	<flow name="rest-api-proxy">
+		<http:listener config-ref="HTTP_Listener_Configuration" doc:name="Receive HTTP requests from apps" path="/*"/>
+		<flow-ref doc:name="Copy HTTP Headers" name="copy-headers"/>
+		<http:request config-ref="HTTP_Request_Configuration" doc:name="Send requests to API" method="#[message.inboundProperties['http.method']]" parseResponse="false" path="#[message.inboundProperties['http.request.path']]">
+			<http:request-builder>
+				<http:query-params expression="#[message.inboundProperties['http.query.params']]"/>
+			</http:request-builder>
+		</http:request>
+		<flow-ref doc:name="Copy HTTP Headers" name="copy-headers"/>
+	</flow>
+
+	<sub-flow name="copy-headers">
+		<copy-properties doc:name="Copy HTTP headers" propertyName="*"/>
+		<remove-property doc:name="Remove host property" propertyName="Host"/>
+		<remove-property doc:name="Remove Content Length Header" propertyName="Content-Length"/>
+		<remove-property doc:name="Remove HTTP synthetic properties" propertyName="http.*"/>
+		<remove-property doc:name="Remove MULE properties" propertyName="MULE_*"/>
+		<remove-property doc:name="Remove Connection Header" propertyName="Connection"/>
+		<remove-property doc:name="Remove Transfer-encoding Header" propertyName="transfer-encoding"/>
+	</sub-flow>
+</mule>

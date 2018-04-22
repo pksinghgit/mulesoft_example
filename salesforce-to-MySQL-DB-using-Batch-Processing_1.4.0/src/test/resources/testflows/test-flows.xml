@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.0" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd  http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd  http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd  http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <sub-flow doc:name="insertSalesforceContactSubFlow" name="insertSalesforceContactSubFlow">
+        <sfdc:upsert config-ref="Salesforce" doc:name="Insert Account" externalIdFieldName="Id" type="Contact">
+     		<sfdc:objects>
+                <sfdc:object>
+                    <sfdc:inner-object key="LastName">#[payload.LastName]</sfdc:inner-object>
+                    <sfdc:inner-object key="Email">#[payload.Email]</sfdc:inner-object>                    
+                </sfdc:object>
+	        </sfdc:objects> 
+        </sfdc:upsert>
+    </sub-flow>
+    <sub-flow doc:name="deleteContactFromDB" name="deleteContactFromDB">
+        <db:delete config-ref="MySQL_Configuration" doc:name="Database">
+            <db:dynamic-query><![CDATA[delete from contact where last_name = '#[payload.LastName]']]></db:dynamic-query>
+
+        </db:delete>
+    </sub-flow>    
+    <sub-flow doc:name="selectContactFromDB" name="selectContactFromDB">
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:dynamic-query><![CDATA[select first_name, last_name, email from contact where last_name = '#[payload.LastName]']]></db:dynamic-query>
+
+        </db:select>
+    </sub-flow>
+	<sub-flow doc:name="deleteContactFromSalesforce" name="deleteContactFromSalesforce">
+		<sfdc:delete config-ref="Salesforce" doc:name="Salesforce">
+			<sfdc:ids ref="#[payload]"/>
+		</sfdc:delete>
+		<logger doc:name="Logger" level="INFO" message="Remove Contact from Salesforce result: #[payload]"/>
+	</sub-flow>
+</mule>

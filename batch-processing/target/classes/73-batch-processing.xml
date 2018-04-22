@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="test" password="test" database="test" doc:name="MySQL Configuration"/>
+    <sfdc:config name="Salesforce__Basic_Authentication" username="pksingh_1@yahoo.com" password="Maharouli@6812" securityToken="4IpBtEyiuJd1wV1Xt32XoqEY" doc:name="Salesforce: Basic Authentication"/>
+    <batch:job name="73-batch-processingBatch">
+        <batch:input>
+            <poll doc:name="Poll">
+                <fixed-frequency-scheduler frequency="10000"/>
+                <watermark variable="maxAccountId" default-expression="0" selector="MAX" selector-expression="#[payload.id]"/>
+                <db:select config-ref="MySQL_Configuration" doc:name="Database">
+                    <db:parameterized-query><![CDATA[select * from account where id > #[flowVars.maxAccountId]]]></db:parameterized-query>
+                </db:select>
+            </poll>
+        </batch:input>
+        <batch:process-records>
+            <batch:step name="duplicate_check_batch_step">
+                <logger message="#[payload.name]" level="INFO" doc:name="Logger"/>
+                <enricher source="#[payload.size() &gt;0]" target="#[recordVars.exist]" doc:name="Message Enricher">
+                    <sfdc:query config-ref="Salesforce__Basic_Authentication" query="dsql:SELECT Name FROM Account WHERE Name = '#[payload.name]'" doc:name="check_duplicate_account"/>
+                </enricher>
+            </batch:step>
+            <batch:step name="Batch_Step" accept-expression="#[!recordVars.exist]">
+                <dw:transform-message doc:name="Transform Message">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+[{
+	Name: payload.name,
+	BillingState: payload.state,
+	BillingCountry: payload.country
+}]]]></dw:set-payload>
+                </dw:transform-message>
+                <sfdc:create config-ref="Salesforce__Basic_Authentication" type="Account" doc:name="Salesforce"/>
+            </batch:step>
+        </batch:process-records>
+        <batch:on-complete>
+            <logger message="Processing Completed" level="INFO" doc:name="Logger"/>
+        </batch:on-complete>
+    </batch:job>
+</mule>

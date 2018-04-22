@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule-project runtimeId="org.mule.tooling.server.3.8.3.ee" schemaVersion="3.5.0.0" xmlns="http://www.mulesoft.com/tooling/project">
+    <name>importing-a-CSV-file-into-Mongo-DB_1.4.1-SNAPSHOT</name>
+    <description/>
+    <muleExtension name="Mongo DB" qualifier="org.mule.tooling.ui.contribution.mongo.3.6.0"/>
+</mule-project>

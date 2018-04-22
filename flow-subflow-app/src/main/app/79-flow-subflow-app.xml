@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <http:request-config name="HTTP_Request_Configuration" host="localhost" port="8083" doc:name="HTTP Request Configuration"/>
+    <flow name="Flow1">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/flow_subflow" doc:name="HTTP"/>
+        <set-variable variableName="flow_variable" value="#[message.inboundProperties['http.query.params'].flow_variable]" doc:name="flow_variable"/>
+        <set-session-variable variableName="sessionVariable" value="#[message.inboundProperties['http.query.params'].flow_variable]" doc:name="Session Variable"/>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <vm:outbound-endpoint exchange-pattern="request-response" path="vm_flow2" doc:name="VM"/>
+    </flow>
+    <sub-flow name="sub_flow">
+        <vm:outbound-endpoint exchange-pattern="one-way" path="vm_subflow" doc:name="subflow"/>
+        <set-payload value="sub flow
+session_variable===#[sessionVars.flow_variable],
+flowVariable===#[flowVars.flow_variable]" doc:name="Set Payload"/>
+    </sub-flow>
+    <flow name="Flow2">
+        <vm:inbound-endpoint exchange-pattern="request-response" path="vm_flow2" doc:name="VM"/>
+        <set-payload value="flow variable==#[flowVars.flow_variable];
+session varibale==#[sessionVars.sessionVariable];" doc:name="Set Payload"/>
+    </flow>
+</mule>

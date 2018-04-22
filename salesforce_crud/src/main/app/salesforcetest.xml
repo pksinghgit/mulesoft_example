@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <sfdc:config name="Salesforce__Basic_Authentication" username="pksingh_1@yahoo.com" password="Maharouli@6812" securityToken="4IpBtEyiuJd1wV1Xt32XoqEY" doc:name="Salesforce: Basic Authentication"/>
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="test" password="test" database="test" doc:name="MySQL Configuration"/>
+    <flow name="salesforcetestFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/salesforcetest" doc:name="HTTP"/>
+        <sfdc:query config-ref="Salesforce__Basic_Authentication" query="dsql:SELECT BillingCity,BillingCountry,BillingPostalCode,BillingState,BillingStreet,Id,Name FROM Account ORDER BY Id ASC" doc:name="Salesforce"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="a42af37d-9fab-4b2f-9fca-b50b45230083">
+            <dw:input-payload doc:sample="C:\Users\kavya\Desktop\Mulesoft\account_example.json" mimeType="application/json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+{
+	account: payload
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="salesforcetestFlow1">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/create" doc:name="HTTP"/>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="3ca618c0-4ad8-450a-b75b-80df4a4cad94">
+            <dw:input-payload mimeType="application/json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+[{
+	Name: payload.Name,
+	BillingCountry: payload.BillingCountry
+}]]]></dw:set-payload>
+        </dw:transform-message>
+        <sfdc:create config-ref="Salesforce__Basic_Authentication" type="Account" doc:name="Salesforce"/>
+    </flow>
+    <flow name="createAccountInLocalDB">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/createRowLocalDB" doc:name="HTTP"/>
+        <json:json-to-xml-transformer doc:name="JSON to XML"/>
+        <splitter expression="#[//Id]" doc:name="Splitter"/>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <expression-component doc:name="Expression"><![CDATA[flowVars.Name=payload.Name;
+flowVars.BillingState=payload.BillingState;
+flowVars.BillingCountry=payload.BillingCountry;
+flowVars.Id=payload.Id;]]></expression-component>
+        <set-payload value="name==flowVars.Name=payload.Name;
+State ====flowVars.BillingState=payload.BillingState;
+country===flowVars.BillingCountry=payload.BillingCountry;
+id===flowVars.Id=payload.Id;" doc:name="Set Payload"/>
+        <db:insert config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[INSERT INTO `test`.`account` (`id`, `name`, `state`, `country`) VALUES (#[flowVars.Id],
+ #[flowVars.Name],
+ #[flowVars.BillingState],
+ #[flowVars.BillingCountry]);]]></db:parameterized-query>
+        </db:insert>
+        <set-payload value="Data Inserted Successfully with id #[flowVars.Id]" doc:name="Set Payload"/>
+        <exception-strategy ref="salesforcetestChoice_Exception_Strategy" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <choice-exception-strategy name="salesforcetestChoice_Exception_Strategy">
+        <catch-exception-strategy when="#[exception.causedBy(java.sql.SQLException)]" doc:name="Catch Exception Strategy">
+            <set-payload value="Null Pointer Exception==#[exception.cause.message]
+" doc:name="Set Payload"/>
+        </catch-exception-strategy>
+    </choice-exception-strategy>
+    <flow name="salesforcetestFlow2" processingStrategy="synchronous">
+        <poll doc:name="Poll">
+            <fixed-frequency-scheduler frequency="1000" timeUnit="SECONDS"/>
+            <watermark variable="account_id" default-expression="0" selector="MAX" selector-expression="#[payload.id]"/>
+            <db:select config-ref="MySQL_Configuration" doc:name="Database">
+                <db:parameterized-query><![CDATA[select * from account where id > #[flowVars.account_id]]]></db:parameterized-query>
+            </db:select>
+        </poll>
+        <dw:transform-message doc:name="Transform Message">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload map ((payload01 , indexOfPayload01) -> {
+	Name: payload01.name,
+	BillingState: payload01.state,
+	BillingCountry: payload01.country
+})]]></dw:set-payload>
+        </dw:transform-message>
+        <sfdc:create config-ref="Salesforce__Basic_Authentication" type="Account" doc:name="Salesforce"/>
+    </flow>
+</mule>

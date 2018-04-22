@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:amqp="http://www.mulesoft.org/schema/mule/amqp" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/amqp http://www.mulesoft.org/schema/mule/amqp/current/mule-amqp.xsd">
+    <amqp:connector doc:name="AMQP Connector" name="AMQP_Connector" validateConnections="true"/>
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+    <flow name="json-to-rabbitmqFlow">
+        <http:listener allowedMethods="POST" config-ref="HTTP_Listener_Configuration" doc:name="Recieve HTTP request" path="/"/>
+
+        <logger doc:name="Log the message content to be sent" level="INFO" message="payload to be sent: #[new String(payload)]"/>
+        <amqp:outbound-endpoint doc:name="Send to AMQP queue" exchange-pattern="request-response" exchangeName="sales_exchange" queueName="sales_queue" responseTimeout="10000"/>
+    </flow>
+</mule>

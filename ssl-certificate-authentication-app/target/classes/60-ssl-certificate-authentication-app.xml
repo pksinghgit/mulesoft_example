@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" protocol="HTTPS" host="localhost" port="4443" doc:name="HTTP Listener Configuration">
+        <tls:context>
+            <tls:trust-store insecure="true"/>
+            <tls:key-store type="pkcs12" path="localserver" alias="client_cert" keyPassword="admin@123" password="admin@123"/>
+        </tls:context>
+    </http:listener-config>
+    <flow name="60-ssl-certificate-authentication-appFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/ssl" doc:name="HTTP"/>
+        <set-payload value="#['passed']" doc:name="Set Payload"/>
+    </flow>
+</mule>

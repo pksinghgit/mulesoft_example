@@ -1,0 +1,332 @@
+INFO  2018-03-22 09:53:55,160 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'maven_db_jenkins'                      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 09:53:55,659 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising RegistryBroker
+INFO  2018-03-22 09:53:56,006 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Starting discovery of extensions
+INFO  2018-03-22 09:53:56,307 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Discovered 1 extensions
+INFO  2018-03-22 09:53:56,307 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Registering extension validation (version 3.9)
+INFO  2018-03-22 09:53:56,486 [main] org.mule.config.spring.MuleArtifactContext: Refreshing org.mule.config.spring.MuleArtifactContext@72b16078: startup date [Thu Mar 22 09:53:56 IST 2018]; root of context hierarchy
+INFO  2018-03-22 09:53:59,804 [main] org.mule.config.spring.processors.NoDevkitInjectorProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+WARN  2018-03-22 09:54:00,600 [main] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+WARN  2018-03-22 09:54:00,600 [main] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+WARN  2018-03-22 09:54:00,600 [main] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+WARN  2018-03-22 09:54:00,600 [main] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+WARN  2018-03-22 09:54:01,392 [main] org.mule.module.ognl.expression.OgnlExpressionEvaluator: OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+INFO  2018-03-22 09:54:02,204 [main] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\maven_db_jenkins\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\maven_db_jenkins\queue-tx-log\tx2.log
+INFO  2018-03-22 09:54:02,229 [main] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\maven_db_jenkins\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\maven_db_jenkins\queue-xa-tx-log\tx2.log
+INFO  2018-03-22 09:54:02,401 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising model: _muleSystemModel
+INFO  2018-03-22 09:54:02,409 [main] org.mule.construct.FlowConstructLifecycleManager: Initialising flow: maven_db_jenkinsFlow
+INFO  2018-03-22 09:54:02,409 [main] org.mule.exception.DefaultMessagingExceptionStrategy: Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@64942607
+INFO  2018-03-22 09:54:02,460 [main] org.mule.processor.SedaStageLifecycleManager: Initialising service: maven_db_jenkinsFlow.stage1
+INFO  2018-03-22 09:54:02,485 [main] org.mule.construct.FlowConstructLifecycleManager: Initialising flow: maven_db_jenkinsFlow2
+INFO  2018-03-22 09:54:02,485 [main] org.mule.exception.DefaultMessagingExceptionStrategy: Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@343e225a
+INFO  2018-03-22 09:54:02,496 [main] org.mule.processor.SedaStageLifecycleManager: Initialising service: maven_db_jenkinsFlow2.stage1
+INFO  2018-03-22 09:54:02,499 [main] org.mule.construct.FlowConstructLifecycleManager: Initialising flow: maven_db_jenkinsFlow1
+INFO  2018-03-22 09:54:02,499 [main] org.mule.exception.DefaultMessagingExceptionStrategy: Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@79696332
+INFO  2018-03-22 09:54:02,510 [main] org.mule.processor.SedaStageLifecycleManager: Initialising service: maven_db_jenkinsFlow1.stage1
+INFO  2018-03-22 09:54:03,446 [main] org.mule.config.spring.SpringXmlConfigurationBuilder: Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\maven_db_jenkins\maven_db_jenkins.xml'}]"
+INFO  2018-03-22 09:54:03,446 [main] org.mule.config.builders.AutoConfigurationBuilder: Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\maven_db_jenkins\maven_db_jenkins.xml'}]"
+INFO  2018-03-22 09:54:03,456 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'maven_db_jenkins'                          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 09:54:03,463 [main] org.mule.util.queue.QueueXaResourceManager: Starting ResourceManager
+INFO  2018-03-22 09:54:03,463 [main] org.mule.util.queue.QueueXaResourceManager: Started ResourceManager
+INFO  2018-03-22 09:54:03,573 [main] org.mule.module.http.internal.listener.DefaultHttpListenerConfig: Listening for requests on http://0.0.0.0:8081
+INFO  2018-03-22 09:54:03,584 [main] org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 09:54:03,586 [main] org.mule.lifecycle.AbstractLifecycleManager: Starting model: _muleSystemModel
+INFO  2018-03-22 09:54:03,588 [main] org.mule.construct.FlowConstructLifecycleManager: Starting flow: maven_db_jenkinsFlow
+INFO  2018-03-22 09:54:03,590 [main] org.mule.processor.SedaStageLifecycleManager: Starting service: maven_db_jenkinsFlow.stage1
+INFO  2018-03-22 09:54:03,597 [main] org.mule.construct.FlowConstructLifecycleManager: Starting flow: maven_db_jenkinsFlow2
+INFO  2018-03-22 09:54:03,597 [main] org.mule.processor.SedaStageLifecycleManager: Starting service: maven_db_jenkinsFlow2.stage1
+INFO  2018-03-22 09:54:03,601 [main] org.mule.construct.FlowConstructLifecycleManager: Starting flow: maven_db_jenkinsFlow1
+INFO  2018-03-22 09:54:03,601 [main] org.mule.processor.SedaStageLifecycleManager: Starting service: maven_db_jenkinsFlow1.stage1
+INFO  2018-03-22 09:54:03,673 [main] org.mule.module.management.agent.WrapperManagerAgent: This JVM hasn't been launched by the wrapper, the agent will not run.
+INFO  2018-03-22 09:54:03,714 [main] org.mule.DefaultMuleContext: 
+**********************************************************************
+* Application: maven_db_jenkins                                      *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+INFO  2018-03-22 09:59:33,965 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app 'maven_db_jenkins'                          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 09:59:33,972 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Stopping flow: maven_db_jenkinsFlow
+INFO  2018-03-22 09:59:33,975 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Stopping service: maven_db_jenkinsFlow.stage1
+INFO  2018-03-22 09:59:33,994 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Stopping flow: maven_db_jenkinsFlow2
+INFO  2018-03-22 09:59:33,994 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Stopping service: maven_db_jenkinsFlow2.stage1
+INFO  2018-03-22 09:59:34,181 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Stopping flow: maven_db_jenkinsFlow1
+INFO  2018-03-22 09:59:34,181 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Stopping service: maven_db_jenkinsFlow1.stage1
+INFO  2018-03-22 09:59:34,384 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Stopping model: _muleSystemModel
+INFO  2018-03-22 09:59:34,459 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.http.internal.listener.DefaultHttpListenerConfig: Stopped listener on http://0.0.0.0:8081
+INFO  2018-03-22 09:59:34,462 [Mule.app.deployer.monitor.1.thread.1] org.mule.util.queue.QueueXaResourceManager: Stopping ResourceManager
+INFO  2018-03-22 09:59:34,462 [Mule.app.deployer.monitor.1.thread.1] org.mule.util.queue.QueueXaResourceManager: Stopped ResourceManager
+INFO  2018-03-22 09:59:34,477 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app 'maven_db_jenkins'                         +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 09:59:34,478 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Disposing RegistryBroker
+INFO  2018-03-22 09:59:34,480 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Disposing flow: maven_db_jenkinsFlow
+INFO  2018-03-22 09:59:34,481 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Disposing service: maven_db_jenkinsFlow.stage1
+INFO  2018-03-22 09:59:34,484 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Disposing flow: maven_db_jenkinsFlow2
+INFO  2018-03-22 09:59:34,484 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Disposing service: maven_db_jenkinsFlow2.stage1
+INFO  2018-03-22 09:59:34,484 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Disposing flow: maven_db_jenkinsFlow1
+INFO  2018-03-22 09:59:34,484 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Disposing service: maven_db_jenkinsFlow1.stage1
+INFO  2018-03-22 09:59:34,486 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Disposing model: _muleSystemModel
+INFO  2018-03-22 09:59:34,824 [Mule.app.deployer.monitor.1.thread.1] org.mule.config.spring.MuleArtifactContext: Closing org.mule.config.spring.MuleArtifactContext@72b16078: startup date [Thu Mar 22 09:53:56 IST 2018]; root of context hierarchy
+INFO  2018-03-22 09:59:34,835 [Mule.app.deployer.monitor.1.thread.1] org.mule.DefaultMuleContext: 
+**********************************************************************
+* Application "maven_db_jenkins" shut down normally on: 3/22/18      *
+* 9:59 AM                                                            *
+* Up for: 0 days, 0 hours, 5 mins, 31.375 sec                        *
+**********************************************************************
+WARN  2018-03-22 09:59:34,944 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.launcher.artifact.DefaultResourceReleaser: Unable to shutdown MySql's AbandonedConnectionCleanupThread
+java.lang.ClassNotFoundException: com.mysql.jdbc.AbandonedConnectionCleanupThread
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381) ~[?:1.8.0_45]
+	at org.mule.module.launcher.FineGrainedControlClassLoader.findClass(FineGrainedControlClassLoader.java:181) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.MuleApplicationClassLoader.findClass(MuleApplicationClassLoader.java:138) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.FineGrainedControlClassLoader.loadClass(FineGrainedControlClassLoader.java:117) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357) ~[?:1.8.0_45]
+	at org.mule.module.launcher.artifact.DefaultResourceReleaser.shutdownMySqlAbandonedConnectionCleanupThread(DefaultResourceReleaser.java:197) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.DefaultResourceReleaser.doDeregisterDriver(DefaultResourceReleaser.java:133) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.DefaultResourceReleaser.deregisterJdbcDrivers(DefaultResourceReleaser.java:84) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.DefaultResourceReleaser.release(DefaultResourceReleaser.java:38) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.AbstractArtifactClassLoader.dispose(AbstractArtifactClassLoader.java:67) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.application.CompositeApplicationClassLoader.dispose(CompositeApplicationClassLoader.java:285) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.application.DefaultMuleApplication.dispose(DefaultMuleApplication.java:331) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper$1.execute(ArtifactWrapper.java:41) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper.executeWithinArtifactClassLoader(ArtifactWrapper.java:137) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper.dispose(ArtifactWrapper.java:36) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArtifactDeployer.tryToDisposeArtifact(DefaultArtifactDeployer.java:45) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArtifactDeployer.undeploy(DefaultArtifactDeployer.java:27) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.redeploy(DefaultArchiveDeployer.java:488) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.redeploy(DefaultArchiveDeployer.java:437) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.redeployModifiedArtifacts(DeploymentDirectoryWatcher.java:567) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.redeployModifiedApplications(DeploymentDirectoryWatcher.java:544) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.run(DeploymentDirectoryWatcher.java:356) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_45]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) ~[?:1.8.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) ~[?:1.8.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) ~[?:1.8.0_45]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_45]
+	at java.lang.Thread.run(Thread.java:745) [?:1.8.0_45]
+INFO  2018-03-22 09:59:35,221 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'maven_db_jenkins'                      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 09:59:35,248 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Initialising RegistryBroker
+INFO  2018-03-22 09:59:35,259 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.extension.internal.manager.DefaultExtensionManager: Starting discovery of extensions
+INFO  2018-03-22 09:59:35,306 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.extension.internal.manager.DefaultExtensionManager: Discovered 1 extensions
+INFO  2018-03-22 09:59:35,316 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.extension.internal.manager.DefaultExtensionManager: Registering extension validation (version 3.9)
+INFO  2018-03-22 09:59:35,334 [Mule.app.deployer.monitor.1.thread.1] org.mule.config.spring.MuleArtifactContext: Refreshing org.mule.config.spring.MuleArtifactContext@45eca290: startup date [Thu Mar 22 09:59:35 IST 2018]; root of context hierarchy
+WARN  2018-03-22 09:59:36,577 [Mule.app.deployer.monitor.1.thread.1] org.springframework.beans.factory.xml.XmlBeanDefinitionReader: Ignored XML validation warning
+org.xml.sax.SAXParseException: schema_reference.4: Failed to read schema document 'http://www.mulesoft.org/schema/mule/cookbook/current/mule-cookbook.xsd', because 1) could not find the document; 2) the document could not be read; 3) the root element of the document is not <xsd:schema>.
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:203) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.warning(ErrorHandlerWrapper.java:99) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:433) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:347) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.traversers.XSDHandler.reportSchemaErr(XSDHandler.java:4166) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.traversers.XSDHandler.reportSchemaWarning(XSDHandler.java:4157) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.traversers.XSDHandler.getSchemaDocument1(XSDHandler.java:2490) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.traversers.XSDHandler.getSchemaDocument(XSDHandler.java:2187) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.traversers.XSDHandler.parseSchema(XSDHandler.java:573) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaLoader.loadSchema(XMLSchemaLoader.java:617) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.findSchemaGrammar(XMLSchemaValidator.java:2453) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:1773) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:746) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:379) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2786) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:606) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:117) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:510) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:848) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:777) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:243) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:348) ~[?:1.8.0_45]
+	at org.springframework.beans.factory.xml.DefaultDocumentLoader.loadDocument(DefaultDocumentLoader.java:76) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.mule.config.spring.MuleDocumentLoader.loadDocument(MuleDocumentLoader.java:91) ~[mule-module-spring-config-3.9.0.jar:3.9.0]
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.doLoadDocument(XmlBeanDefinitionReader.java:429) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.doLoadBeanDefinitions(XmlBeanDefinitionReader.java:391) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:336) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:304) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:181) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.mule.config.spring.MuleArtifactContext.loadBeanDefinitions(MuleArtifactContext.java:192) ~[mule-module-spring-config-3.9.0.jar:3.9.0]
+	at org.springframework.context.support.AbstractRefreshableApplicationContext.refreshBeanFactory(AbstractRefreshableApplicationContext.java:129) ~[spring-context-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:541) ~[spring-context-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:452) ~[spring-context-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.mule.config.spring.SpringRegistry.doInitialise(SpringRegistry.java:108) ~[mule-module-spring-config-3.9.0.jar:3.9.0]
+	at org.mule.registry.AbstractRegistry.initialise(AbstractRegistry.java:104) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.spring.SpringXmlConfigurationBuilder.createSpringRegistry(SpringXmlConfigurationBuilder.java:177) ~[mule-module-spring-config-3.9.0.jar:3.9.0]
+	at org.mule.config.spring.SpringXmlConfigurationBuilder.doConfigure(SpringXmlConfigurationBuilder.java:100) ~[mule-module-spring-config-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AbstractConfigurationBuilder.configure(AbstractConfigurationBuilder.java:43) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AbstractResourceConfigurationBuilder.configure(AbstractResourceConfigurationBuilder.java:69) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AutoConfigurationBuilder.autoConfigure(AutoConfigurationBuilder.java:102) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AutoConfigurationBuilder.doConfigure(AutoConfigurationBuilder.java:54) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AbstractConfigurationBuilder.configure(AbstractConfigurationBuilder.java:43) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AbstractResourceConfigurationBuilder.configure(AbstractResourceConfigurationBuilder.java:69) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.context.DefaultMuleContextFactory$1.configure(DefaultMuleContextFactory.java:89) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.context.DefaultMuleContextFactory.doCreateMuleContext(DefaultMuleContextFactory.java:222) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.context.DefaultMuleContextFactory.createMuleContext(DefaultMuleContextFactory.java:81) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.application.DefaultMuleApplication.init(DefaultMuleApplication.java:210) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper$2.execute(ArtifactWrapper.java:64) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper.executeWithinArtifactClassLoader(ArtifactWrapper.java:137) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper.init(ArtifactWrapper.java:59) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArtifactDeployer.deploy(DefaultArtifactDeployer.java:72) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.redeploy(DefaultArchiveDeployer.java:501) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.redeploy(DefaultArchiveDeployer.java:437) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.redeployModifiedArtifacts(DeploymentDirectoryWatcher.java:567) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.redeployModifiedApplications(DeploymentDirectoryWatcher.java:544) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.run(DeploymentDirectoryWatcher.java:356) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_45]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) ~[?:1.8.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) ~[?:1.8.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) ~[?:1.8.0_45]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_45]
+	at java.lang.Thread.run(Thread.java:745) [?:1.8.0_45]
+Caused by: java.io.FileNotFoundException: http://www.mulesoft.org/schema/mule/cookbook/current/mule-cookbook.xsd
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1835) ~[?:1.8.0_45]
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1440) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLEntityManager.setupCurrentEntity(XMLEntityManager.java:646) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLVersionDetector.determineDocVersion(XMLVersionDetector.java:189) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.opti.SchemaParsingConfig.parse(SchemaParsingConfig.java:582) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.opti.SchemaParsingConfig.parse(SchemaParsingConfig.java:685) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.opti.SchemaDOMParser.parse(SchemaDOMParser.java:530) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.traversers.XSDHandler.getSchemaDocument(XSDHandler.java:2175) ~[?:1.8.0_45]
+	... 56 more
+INFO  2018-03-22 09:59:36,652 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Disposing RegistryBroker
+ERROR 2018-03-22 09:59:36,657 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.launcher.application.DefaultMuleApplication: null
+org.xml.sax.SAXParseException: cvc-complex-type.2.4.a: Invalid content was found starting with element 'cookbook:config'. One of '{"http://www.mulesoft.org/schema/mule/core":annotations, "http://www.mulesoft.org/schema/mule/core":description, "http://www.springframework.org/schema/beans":beans, "http://www.springframework.org/schema/beans":bean, "http://www.springframework.org/schema/context":property-placeholder, "http://www.springframework.org/schema/beans":ref, "http://www.mulesoft.org/schema/mule/core":global-property, "http://www.mulesoft.org/schema/mule/core":configuration, "http://www.mulesoft.org/schema/mule/core":notifications, "http://www.mulesoft.org/schema/mule/core":abstract-extension, "http://www.mulesoft.org/schema/mule/core":abstract-shared-extension, "http://www.mulesoft.org/schema/mule/core":abstract-mixed-content-extension, "http://www.mulesoft.org/schema/mule/core":abstract-agent, "http://www.mulesoft.org/schema/mule/core":abstract-security-manager, "http://www.mulesoft.org/schema/mule/core":abstract-transaction-manager, "http://www.mulesoft.org/schema/mule/core":abstract-shared-transaction-manager, "http://www.mulesoft.org/schema/mule/core":abstract-connector, "http://www.mulesoft.org/schema/mule/core":abstract-shared-connector, "http://www.mulesoft.org/schema/mule/core":abstract-global-endpoint, "http://www.mulesoft.org/schema/mule/core":abstract-exception-strategy, "http://www.mulesoft.org/schema/mule/core":abstract-flow-construct, "http://www.mulesoft.org/schema/mule/core":flow, "http://www.mulesoft.org/schema/mule/core":sub-flow, "http://www.mulesoft.org/schema/mule/core":abstract-model, "http://www.mulesoft.org/schema/mule/core":abstract-interceptor-stack, "http://www.mulesoft.org/schema/mule/core":abstract-filter, "http://www.mulesoft.org/schema/mule/core":abstract-transformer, "http://www.mulesoft.org/schema/mule/core":processor-chain, "http://www.mulesoft.org/schema/mule/core":custom-processor, "http://www.mulesoft.org/schema/mule/core":abstract-empty-processor, "http://www.mulesoft.org/schema/mule/core":invoke, "http://www.mulesoft.org/schema/mule/core":set-payload, "http://www.mulesoft.org/schema/mule/core":abstract-global-intercepting-message-processor, "http://www.mulesoft.org/schema/mule/core":custom-queue-store, "http://www.mulesoft.org/schema/mule/core":abstract-processing-strategy}' is expected.
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(ErrorHandlerWrapper.java:203) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.error(ErrorHandlerWrapper.java:134) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:437) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:368) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(XMLErrorReporter.java:325) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator$XSIErrorReporter.reportError(XMLSchemaValidator.java:458) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.reportSchemaError(XMLSchemaValidator.java:3237) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.handleStartElement(XMLSchemaValidator.java:1796) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.xs.XMLSchemaValidator.startElement(XMLSchemaValidator.java:746) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:379) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2786) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:606) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:117) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:510) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:848) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:777) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.parsers.DOMParser.parse(DOMParser.java:243) ~[?:1.8.0_45]
+	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(DocumentBuilderImpl.java:348) ~[?:1.8.0_45]
+	at org.springframework.beans.factory.xml.DefaultDocumentLoader.loadDocument(DefaultDocumentLoader.java:76) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.mule.config.spring.MuleDocumentLoader.loadDocument(MuleDocumentLoader.java:91) ~[mule-module-spring-config-3.9.0.jar:3.9.0]
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.doLoadDocument(XmlBeanDefinitionReader.java:429) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.doLoadBeanDefinitions(XmlBeanDefinitionReader.java:391) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:336) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:304) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:181) ~[spring-beans-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.mule.config.spring.MuleArtifactContext.loadBeanDefinitions(MuleArtifactContext.java:192) ~[mule-module-spring-config-3.9.0.jar:3.9.0]
+	at org.springframework.context.support.AbstractRefreshableApplicationContext.refreshBeanFactory(AbstractRefreshableApplicationContext.java:129) ~[spring-context-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.obtainFreshBeanFactory(AbstractApplicationContext.java:541) ~[spring-context-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:452) ~[spring-context-4.1.9.RELEASE.jar:4.1.9.RELEASE]
+	at org.mule.config.spring.SpringRegistry.doInitialise(SpringRegistry.java:108) ~[mule-module-spring-config-3.9.0.jar:3.9.0]
+	at org.mule.registry.AbstractRegistry.initialise(AbstractRegistry.java:104) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.spring.SpringXmlConfigurationBuilder.createSpringRegistry(SpringXmlConfigurationBuilder.java:177) ~[mule-module-spring-config-3.9.0.jar:3.9.0]
+	at org.mule.config.spring.SpringXmlConfigurationBuilder.doConfigure(SpringXmlConfigurationBuilder.java:100) ~[mule-module-spring-config-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AbstractConfigurationBuilder.configure(AbstractConfigurationBuilder.java:43) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AbstractResourceConfigurationBuilder.configure(AbstractResourceConfigurationBuilder.java:69) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AutoConfigurationBuilder.autoConfigure(AutoConfigurationBuilder.java:102) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AutoConfigurationBuilder.doConfigure(AutoConfigurationBuilder.java:54) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AbstractConfigurationBuilder.configure(AbstractConfigurationBuilder.java:43) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.config.builders.AbstractResourceConfigurationBuilder.configure(AbstractResourceConfigurationBuilder.java:69) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.context.DefaultMuleContextFactory$1.configure(DefaultMuleContextFactory.java:89) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.context.DefaultMuleContextFactory.doCreateMuleContext(DefaultMuleContextFactory.java:222) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.context.DefaultMuleContextFactory.createMuleContext(DefaultMuleContextFactory.java:81) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.application.DefaultMuleApplication.init(DefaultMuleApplication.java:210) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper$2.execute(ArtifactWrapper.java:64) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper.executeWithinArtifactClassLoader(ArtifactWrapper.java:137) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper.init(ArtifactWrapper.java:59) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArtifactDeployer.deploy(DefaultArtifactDeployer.java:72) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.redeploy(DefaultArchiveDeployer.java:501) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.redeploy(DefaultArchiveDeployer.java:437) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.redeployModifiedArtifacts(DeploymentDirectoryWatcher.java:567) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.redeployModifiedApplications(DeploymentDirectoryWatcher.java:544) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.run(DeploymentDirectoryWatcher.java:356) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511) ~[?:1.8.0_45]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:308) ~[?:1.8.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$301(ScheduledThreadPoolExecutor.java:180) ~[?:1.8.0_45]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:294) ~[?:1.8.0_45]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142) [?:1.8.0_45]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617) [?:1.8.0_45]
+	at java.lang.Thread.run(Thread.java:745) [?:1.8.0_45]
+INFO  2018-03-22 09:59:36,672 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.launcher.application.DefaultMuleApplication: App 'maven_db_jenkins' never started, nothing to dispose of
+INFO  2018-03-22 09:59:46,955 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'maven_db_jenkins'                      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 09:59:46,980 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Initialising RegistryBroker
+INFO  2018-03-22 09:59:46,990 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.extension.internal.manager.DefaultExtensionManager: Starting discovery of extensions
+INFO  2018-03-22 09:59:47,021 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.extension.internal.manager.DefaultExtensionManager: Discovered 1 extensions
+INFO  2018-03-22 09:59:47,023 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.extension.internal.manager.DefaultExtensionManager: Registering extension validation (version 3.9)
+INFO  2018-03-22 09:59:47,028 [Mule.app.deployer.monitor.1.thread.1] org.mule.config.spring.MuleArtifactContext: Refreshing org.mule.config.spring.MuleArtifactContext@69bb053a: startup date [Thu Mar 22 09:59:47 IST 2018]; root of context hierarchy
+INFO  2018-03-22 09:59:48,150 [Mule.app.deployer.monitor.1.thread.1] org.mule.config.spring.processors.NoDevkitInjectorProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+WARN  2018-03-22 09:59:48,462 [Mule.app.deployer.monitor.1.thread.1] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+WARN  2018-03-22 09:59:48,462 [Mule.app.deployer.monitor.1.thread.1] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+WARN  2018-03-22 09:59:48,464 [Mule.app.deployer.monitor.1.thread.1] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+WARN  2018-03-22 09:59:48,464 [Mule.app.deployer.monitor.1.thread.1] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+INFO  2018-03-22 09:59:49,020 [Mule.app.deployer.monitor.1.thread.1] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\maven_db_jenkins\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\maven_db_jenkins\queue-tx-log\tx2.log
+INFO  2018-03-22 09:59:49,022 [Mule.app.deployer.monitor.1.thread.1] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\maven_db_jenkins\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\maven_db_jenkins\queue-xa-tx-log\tx2.log
+INFO  2018-03-22 09:59:49,042 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Initialising model: _muleSystemModel
+INFO  2018-03-22 09:59:49,044 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Initialising flow: maven_db_jenkinsFlow
+INFO  2018-03-22 09:59:49,045 [Mule.app.deployer.monitor.1.thread.1] org.mule.exception.DefaultMessagingExceptionStrategy: Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@5a94267f
+INFO  2018-03-22 09:59:49,056 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Initialising service: maven_db_jenkinsFlow.stage1
+INFO  2018-03-22 09:59:49,058 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Initialising flow: maven_db_jenkinsFlow2
+INFO  2018-03-22 09:59:49,058 [Mule.app.deployer.monitor.1.thread.1] org.mule.exception.DefaultMessagingExceptionStrategy: Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@7001ba5c
+INFO  2018-03-22 09:59:49,074 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Initialising service: maven_db_jenkinsFlow2.stage1
+INFO  2018-03-22 09:59:49,075 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Initialising flow: maven_db_jenkinsFlow1
+INFO  2018-03-22 09:59:49,075 [Mule.app.deployer.monitor.1.thread.1] org.mule.exception.DefaultMessagingExceptionStrategy: Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@6ed00a16
+INFO  2018-03-22 09:59:49,085 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Initialising service: maven_db_jenkinsFlow1.stage1
+INFO  2018-03-22 09:59:49,123 [Mule.app.deployer.monitor.1.thread.1] org.mule.config.spring.SpringXmlConfigurationBuilder: Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\maven_db_jenkins\maven_db_jenkins.xml'}]"
+INFO  2018-03-22 09:59:49,123 [Mule.app.deployer.monitor.1.thread.1] org.mule.config.builders.AutoConfigurationBuilder: Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\maven_db_jenkins\maven_db_jenkins.xml'}]"
+INFO  2018-03-22 09:59:49,126 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'maven_db_jenkins'                          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 09:59:49,133 [Mule.app.deployer.monitor.1.thread.1] org.mule.util.queue.QueueXaResourceManager: Starting ResourceManager
+INFO  2018-03-22 09:59:49,133 [Mule.app.deployer.monitor.1.thread.1] org.mule.util.queue.QueueXaResourceManager: Started ResourceManager
+INFO  2018-03-22 09:59:49,152 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.http.internal.listener.DefaultHttpListenerConfig: Listening for requests on http://0.0.0.0:8081
+INFO  2018-03-22 09:59:49,156 [Mule.app.deployer.monitor.1.thread.1] org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 09:59:49,157 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Starting model: _muleSystemModel
+INFO  2018-03-22 09:59:49,159 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Starting flow: maven_db_jenkinsFlow
+INFO  2018-03-22 09:59:49,159 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Starting service: maven_db_jenkinsFlow.stage1
+INFO  2018-03-22 09:59:49,163 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Starting flow: maven_db_jenkinsFlow2
+INFO  2018-03-22 09:59:49,163 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Starting service: maven_db_jenkinsFlow2.stage1
+INFO  2018-03-22 09:59:49,167 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Starting flow: maven_db_jenkinsFlow1
+INFO  2018-03-22 09:59:49,167 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Starting service: maven_db_jenkinsFlow1.stage1
+INFO  2018-03-22 09:59:49,185 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.management.agent.WrapperManagerAgent: This JVM hasn't been launched by the wrapper, the agent will not run.
+INFO  2018-03-22 09:59:49,200 [Mule.app.deployer.monitor.1.thread.1] org.mule.DefaultMuleContext: 
+**********************************************************************
+* Application: maven_db_jenkins                                      *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************

@@ -1,0 +1,299 @@
+INFO  2017-12-27 18:28:46,771 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '68-proxying-a-soap-api'                +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2017-12-27 18:28:47,207 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising RegistryBroker
+INFO  2017-12-27 18:28:47,507 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Starting discovery of extensions
+INFO  2017-12-27 18:28:47,817 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Discovered 1 extensions
+INFO  2017-12-27 18:28:47,817 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Registering extension validation (version 3.9)
+INFO  2017-12-27 18:28:48,708 [main] org.mule.config.spring.MuleArtifactContext: Refreshing org.mule.config.spring.MuleArtifactContext@16872c4d: startup date [Wed Dec 27 18:28:48 IST 2017]; root of context hierarchy
+INFO  2017-12-27 18:28:53,076 [main] org.mule.config.spring.processors.NoDevkitInjectorProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+WARN  2017-12-27 18:28:57,274 [main] org.mule.module.ognl.expression.OgnlExpressionEvaluator: OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+INFO  2017-12-27 18:28:58,453 [main] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-tx-log\tx2.log
+INFO  2017-12-27 18:28:58,476 [main] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-xa-tx-log\tx2.log
+INFO  2017-12-27 18:28:58,660 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising model: _muleSystemModel
+INFO  2017-12-27 18:28:58,667 [main] org.mule.construct.FlowConstructLifecycleManager: Initialising flow: main
+INFO  2017-12-27 18:28:58,667 [main] org.mule.exception.DefaultMessagingExceptionStrategy: Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@38848217
+INFO  2017-12-27 18:28:58,719 [main] org.mule.processor.SedaStageLifecycleManager: Initialising service: main.stage1
+WARN  2017-12-27 18:28:59,117 [main] org.mule.transport.http.HttpConnector: HTTP transport is deprecated and will be removed in Mule 4.0. Use HTTP module instead.
+INFO  2017-12-27 18:29:01,438 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising connector: connector.http.mule.default
+INFO  2017-12-27 18:29:01,689 [main] org.mule.config.spring.SpringXmlConfigurationBuilder: Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\68-proxying-a-soap-api\soap-api-proxy.xml'}]"
+INFO  2017-12-27 18:29:01,689 [main] org.mule.config.builders.AutoConfigurationBuilder: Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\68-proxying-a-soap-api\soap-api-proxy.xml'}]"
+INFO  2017-12-27 18:29:01,702 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '68-proxying-a-soap-api'                    +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2017-12-27 18:29:01,714 [main] org.mule.util.queue.QueueXaResourceManager: Starting ResourceManager
+INFO  2017-12-27 18:29:01,714 [main] org.mule.util.queue.QueueXaResourceManager: Started ResourceManager
+ERROR 2017-12-27 18:29:01,778 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+********************************************************************************
+Message               : Failed to invoke lifecycle phase "start" on object: org.mule.module.http.internal.listener.DefaultHttpListenerConfig@60a4e619
+Element               : /HTTP_Listener_Configuration @ app:soap-api-proxy.xml:7 (HTTP Listener Configuration)
+--------------------------------------------------------------------------------
+Root Exception stack trace:
+java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:437)
+	at sun.nio.ch.Net.bind(Net.java:429)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:223)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.glassfish.grizzly.nio.transport.TCPNIOBindingHandler.bindToChannelAndAddress(TCPNIOBindingHandler.java:131)
+	at org.glassfish.grizzly.nio.transport.TCPNIOBindingHandler.bind(TCPNIOBindingHandler.java:88)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.bind(TCPNIOTransport.java:239)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.bind(TCPNIOTransport.java:219)
+	at org.glassfish.grizzly.nio.transport.TCPNIOTransport.bind(TCPNIOTransport.java:210)
+	at org.mule.module.http.internal.listener.grizzly.GrizzlyServer.start(GrizzlyServer.java:41)
+	at org.mule.module.http.internal.listener.DefaultHttpListenerConfig.start(DefaultHttpListenerConfig.java:274)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.mule.lifecycle.phases.DefaultLifecyclePhase.applyLifecycle(DefaultLifecyclePhase.java:230)
+	at org.mule.lifecycle.RegistryLifecycleCallback.doApplyLifecycle(RegistryLifecycleCallback.java:108)
+	at org.mule.lifecycle.RegistryLifecycleCallback.onTransition(RegistryLifecycleCallback.java:78)
+	at org.mule.lifecycle.AbstractLifecycleManager.invokePhase(AbstractLifecycleManager.java:146)
+	at org.mule.lifecycle.RegistryLifecycleManager.fireLifecycle(RegistryLifecycleManager.java:134)
+	at org.mule.registry.AbstractRegistryBroker.fireLifecycle(AbstractRegistryBroker.java:88)
+	at org.mule.registry.MuleRegistryHelper.fireLifecycle(MuleRegistryHelper.java:141)
+	at org.mule.lifecycle.MuleContextLifecycleManager$MuleContextLifecycleCallback.onTransition(MuleContextLifecycleManager.java:74)
+	at org.mule.lifecycle.MuleContextLifecycleManager$MuleContextLifecycleCallback.onTransition(MuleContextLifecycleManager.java:70)
+	at org.mule.lifecycle.AbstractLifecycleManager.invokePhase(AbstractLifecycleManager.java:146)
+	at org.mule.lifecycle.MuleContextLifecycleManager.fireLifecycle(MuleContextLifecycleManager.java:62)
+	at org.mule.DefaultMuleContext.start(DefaultMuleContext.java:320)
+	at org.mule.module.launcher.application.DefaultMuleApplication.start(DefaultMuleApplication.java:146)
+	at org.mule.module.launcher.artifact.ArtifactWrapper$4.execute(ArtifactWrapper.java:106)
+	at org.mule.module.launcher.artifact.ArtifactWrapper.executeWithinArtifactClassLoader(ArtifactWrapper.java:137)
+	at org.mule.module.launcher.artifact.ArtifactWrapper.start(ArtifactWrapper.java:101)
+	at org.mule.module.launcher.DefaultArtifactDeployer.deploy(DefaultArtifactDeployer.java:73)
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployArtifact(DefaultArchiveDeployer.java:536)
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployArtifact(DefaultArchiveDeployer.java:333)
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployPackagedArtifact(DefaultArchiveDeployer.java:193)
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployPackagedArtifact(DefaultArchiveDeployer.java:282)
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployPackagedArtifact(DefaultArchiveDeployer.java:80)
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployPackagedArtifact(DefaultArchiveDeployer.java:566)
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.deployPackedApps(DeploymentDirectoryWatcher.java:283)
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.start(DeploymentDirectoryWatcher.java:155)
+	at org.mule.module.launcher.MuleDeploymentService.start(MuleDeploymentService.java:139)
+	at org.mule.module.launcher.MuleContainer.start(MuleContainer.java:172)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.mule.tooling.server.application.ApplicationDeployer.main(ApplicationDeployer.java:33)
+
+********************************************************************************
+
+INFO  2017-12-27 18:29:01,796 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '68-proxying-a-soap-api'                   +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2017-12-27 18:29:01,803 [main] org.mule.construct.FlowConstructLifecycleManager: Stopping flow: main
+INFO  2017-12-27 18:29:01,805 [main] org.mule.processor.SedaStageLifecycleManager: Stopping service: main.stage1
+INFO  2017-12-27 18:29:01,808 [main] org.mule.lifecycle.AbstractLifecycleManager: Stopping model: _muleSystemModel
+INFO  2017-12-27 18:29:01,813 [main] org.mule.lifecycle.AbstractLifecycleManager: Stopping connector: connector.http.mule.default
+INFO  2017-12-27 18:29:01,818 [main] org.mule.util.queue.QueueXaResourceManager: Stopping ResourceManager
+INFO  2017-12-27 18:29:01,818 [main] org.mule.util.queue.QueueXaResourceManager: Stopped ResourceManager
+ERROR 2017-12-27 18:29:01,858 [main] org.mule.DefaultMuleContext: Failed to stop Mule context
+org.mule.api.lifecycle.LifecycleException: Failed to invoke lifecycle phase "stop" on object: org.mule.module.http.internal.request.DefaultHttpRequesterConfig@3164d5aa
+	at org.mule.lifecycle.phases.DefaultLifecyclePhase.applyLifecycle(DefaultLifecyclePhase.java:243) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.lifecycle.RegistryLifecycleCallback.doApplyLifecycle(RegistryLifecycleCallback.java:108) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.lifecycle.RegistryLifecycleCallback.onTransition(RegistryLifecycleCallback.java:78) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.lifecycle.AbstractLifecycleManager.invokePhase(AbstractLifecycleManager.java:146) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.lifecycle.RegistryLifecycleManager.fireLifecycle(RegistryLifecycleManager.java:134) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.registry.AbstractRegistryBroker.fireLifecycle(AbstractRegistryBroker.java:88) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.registry.MuleRegistryHelper.fireLifecycle(MuleRegistryHelper.java:141) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.lifecycle.MuleContextLifecycleManager$MuleContextLifecycleCallback.onTransition(MuleContextLifecycleManager.java:74) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.lifecycle.MuleContextLifecycleManager$MuleContextLifecycleCallback.onTransition(MuleContextLifecycleManager.java:70) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.lifecycle.AbstractLifecycleManager.invokePhase(AbstractLifecycleManager.java:146) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.lifecycle.MuleContextLifecycleManager.fireLifecycle(MuleContextLifecycleManager.java:62) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.DefaultMuleContext.stop(DefaultMuleContext.java:413) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.DefaultMuleContext.dispose(DefaultMuleContext.java:426) ~[mule-core-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.application.DefaultMuleApplication.doDispose(DefaultMuleApplication.java:439) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.application.DefaultMuleApplication.dispose(DefaultMuleApplication.java:324) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper$1.execute(ArtifactWrapper.java:41) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper.executeWithinArtifactClassLoader(ArtifactWrapper.java:137) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.artifact.ArtifactWrapper.dispose(ArtifactWrapper.java:36) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArtifactDeployer.deploy(DefaultArtifactDeployer.java:77) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployArtifact(DefaultArchiveDeployer.java:536) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployArtifact(DefaultArchiveDeployer.java:333) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployPackagedArtifact(DefaultArchiveDeployer.java:193) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployPackagedArtifact(DefaultArchiveDeployer.java:282) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployPackagedArtifact(DefaultArchiveDeployer.java:80) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DefaultArchiveDeployer.deployPackagedArtifact(DefaultArchiveDeployer.java:566) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.deployPackedApps(DeploymentDirectoryWatcher.java:283) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.DeploymentDirectoryWatcher.start(DeploymentDirectoryWatcher.java:155) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.MuleDeploymentService.start(MuleDeploymentService.java:139) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at org.mule.module.launcher.MuleContainer.start(MuleContainer.java:172) ~[mule-module-launcher-3.9.0.jar:3.9.0]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_45]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_45]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_45]
+	at java.lang.reflect.Method.invoke(Method.java:497) ~[?:1.8.0_45]
+	at org.mule.tooling.server.application.ApplicationDeployer.main(ApplicationDeployer.java:33) ~[tooling-support-3.9.0.jar:?]
+Caused by: java.lang.NullPointerException
+	at org.mule.module.http.internal.request.grizzly.GrizzlyHttpClient.stop(GrizzlyHttpClient.java:612) ~[mule-module-http-3.9.0.jar:3.9.0]
+	at org.mule.module.http.internal.request.DefaultHttpRequesterConfig.stop(DefaultHttpRequesterConfig.java:155) ~[mule-module-http-3.9.0.jar:3.9.0]
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:1.8.0_45]
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62) ~[?:1.8.0_45]
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:1.8.0_45]
+	at java.lang.reflect.Method.invoke(Method.java:497) ~[?:1.8.0_45]
+	at org.mule.lifecycle.phases.DefaultLifecyclePhase.applyLifecycle(DefaultLifecyclePhase.java:230) ~[mule-core-3.9.0.jar:3.9.0]
+	... 33 more
+INFO  2017-12-27 18:29:01,860 [main] org.mule.lifecycle.AbstractLifecycleManager: Disposing RegistryBroker
+INFO  2017-12-27 18:29:01,863 [main] org.mule.construct.FlowConstructLifecycleManager: Disposing flow: main
+INFO  2017-12-27 18:29:01,864 [main] org.mule.processor.SedaStageLifecycleManager: Disposing service: main.stage1
+INFO  2017-12-27 18:29:01,868 [main] org.mule.lifecycle.AbstractLifecycleManager: Disposing model: _muleSystemModel
+INFO  2017-12-27 18:29:01,881 [main] org.mule.lifecycle.AbstractLifecycleManager: Disposing connector: connector.http.mule.default
+INFO  2017-12-27 18:29:01,881 [main] org.mule.util.monitor.ExpiryMonitor: disposing monitor
+INFO  2017-12-27 18:29:02,856 [main] org.mule.config.spring.MuleArtifactContext: Closing org.mule.config.spring.MuleArtifactContext@16872c4d: startup date [Wed Dec 27 18:28:48 IST 2017]; root of context hierarchy
+INFO  2017-12-27 18:29:02,882 [main] org.mule.DefaultMuleContext: 
+**********************************************************************
+* Application "68-proxying-a-soap-api" shut down normally on:        *
+* 12/27/17 6:29 PM                                                   *
+* Up for: 0 days, 0 hours, 0 mins, 1.175 sec                         *
+**********************************************************************
+INFO  2017-12-27 18:29:33,323 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '68-proxying-a-soap-api'                +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2017-12-27 18:29:33,336 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Initialising RegistryBroker
+INFO  2017-12-27 18:29:33,346 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.extension.internal.manager.DefaultExtensionManager: Starting discovery of extensions
+INFO  2017-12-27 18:29:33,412 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.extension.internal.manager.DefaultExtensionManager: Discovered 1 extensions
+INFO  2017-12-27 18:29:33,413 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.extension.internal.manager.DefaultExtensionManager: Registering extension validation (version 3.9)
+INFO  2017-12-27 18:29:33,422 [Mule.app.deployer.monitor.1.thread.1] org.mule.config.spring.MuleArtifactContext: Refreshing org.mule.config.spring.MuleArtifactContext@5da96c2b: startup date [Wed Dec 27 18:29:33 IST 2017]; root of context hierarchy
+INFO  2017-12-27 18:29:34,522 [Mule.app.deployer.monitor.1.thread.1] org.mule.config.spring.processors.NoDevkitInjectorProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+INFO  2017-12-27 18:29:34,862 [Mule.app.deployer.monitor.1.thread.1] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-tx-log\tx2.log
+INFO  2017-12-27 18:29:34,867 [Mule.app.deployer.monitor.1.thread.1] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-xa-tx-log\tx2.log
+INFO  2017-12-27 18:29:34,901 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Initialising model: _muleSystemModel
+INFO  2017-12-27 18:29:34,904 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Initialising flow: main
+INFO  2017-12-27 18:29:34,904 [Mule.app.deployer.monitor.1.thread.1] org.mule.exception.DefaultMessagingExceptionStrategy: Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@339c150d
+INFO  2017-12-27 18:29:34,918 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Initialising service: main.stage1
+INFO  2017-12-27 18:29:35,490 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Initialising connector: connector.http.mule.default
+INFO  2017-12-27 18:29:35,525 [Mule.app.deployer.monitor.1.thread.1] org.mule.config.spring.SpringXmlConfigurationBuilder: Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\68-proxying-a-soap-api\soap-api-proxy.xml'}]"
+INFO  2017-12-27 18:29:35,525 [Mule.app.deployer.monitor.1.thread.1] org.mule.config.builders.AutoConfigurationBuilder: Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\68-proxying-a-soap-api\soap-api-proxy.xml'}]"
+INFO  2017-12-27 18:29:35,527 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '68-proxying-a-soap-api'                    +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2017-12-27 18:29:35,531 [Mule.app.deployer.monitor.1.thread.1] org.mule.util.queue.QueueXaResourceManager: Starting ResourceManager
+INFO  2017-12-27 18:29:35,531 [Mule.app.deployer.monitor.1.thread.1] org.mule.util.queue.QueueXaResourceManager: Started ResourceManager
+INFO  2017-12-27 18:29:35,675 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.http.internal.listener.DefaultHttpListenerConfig: Listening for requests on http://0.0.0.0:8083
+INFO  2017-12-27 18:29:35,680 [Mule.app.deployer.monitor.1.thread.1] org.mule.transport.http.HttpConnector: Connected: HttpConnector
+{
+  name=connector.http.mule.default
+  lifecycle=initialise
+  this=17163dc5
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[http]
+  serviceOverrides=<none>
+}
+
+INFO  2017-12-27 18:29:35,681 [Mule.app.deployer.monitor.1.thread.1] org.mule.transport.http.HttpConnector: Starting: HttpConnector
+{
+  name=connector.http.mule.default
+  lifecycle=initialise
+  this=17163dc5
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[http]
+  serviceOverrides=<none>
+}
+
+INFO  2017-12-27 18:29:35,683 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Starting connector: connector.http.mule.default
+INFO  2017-12-27 18:29:35,692 [Mule.app.deployer.monitor.1.thread.1] org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2017-12-27 18:29:35,694 [Mule.app.deployer.monitor.1.thread.1] org.mule.lifecycle.AbstractLifecycleManager: Starting model: _muleSystemModel
+INFO  2017-12-27 18:29:35,697 [Mule.app.deployer.monitor.1.thread.1] org.mule.construct.FlowConstructLifecycleManager: Starting flow: main
+INFO  2017-12-27 18:29:35,699 [Mule.app.deployer.monitor.1.thread.1] org.mule.processor.SedaStageLifecycleManager: Starting service: main.stage1
+INFO  2017-12-27 18:29:36,486 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.management.agent.WrapperManagerAgent: This JVM hasn't been launched by the wrapper, the agent will not run.
+INFO  2017-12-27 18:29:36,533 [Mule.app.deployer.monitor.1.thread.1] org.mule.module.management.agent.AbstractJmxAgent: Registered Connector Service with name Mule.68-proxying-a-soap-api:type=Connector,name="connector.http.mule.default"
+INFO  2017-12-27 18:29:36,549 [Mule.app.deployer.monitor.1.thread.1] org.mule.DefaultMuleContext: 
+**********************************************************************
+* Application: 68-proxying-a-soap-api                                *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+INFO  2017-12-27 18:30:24,039 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '68-proxying-a-soap-api'                +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2017-12-27 18:30:24,488 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising RegistryBroker
+INFO  2017-12-27 18:30:24,758 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Starting discovery of extensions
+INFO  2017-12-27 18:30:25,076 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Discovered 1 extensions
+INFO  2017-12-27 18:30:25,078 [main] org.mule.module.extension.internal.manager.DefaultExtensionManager: Registering extension validation (version 3.9)
+INFO  2017-12-27 18:30:25,785 [main] org.mule.config.spring.MuleArtifactContext: Refreshing org.mule.config.spring.MuleArtifactContext@76c548f: startup date [Wed Dec 27 18:30:25 IST 2017]; root of context hierarchy
+INFO  2017-12-27 18:30:29,380 [main] org.mule.config.spring.processors.NoDevkitInjectorProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+WARN  2017-12-27 18:30:32,518 [main] org.mule.module.ognl.expression.OgnlExpressionEvaluator: OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+INFO  2017-12-27 18:30:33,612 [main] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-tx-log\tx2.log
+INFO  2017-12-27 18:30:33,638 [main] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\68-proxying-a-soap-api\queue-xa-tx-log\tx2.log
+INFO  2017-12-27 18:30:33,844 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising model: _muleSystemModel
+INFO  2017-12-27 18:30:33,856 [main] org.mule.construct.FlowConstructLifecycleManager: Initialising flow: main
+INFO  2017-12-27 18:30:33,856 [main] org.mule.exception.DefaultMessagingExceptionStrategy: Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@1de73d37
+INFO  2017-12-27 18:30:33,919 [main] org.mule.processor.SedaStageLifecycleManager: Initialising service: main.stage1
+WARN  2017-12-27 18:30:34,188 [main] org.mule.transport.http.HttpConnector: HTTP transport is deprecated and will be removed in Mule 4.0. Use HTTP module instead.
+INFO  2017-12-27 18:30:35,851 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising connector: connector.http.mule.default
+INFO  2017-12-27 18:30:36,045 [main] org.mule.config.spring.SpringXmlConfigurationBuilder: Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\68-proxying-a-soap-api\soap-api-proxy.xml'}]"
+INFO  2017-12-27 18:30:36,046 [main] org.mule.config.builders.AutoConfigurationBuilder: Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\68-proxying-a-soap-api\soap-api-proxy.xml'}]"
+INFO  2017-12-27 18:30:36,059 [main] org.mule.module.launcher.application.DefaultMuleApplication: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '68-proxying-a-soap-api'                    +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2017-12-27 18:30:36,070 [main] org.mule.util.queue.QueueXaResourceManager: Starting ResourceManager
+INFO  2017-12-27 18:30:36,070 [main] org.mule.util.queue.QueueXaResourceManager: Started ResourceManager
+INFO  2017-12-27 18:30:36,179 [main] org.mule.module.http.internal.listener.DefaultHttpListenerConfig: Listening for requests on http://0.0.0.0:8083
+INFO  2017-12-27 18:30:36,186 [main] org.mule.transport.http.HttpConnector: Connected: HttpConnector
+{
+  name=connector.http.mule.default
+  lifecycle=initialise
+  this=b76b7d8
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[http]
+  serviceOverrides=<none>
+}
+
+INFO  2017-12-27 18:30:36,186 [main] org.mule.transport.http.HttpConnector: Starting: HttpConnector
+{
+  name=connector.http.mule.default
+  lifecycle=initialise
+  this=b76b7d8
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[http]
+  serviceOverrides=<none>
+}
+
+INFO  2017-12-27 18:30:36,189 [main] org.mule.lifecycle.AbstractLifecycleManager: Starting connector: connector.http.mule.default
+INFO  2017-12-27 18:30:36,201 [main] org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2017-12-27 18:30:36,203 [main] org.mule.lifecycle.AbstractLifecycleManager: Starting model: _muleSystemModel
+INFO  2017-12-27 18:30:36,210 [main] org.mule.construct.FlowConstructLifecycleManager: Starting flow: main
+INFO  2017-12-27 18:30:36,213 [main] org.mule.processor.SedaStageLifecycleManager: Starting service: main.stage1
+INFO  2017-12-27 18:30:36,650 [main] org.mule.module.management.agent.WrapperManagerAgent: This JVM hasn't been launched by the wrapper, the agent will not run.
+INFO  2017-12-27 18:30:36,707 [main] org.mule.module.management.agent.AbstractJmxAgent: Registered Connector Service with name Mule.68-proxying-a-soap-api:type=Connector,name="connector.http.mule.default"
+INFO  2017-12-27 18:30:36,718 [main] org.mule.DefaultMuleContext: 
+**********************************************************************
+* Application: 68-proxying-a-soap-api                                *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************

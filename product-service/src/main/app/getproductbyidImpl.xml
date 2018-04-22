@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:context="http://www.springframework.org/schema/context" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd">
+    <ee:object-store-caching-strategy name="Caching_Strategy" keyGenerationExpression="#[message.inboundProperties['http.uri.params'].productId]" doc:name="Caching Strategy">
+        <in-memory-store/>
+    </ee:object-store-caching-strategy>
+    <flow name="getproductbyidFlow">
+        <ee:cache cachingStrategy-ref="Caching_Strategy" doc:name="Cache">
+            <db:select config-ref="MySQL_Configuration" doc:name="getProductById">
+                <db:parameterized-query><![CDATA[SELECT `id`, `name`, `model`, `price` FROM `product` WHERE id=#[message.inboundProperties['http.uri.params'].productId]]]></db:parameterized-query>
+            </db:select>
+            <set-payload value="#[payload]" doc:name="message"/>
+            <json:object-to-json-transformer doc:name="Object to JSON"/>
+            <logger message="Query executed" level="INFO" doc:name="Logger"/>
+        </ee:cache>
+    </flow>
+</mule>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:mule="http://www.mulesoft.org/schema/mule/core"
+            xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.mulesoft.org/schema/mule/core"
+                schemaLocation="http://www.mulesoft.org/schema/mule/core/3.7/mule.xsd"/>
+    <xsd:import namespace = "http://www.mulesoft.org/schema/mule/schemadoc"
+                schemaLocation = "http://www.mulesoft.org/schema/mule/schemadoc/3.7/mule-schemadoc.xsd"/>
+
+
+    <!-- Documentation -->
+
+    <xsd:annotation>
+        <xsd:documentation>
+            Base abstract definitions for Mule Messaging connectors.
+        </xsd:documentation>
+        <xsd:appinfo>
+            <schemadoc:short-name>Common Messaging Connector</schemadoc:short-name>
+            <schemadoc:page-title>Common Messaging Connector Module</schemadoc:page-title>
+        </xsd:appinfo>
+    </xsd:annotation>
+
+
+    <!-- Configuration -->
+
+    <xsd:element name="abstract-config" type="abstractConfigType" substitutionGroup="mule:abstract-shared-extension" abstract="true">
+        <xsd:annotation>
+            <xsd:documentation>
+                Common configuration elements.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:complexType name="abstractConfigType" abstract="true">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractExtensionType">
+                <xsd:attribute name="name" type="mule:substitutableName" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Identifies the configuration in the registry, so that it can be referenced by the operations.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="maxRedelivery" type="mule:substitutableInt" use="optional" default="-1">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Number of re-deliveries in case of the message processing fails. In order to avoid poisson message, default value is -1 (infinite).
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="pollingTime" type="mule:substitutableInt" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Amount of time the client will wait to satisfy the number of messages requested.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="acknowledgementMode" type="acknowledgementModes" use="optional" default="AUTO">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Default acknowledge mode to use for the messages retrieved by the subscribers using this configuration.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+
+    <!-- Operation Subscribe -->
+
+    <xsd:element name="abstract-subscriber" type="abstractSubscriberType" substitutionGroup="mule:abstract-message-source">
+        <xsd:annotation>
+            <xsd:documentation>
+                Subscriber to a particular destination.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:complexType name="abstractSubscriberType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractMessageSourceType">
+                <xsd:attribute name="destination" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Destination from where to retrieve messages.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="config-ref" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            A reference to the configuration element for this subscriber.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="acknowledgementMode" type="acknowledgementModes" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Acknowledge mode to use for the messages retrieved by this subscriber.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="pollingTime" type="mule:substitutableInt" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Amount of time the client will wait to satisfy the number of messages requested.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+
+    <!-- Operation Publish -->
+
+    <xsd:element name="abstract-publish" type="abstractPublishType" substitutionGroup="mule:abstract-message-processor">
+        <xsd:annotation>
+            <xsd:documentation>
+                Publish messages to a particular destination.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:complexType name="abstractPublishType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractMessageProcessorType">
+                <xsd:sequence>
+                    <xsd:element name="message-builder" minOccurs="0" maxOccurs="1" type="messageBuilderType">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                                Contains the definition of all the parameters that should be sent in the request (uri params,
+                                query params and headers).
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+
+                <xsd:attribute name="destination" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Destination to where the messages will be sent.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="config-ref" type="xsd:string" use="required">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            A reference to the configuration element for this publisher.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="messageBuilderType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractExtensionType">
+                <xsd:sequence>
+                    <xsd:choice minOccurs="0" maxOccurs="1">
+                        <xsd:element name="properties">
+                            <xsd:complexType>
+                                <xsd:complexContent>
+                                    <xsd:extension base="mule:abstractExtensionType">
+                                        <xsd:sequence>
+                                            <xsd:choice minOccurs="1" maxOccurs="unbounded">
+                                                <xsd:element name="property">
+                                                    <xsd:complexType>
+                                                        <xsd:attribute name="propertyName" />
+                                                        <xsd:attribute name="value" />
+                                                        <xsd:attribute name="expression" type="xsd:string" >
+                                                            <xsd:annotation>
+                                                                <xsd:documentation>
+                                                                    MEL expression that should return a map with the properties to add.
+                                                                </xsd:documentation>
+                                                            </xsd:annotation>
+                                                        </xsd:attribute>
+                                                    </xsd:complexType>
+                                                </xsd:element>
+                                            </xsd:choice>
+                                        </xsd:sequence>
+                                    </xsd:extension>
+                                </xsd:complexContent>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:choice>
+                </xsd:sequence>
+
+                <xsd:attribute name="source" type="xsd:string">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            The expression used to obtain the message's content. Default is empty, so payload is used.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+
+                <xsd:attribute name="messageId" type="xsd:string" use="optional">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Expresion resolving to a unique identifier for the message. The default value is a random generated UUID.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="sendOutboundProperties" type="mule:substitutableBoolean" use="optional" default="true">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Copy the mule message outbound properties as properties in the Anypoint MQ message.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+                <xsd:attribute name="sendContentType" type="mule:substitutableBoolean" use="optional" default="true">
+                    <xsd:annotation>
+                        <xsd:documentation>
+                            Send the mule message content type as a property in the Anypoint MQ message.
+                        </xsd:documentation>
+                    </xsd:annotation>
+                </xsd:attribute>
+
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+
+    <!-- Misc -->
+
+    <xsd:simpleType name="acknowledgementModes">
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="NONE">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        No acknowledge expected by the provider.
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="AUTO">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        Mule will implicitly acknowledge the message if the flow finish successfully. //TODO doesn't seem to make sense to support AUTO ack upon receives because it has the same drawbacks as NONE in mule with less performance
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+            <xsd:enumeration value="MANUAL">
+                <xsd:annotation>
+                    <xsd:documentation>
+                        User must explicitly acknowledge the message
+                    </xsd:documentation>
+                </xsd:annotation>
+            </xsd:enumeration>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="clientModes">
+        <xsd:annotation>
+            <xsd:documentation>
+                HttpClient modes to use
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:NMTOKEN">
+            <xsd:enumeration value="MULE"/>
+            <xsd:enumeration value="SYNC"/>
+            <xsd:enumeration value="ASYNC"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+
+</xsd:schema>

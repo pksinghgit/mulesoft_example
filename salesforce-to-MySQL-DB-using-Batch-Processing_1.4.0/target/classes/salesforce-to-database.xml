@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:context="http://www.springframework.org/schema/context" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+ 	
+    <sfdc:config doc:name="Salesforce" name="Salesforce" password="${sfdc.password}" securityToken="${sfdc.securityToken}" username="${sfdc.user}">
+        <sfdc:connection-pooling-profile exhaustedAction="WHEN_EXHAUSTED_GROW" initialisationPolicy="INITIALISE_ONE"/>
+    </sfdc:config>
+    <db:mysql-config database="${mysql.db}" doc:name="MySQL Configuration" host="${mysql.host}" name="MySQL_Configuration" password="${mysql.password}" port="${mysql.port}" user="${mysql.user}"/>
+    <batch:job name="salesforce-to-database-Batch">
+        <batch:threading-profile poolExhaustedAction="WAIT"/>
+        
+        <batch:process-records>
+            <batch:step name="queryExistingContactInDbStep">
+                <dw:transform-message doc:name="Transform SFDC fields to DB fields" metadata:id="a9c0c674-90be-40f3-985e-e1d76c4bbfab">
+                    <dw:input-payload doc:sample="SfdcContactMap.dwl"/>
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	"email" : payload.Email,
+	"first_name" : payload.FirstName,
+	"last_name" : payload.LastName,
+	"last_modified" : payload.LastModifiedDate
+}]]></dw:set-payload>
+                </dw:transform-message>
+
+                <enricher doc:name="Message Enricher">
+                    <db:select config-ref="MySQL_Configuration" doc:name="Check existence in Database">
+                        <db:parameterized-query><![CDATA[SELECT first_name,last_name,email FROM salesforce_aacount WHERE email=#[payload.email]]]></db:parameterized-query>
+
+
+                    </db:select>
+                    <enrich source="#[payload.size() > 0]" target="#[recordVars['exists']]"/>
+                    <enrich source="#[payload]" target="#[recordVars['dbRecord']]"/>
+                </enricher>
+            </batch:step>
+            <batch:step name="upsertContactInDbStep">
+            	<choice doc:name="Choice">
+                    <when expression="#[recordVars['exists']==false]">
+                        <db:insert config-ref="MySQL_Configuration" doc:name="Create contact">
+                            <db:parameterized-query><![CDATA[INSERT INTO salesforce_aacount (first_name, last_name, email) VALUES (#[payload.first_name],#[payload.last_name],#[payload.email])]]></db:parameterized-query>
+                        </db:insert>
+                    </when>
+                    <when expression="#[recordVars['exists']==true and recordVars['dbRecord'] != null]">
+                        <db:update config-ref="MySQL_Configuration" doc:name="Update Contact">
+                            <db:parameterized-query><![CDATA[UPDATE salesforce_aacount SET first_name=#[payload.first_name],last_name=#[payload.last_name] WHERE email = #[payload.email]]]></db:parameterized-query>
+                        </db:update>
+                    </when>
+                    <otherwise>
+                        <logger doc:name="Logger" level="INFO" message="Error with #[payload.email] contact"/>
+                    </otherwise>
+                </choice>
+            </batch:step>                        
+        </batch:process-records>
+        <batch:on-complete>
+            <logger doc:name="Log completion" level="INFO" message="Batch sf->db has finished"/>
+        </batch:on-complete>
+    </batch:job>
+    <flow name="triggerFlow" processingStrategy="synchronous">
+        <poll doc:name="Poll">
+                <fixed-frequency-scheduler frequency="10" timeUnit="SECONDS"/>
+                <watermark default-expression="#[groovy: new Date(System.currentTimeMillis() - 10000).format(&quot;yyyy-MM-dd'T'HH:mm:ss.SSS'Z'&quot;, TimeZone.getTimeZone('UTC'))]" selector="MAX" selector-expression="#[payload.LastModifiedDate]" variable="timestamp"/>                
+                <sfdc:query config-ref="Salesforce" doc:name="Query Salesforce every 60 seconds" query="dsql:SELECT Email,FirstName,LastModifiedDate,LastName FROM Contact WHERE LastModifiedDate > #[timestamp]"/>
+        </poll>
+        <logger doc:name="Logger" level="INFO" message="#[flowVars.timestamp]"/>
+        <batch:execute doc:name="salesforce-to-database-Batch" name="salesforce-to-database-Batch"/>
+    </flow>
+
+    
+</mule>

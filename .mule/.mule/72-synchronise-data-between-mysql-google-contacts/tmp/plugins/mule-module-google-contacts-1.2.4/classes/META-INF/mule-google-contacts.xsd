@@ -1,0 +1,1108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:ns2="http://www.mulesoft.org/schema/mule/devkit" xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" targetNamespace="http://www.mulesoft.org/schema/mule/google-contacts">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"></xs:import>
+  <xs:import schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" namespace="http://www.springframework.org/schema/beans"></xs:import>
+  <xs:import schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd" namespace="http://www.mulesoft.org/schema/mule/core"></xs:import>
+  <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="config-with-oauth" substitutionGroup="mule:abstract-extension" ns2:javaClass="org.mule.modules.google.contact.adapters.GoogleContactsConnectorOAuth2Adapter">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mule:abstractExtensionType">
+          <xs:annotation>
+            <xs:documentation>Cloud connector for the Google Contacts API v3 using OAuth2 for initialization.
+Uses OAuth2 for authentication</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+            <xs:element name="oauth-callback-config" maxOccurs="1" minOccurs="1">
+              <xs:annotation>
+                <xs:documentation>Config for http callbacks.</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:extension base="mule:abstractExtensionType">
+                    <xs:attribute name="localPort" use="optional" type="xs:string"></xs:attribute>
+                    <xs:attribute name="remotePort" use="optional" type="xs:string"></xs:attribute>
+                    <xs:attribute name="domain" use="optional" type="xs:string"></xs:attribute>
+                    <xs:attribute name="async" default="false" use="optional" type="xs:boolean"></xs:attribute>
+                    <xs:attribute name="path" use="optional" type="xs:string"></xs:attribute>
+                    <xs:attribute name="connector-ref" use="optional" type="xs:string"></xs:attribute>
+                    <xs:attribute name="defaultAccessTokenId" use="optional" type="xs:string">
+                      <xs:annotation>
+                        <xs:documentation>A Mule Expression to use as access token id</xs:documentation>
+                      </xs:annotation>
+                    </xs:attribute>
+                  </xs:extension>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="oauth-store-config" maxOccurs="1" minOccurs="0">
+              <xs:annotation>
+                <xs:documentation>Configuration element for storage of access tokens</xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:extension base="mule:abstractExtensionType">
+                    <xs:attribute name="objectStore-ref" use="required" type="xs:string"></xs:attribute>
+                  </xs:extension>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute name="name" use="optional" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Give a name to this configuration so it can be later referenced by config-ref.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="applicationName" default="Mule-GoogleContactsConnector/1.0" use="optional" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>Application name registered on Google API console</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="consumerKey" use="required" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The OAuth2 consumer key</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="consumerSecret" use="required" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The OAuth2 consumer secret</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="scope" default="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.google.com/m8/feeds" use="optional" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The OAuth2 scopes you want to request</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="accessTokenUrl" default="https://accounts.google.com/o/oauth2/token" use="optional" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The URL defined by the Service Provider to obtain an access token</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/google-contacts" name="onNoToken" default="EXCEPTION" use="optional" type="OnNoTokenPolicyEnumType">
+            <xs:annotation>
+              <xs:documentation>The URL defined by the Service Provider to obtain an access token</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="authorizationUrl" default="https://accounts.google.com/o/oauth2/auth" use="optional" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>The URL defined by the Service Provider where the resource owner will be redirected to grant authorization to the connector</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="authorize" substitutionGroup="mule:abstract-message-processor" type="AuthorizeType">
+    <xs:annotation>
+      <xs:documentation>Starts OAuth authorization process. It must be called from a flow with an http:inbound-endpoint.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="unauthorize" substitutionGroup="mule:abstract-message-processor" type="UnauthorizeType">
+    <xs:annotation>
+      <xs:documentation>Unauthorizes the connector, forcing to re-use authorize again before accessing any protected message processor.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AuthorizeType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="state" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Any value that you wish to be sent with the callback</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/google-contacts" name="access_type" default="online" use="optional" type="AccessTypeEnumType">
+          <xs:annotation>
+            <xs:documentation></xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/google-contacts" name="force_prompt" default="auto" use="optional" type="ForcePromptEnumType">
+          <xs:annotation>
+            <xs:documentation></xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenUrl" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The URL defined by the Service Provider to obtain an access token</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The Id with which the obtained access token will be stored. If not provided, then it will be the config name</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="authorizationUrl" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The URL defined by the Service Provider where the resource owner will be redirected to grant authorization to the connector</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="UnauthorizeType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="get-contacts" substitutionGroup="mule:abstract-message-processor" type="GetContactsType">
+    <xs:annotation>
+      <xs:documentation>Retrieves all the contacts matching the given criterias. If a criteria is not provided
+then it's not used in the filtering. Thus, providing no criteria equals getting all contacts</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetContactsType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="updatedMin" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Sets the minimum updated timestamp used for the query.  Only entries with an updated timestamp equal to or later than the specified timestamp will be returned.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="updatedMax" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Sets the maximum updated timestamp used for the query.  Only entries with an updated timestamp earlier than the specified timestamp will be returned.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="datetimeFormat" default="yyyy-MM-dd'T'HH:mm:ss'Z'" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the pattern to be used for parsing updatedMin and updatedMax</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="fullTextQuery" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Sets the full text query string that will be used for the query.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/google-contacts" name="sortOrder" default="NONE" use="optional" type="SortOrderEnumType">
+          <xs:annotation>
+            <xs:documentation>valid values are NONE, ASCENDING and DESCENDING</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/google-contacts" name="showDeleted" default="false" use="optional" type="booleanType">
+          <xs:annotation>
+            <xs:documentation>wether to show deleted entries or not</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/google-contacts" name="orderBy" default="NONE" use="optional" type="OrderByEnumType">
+          <xs:annotation>
+            <xs:documentation>the field to be used when sorting. Valid values are NONE, LAST_MODIFIED and EDITED</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="groupId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>only show contacts from a given group</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/google-contacts" name="fetchSize" default="100" use="optional" type="integerType">
+          <xs:annotation>
+            <xs:documentation>The amount of items to fetch on each invocation to the data source</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="get-contact-by-id" substitutionGroup="mule:abstract-message-processor" type="GetContactByIdType">
+    <xs:annotation>
+      <xs:documentation>Retrieves a contact by id</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetContactByIdType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="id" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the id of the contact</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="insert-contact" substitutionGroup="mule:abstract-message-processor" type="InsertContactType">
+    <xs:annotation>
+      <xs:documentation>Inserts a new contact</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="InsertContactType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="contact-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>an instance of  representing the contact to be inserted</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="update-contact" substitutionGroup="mule:abstract-message-processor" type="UpdateContactType">
+    <xs:annotation>
+      <xs:documentation>Updates a contact entry</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="UpdateContactType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="contact-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>an instance of  representing the contact to be updated</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="add-group" substitutionGroup="mule:abstract-message-processor" type="AddGroupType">
+    <xs:annotation>
+      <xs:documentation>Adds a group to a given contact</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AddGroupType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="contact-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>an instance of  representing the contact to be updated</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="groupId" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the id of the group</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="delete-contact-by-id" substitutionGroup="mule:abstract-message-processor" type="DeleteContactByIdType">
+    <xs:annotation>
+      <xs:documentation>Deletes a contact signaled by its id</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteContactByIdType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="contactId" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the id of the contact to be deleted</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="delete-contact" substitutionGroup="mule:abstract-message-processor" type="DeleteContactType">
+    <xs:annotation>
+      <xs:documentation>Deletes a given contact</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteContactType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="entry-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the contact to be deleted</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="download-photo-by-id" substitutionGroup="mule:abstract-message-processor" type="DownloadPhotoByIdType">
+    <xs:annotation>
+      <xs:documentation>Downloads the photo of a contact signaled by its id contact and returns it as an input stream</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DownloadPhotoByIdType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="id" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the id of the contact whose photo we want</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="download-photo" substitutionGroup="mule:abstract-message-processor" type="DownloadPhotoType">
+    <xs:annotation>
+      <xs:documentation>Downloads the photo of a given contact</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DownloadPhotoType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="contact-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the contact whose photo we want</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="update-contact-photo" substitutionGroup="mule:abstract-message-processor" type="UpdateContactPhotoType">
+    <xs:annotation>
+      <xs:documentation>Updates the photo of a contact signaled by its id taken a  as an input</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="UpdateContactPhotoType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="contactId" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the id of the contact whose photo we want to update</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="in-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>a  with the photo's binary content</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="delete-contact-photo-by-id" substitutionGroup="mule:abstract-message-processor" type="DeleteContactPhotoByIdType">
+    <xs:annotation>
+      <xs:documentation>Deletes the photo of a contact signaled by its id</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteContactPhotoByIdType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="contactId" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the id of the contact whose photo we want to delete</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="delete-contact-photo" substitutionGroup="mule:abstract-message-processor" type="DeleteContactPhotoType">
+    <xs:annotation>
+      <xs:documentation>Deletes the photo associated to a given contact</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteContactPhotoType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="contact-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>an instance of  representing the contact whose photo we want deleted</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="get-groups" substitutionGroup="mule:abstract-message-processor" type="GetGroupsType">
+    <xs:annotation>
+      <xs:documentation>Returns all the groups the authenticated user has access to</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetGroupsType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="updatedMin" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Sets the minimum updated timestamp used for the query.  Only entries with an updated timestamp equal to or later than the specified timestamp will be returned.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="updatedMax" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Sets the maximum updated timestamp used for the query.  Only entries with an updated timestamp earlier than the specified timestamp will be returned.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="datetimeFormat" default="yyyy-MM-dd'T'HH:mm:ss'Z'" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the date pattern used to parse updatedMin and updatedMax</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/google-contacts" name="fetchSize" default="100" use="optional" type="integerType">
+          <xs:annotation>
+            <xs:documentation>The amount of items to fetch on each invocation to the data source</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="get-group-by-name" substitutionGroup="mule:abstract-message-processor" type="GetGroupByNameType">
+    <xs:annotation>
+      <xs:documentation>Retrieves a group with the given name</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetGroupByNameType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="groupName" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the name of the group you want</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="get-group-by-id" substitutionGroup="mule:abstract-message-processor" type="GetGroupByIdType">
+    <xs:annotation>
+      <xs:documentation>Retrieves a group by id</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetGroupByIdType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="id" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the id of the group to be returned</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="create-group" substitutionGroup="mule:abstract-message-processor" type="CreateGroupType">
+    <xs:annotation>
+      <xs:documentation>Inserts a new group</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateGroupType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="group-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>an instance of  representing the group to be inserted</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="update-group" substitutionGroup="mule:abstract-message-processor" type="UpdateGroupType">
+    <xs:annotation>
+      <xs:documentation>Updates the state of a group</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="UpdateGroupType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="group-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>an instance of  with the group's new state</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="delete-group-by-id" substitutionGroup="mule:abstract-message-processor" type="DeleteGroupByIdType">
+    <xs:annotation>
+      <xs:documentation>Deletes a group signaled by its id</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteGroupByIdType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="groupId" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>the id of the group to be deleted</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="delete-group" substitutionGroup="mule:abstract-message-processor" type="DeleteGroupType">
+    <xs:annotation>
+      <xs:documentation>Deletes the given group</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteGroupType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="group-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>an instance of  representing the group to be deleted</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="batch-contacts" substitutionGroup="mule:abstract-message-processor" type="BatchContactsType">
+    <xs:annotation>
+      <xs:documentation>This tag encloses a series of nested processors that perform operations on contacts entities</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BatchContactsType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:group ref="mule:messageProcessorOrOutboundEndpoint" maxOccurs="unbounded" minOccurs="0"></xs:group>
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="batchId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>an id to identify the batch</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="batch-groups" substitutionGroup="mule:abstract-message-processor" type="BatchGroupsType">
+    <xs:annotation>
+      <xs:documentation>This tag encloses a series of nested processors that perform operations on group entities.
+According to the API's specification the maximum number of operations allowed in one batch is 100. Thus,
+this processor will automatically group the operations in batches of 100.
+
+According to the API's specification the maximum number of operations allowed in one batch is 100. Thus,
+this processor will automatically group the operations in batches of 100.</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BatchGroupsType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:group ref="mule:messageProcessorOrOutboundEndpoint" maxOccurs="unbounded" minOccurs="0"></xs:group>
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="batchId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>an id to identify the batch</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="batch-insert" substitutionGroup="mule:abstract-message-processor" type="BatchInsertType">
+    <xs:annotation>
+      <xs:documentation>The function of this sub processor is to add insert operations into the current batch for the given entries
+
+This processor is intended to be used nested inside batch-contacts or batch-groups, although there's no syntactic
+validation inside the connector's XSD enforcing that. However, if you don't use it that way, then it's most
+likely to throw a</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BatchInsertType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="operationId" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>id to identify this particular operation inside the batch</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="entries-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>a collection with instances of  to be batch inserted</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="batch-update" substitutionGroup="mule:abstract-message-processor" type="BatchUpdateType">
+    <xs:annotation>
+      <xs:documentation>The function of this sub processor is to add updated operations into the current batch for the given entries
+
+This processor is intended to be used nested inside batch-contacts or batch-groups, although there's no syntactic
+validation inside the connector's XSD enforcing that. However, if you don't use it that way, then it's most
+likely to throw a</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BatchUpdateType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="operationId" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>id to identify this particular operation inside the batch</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="entries-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>a collection with instances of  to be batch updated</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:mule="http://www.mulesoft.org/schema/mule/core" name="batch-delete" substitutionGroup="mule:abstract-message-processor" type="BatchDeleteType">
+    <xs:annotation>
+      <xs:documentation>The function of this sub processor is to add updated operations into the current batch for the given entries
+
+This processor is intended to be used nested inside batch-contacts or batch-groups, although there's no syntactic
+validation inside the connector's XSD enforcing that. However, if you don't use it that way, then it's most
+likely to throw a</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="BatchDeleteType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute name="config-ref" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="operationId" use="required" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>id to identify this particular operation inside the batch</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="entries-ref" default="#[payload]" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>a collection with instances of  to be batch updated</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="accessTokenId" use="optional" type="xs:string">
+          <xs:annotation>
+            <xs:documentation>The id of the access token that will be used to authenticate the call</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="AccessTypeEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="online">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="offline">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="ForcePromptEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="auto">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="force">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="SortOrderEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ASCENDING">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DESCENDING">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="NONE">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="OrderByEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="EDITED">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="LAST_MODIFIED">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="NONE">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="OnNoTokenPolicyEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="EXCEPTION"></xs:enumeration>
+          <xs:enumeration value="STOP_FLOW"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="integerType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:integer"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="decimalType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:decimal"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="floatType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:float"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="doubleType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:double"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="dateTimeType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:dateTime"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="longType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:long"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="byteType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:byte"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="booleanType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:boolean"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="anyUriType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:anyURI"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="charType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="1"></xs:minLength>
+          <xs:maxLength value="1"></xs:maxLength>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+</xs:schema>

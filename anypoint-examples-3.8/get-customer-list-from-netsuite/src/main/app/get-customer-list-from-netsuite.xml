@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:netsuite="http://www.mulesoft.org/schema/mule/netsuite" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/netsuite http://www.mulesoft.org/schema/mule/netsuite/current/mule-netsuite.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    
+    <netsuite:config account="${netsuite.account}" doc:name="Netsuite" email="${netsuite.email}" name="Netsuite" password="${netsuite.password}" roleId="${netsuite.roleId}"/>
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+  
+    <flow name="get-customer-list-from-netsuiteFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="HTTP" path="/customers"/>
+        <expression-filter doc:name="Filters requests without lastName specified in URL" expression="#[message.inboundProperties[&quot;http.query.params&quot;][&quot;lastName&quot;] != null]"/>
+        <netsuite:query-records config-ref="Netsuite" doc:name="Get customer list" query="dsql:SELECT email,firstName,lastName FROM CUSTOMER WHERE lastName like '#[message.inboundProperties[&quot;http.query.params&quot;][&quot;lastName&quot;]]%' ORDER BY lastName ASC"/>
+        <dw:transform-message doc:name="Customer List to XML" metadata:id="2c718a72-b963-408c-a7b9-5f07a12e8090">
+            <dw:input-payload doc:sample="list_Customer.dwl"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+div: {
+  ( payload map {
+    line: {
+      tr: {
+        td: $.lastName,
+        td: $.firstName,
+        td: $.email
+      }
+    }
+  })
+} unless (payload is :empty) otherwise {
+	line: {
+		tr:	{
+			td: 'No customers found'
+		}
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <object-to-string-transformer doc:name="Object to String" mimeType="text/html"/>
+        <parse-template doc:name="Generate HTML response" location="./src/main/resources/customer/index.html"/>
+    </flow>
+</mule>

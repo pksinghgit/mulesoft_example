@@ -1,0 +1,7 @@
+<ns1:Billxmlns:ns1="http://www.mule-health.com/SOA/model/1.0">
+<costPerNight>100</costPerNight>
+<initialStayEstimate>5</initialStayEstimate>
+<runningTotal>500</runningTotal>
+<status>ADMITTED</status>
+</ns1:Bill>
+</ns0:admitSubjectResponse></soap:Body></soap:Envelope>

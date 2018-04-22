@@ -1,0 +1,13 @@
+{
+    "inputMessageMetadata": {
+        "inboundProperties": {
+            "http.query.params": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "inboundProperties"
+            }
+        }
+    },
+    "outputMessageMetadata": {},
+    "id": "711a1bba-68b9-4a72-9f5b-dc077ea13256",
+    "version": "5.2.0.0"
+}

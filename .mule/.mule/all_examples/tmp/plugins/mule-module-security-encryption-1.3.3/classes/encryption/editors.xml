@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<namespace xmlns="http://www.mulesoft.org/schema/mule/tooling.attributes" xmlns:mule="http://www.mulesoft.org/schema/mule/core" url="http://www.mulesoft.org/schema/mule/encryption" prefix="encryption">
+  <global-cloud-connector versions="[3.5.4,8.0.0]" caption="Encryption" description="" icon="" localId="parentConfig" image="" abstract="true" extends="http://www.mulesoft.org/schema/mule/encryption/abstractEncryptionConnectorGeneric"></global-cloud-connector>
+  <global-cloud-connector versions="[3.5.4,8.0.0]" caption="Encryption" description="Global Encryption configuration information." icon="icons/small/encryption-connector-24x16.png" localId="config" image="icons/large/encryption-connector-48x32.png" abstract="false" extends="http://www.mulesoft.org/schema/mule/encryption/parentConfig" connectivityTesting="off">
+    <attribute-category caption="General" description="Encryption configuration properties.">
+      <group id="encryptionGenericProperties" caption="Basic Settings">
+        <name name="name" caption="Name" description="Give a name to this configuration so it can be later referenced by config-ref." required="true"></name>
+      </group>
+      <group id="general" caption="General">
+        <enum defaultValue="JCE_ENCRYPTER" allowsCustom="true" name="defaultEncrypter" caption="Default Encrypter" description="
+The encryption configuration used by default.
+." supportsExpressions="true" required="false" javaType="org.mule.modules.security.encryption.EncrypterType">
+          <option value="JCE_ENCRYPTER"></option>
+          <option value="PGP_ENCRYPTER"></option>
+          <option value="XML_ENCRYPTER"></option>
+        </enum>
+        <boolean defaultValue="false" name="enableLanguage" caption="Enable Language" description="
+Set to TRUE if this module can be use with MEL
+." supportsExpressions="true" required="false" javaType="boolean"></boolean>
+      </group>
+    </attribute-category>
+    <attribute-category caption="Xml Encrypter" description="Xml Encrypter.">
+      <group id="xML encrypter Configuration" caption="XML encrypter Configuration">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/encryption/xml-encrypter-config" caption="Xml Encrypter Config Reference" required="false" javaType="org.mule.modules.security.encryption.encrypters.XmlEncrypterConfiguration"></childElement>
+      </group>
+    </attribute-category>
+    <attribute-category caption="Jce Encrypter" description="JCE Encrypter.">
+      <group id="jCE Configuration" caption="JCE Configuration">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/encryption/jce-encrypter-config" caption="Jce Encrypter Config Reference" required="false" javaType="org.mule.modules.security.encryption.encrypters.JCEEncrypterConfiguration"></childElement>
+      </group>
+    </attribute-category>
+    <attribute-category caption="Pgp Encrypter" description="PGP Encrypter.">
+      <group id="pGP Configuration" caption="PGP Configuration">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/encryption/pgp-encrypter-config" caption="Pgp Encrypter Config Reference" required="false" javaType="org.mule.modules.security.encryption.encrypters.PGPEncrypterConfiguration"></childElement>
+      </group>
+    </attribute-category>
+  </global-cloud-connector>
+  <cloud-connector caption="Abstractencryptionconnectorgeneric" description="Interact with Encryption." icon="icons/small/encryption-connector-24x16.png" localId="abstractEncryptionConnectorGeneric" image="icons/large/encryption-connector-48x32.png" category="org.mule.tooling.category.security" abstract="true">
+    <attribute-category caption="General" description="General.">
+      <group id="abstractEncryptionConnectorGeneric" caption="Basic Settings">
+        <globalRef requiredType="http://www.mulesoft.org/schema/mule/encryption/config" name="config-ref" caption="Connector Configuration" description="Specify which configuration to use for this invocation." required="true"></globalRef>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector versions="[3.5.4,8.0.0]" aliasId="org.mule.tooling.ui.modules.core.pattern.encryption" caption="Encryption" description="Module for Payload encryption.." icon="icons/small/encryption-connector-24x16.png" localId="encryption-connector" image="icons/large/encryption-connector-48x32.png" category="org.mule.tooling.category.security" extends="http://www.mulesoft.org/schema/mule/encryption/abstractEncryptionConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="encryptionConnectorGeneric" caption="Basic Settings">
+        <modeSwitch alwaysCombo="true" name="Encryption operations to execute" caption="Operation" description="Operation.">
+          <mode modeId="http://www.mulesoft.org/schema/mule/encryption/decrypt" modeLabel="Decrypt"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/encryption/encrypt" modeLabel="Encrypt"></mode>
+        </modeSwitch>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.lang.Object" caption="Decrypt" icon="icons/small/encryption-connector-24x16.png" localId="decrypt" image="icons/large/encryption-connector-48x32.png" category="org.mule.tooling.category.security" abstract="true" extends="http://www.mulesoft.org/schema/mule/encryption/abstractEncryptionConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string defaultValue="#[payload]" name="input-ref" caption="Input expression" description="Message that has to be decrypted." required="false" javaType="java.lang.Object"></string>
+      </group>
+      <group id="encrypter Strategy to use for decrypt" caption="Encrypter Strategy to use for decrypt">
+        <enum allowsCustom="true" name="using" caption="Select encrypter" description="Which encrypter needs to be used in the processor call." supportsExpressions="true" required="false" javaType="org.mule.modules.security.encryption.EncrypterType">
+          <option value="JCE_ENCRYPTER"></option>
+          <option value="PGP_ENCRYPTER"></option>
+          <option value="XML_ENCRYPTER"></option>
+        </enum>
+      </group>
+      <group id="jCE encrypter Strategy Configuration for operation" caption="JCE encrypter Strategy Configuration for operation">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/encryption/jce-encrypter" caption="Jce Encrypter Reference" required="false" javaType="org.mule.modules.security.encryption.encrypters.JCEEncrypterOverrideConfiguration"></childElement>
+      </group>
+      <group id="xML encrypter Strategy Configuration for operation" caption="XML encrypter Strategy Configuration for operation">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/encryption/xml-encrypter" caption="Xml Encrypter Reference" required="false" javaType="org.mule.modules.security.encryption.encrypters.XmlEncrypterOverrideConfiguration"></childElement>
+      </group>
+      <group id="pGP encrypter Strategy Configuration for operation" caption="PGP encrypter Strategy Configuration for operation">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/encryption/pgp-encrypter" caption="Pgp Encrypter Reference" required="false" javaType="org.mule.modules.security.encryption.encrypters.PGPEncrypterOverrideConfiguration"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.lang.Object" caption="Encrypt" icon="icons/small/encryption-connector-24x16.png" localId="encrypt" image="icons/large/encryption-connector-48x32.png" category="org.mule.tooling.category.security" abstract="true" extends="http://www.mulesoft.org/schema/mule/encryption/abstractEncryptionConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string defaultValue="#[payload]" name="input-ref" caption="Input Reference" description="Input that has to be encrypted. By default is the payload." required="false" javaType="java.lang.Object"></string>
+      </group>
+      <group id="encrypter Strategy to use for encrypt" caption="Encrypter Strategy to use for encrypt">
+        <enum allowsCustom="true" name="using" caption="Select encrypter" description="Which encrypter needs to be used in the processor call." supportsExpressions="true" required="false" javaType="org.mule.modules.security.encryption.EncrypterType">
+          <option value="JCE_ENCRYPTER"></option>
+          <option value="PGP_ENCRYPTER"></option>
+          <option value="XML_ENCRYPTER"></option>
+        </enum>
+      </group>
+      <group id="jCE encrypter Strategy Configuration for operation" caption="JCE encrypter Strategy Configuration for operation">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/encryption/jce-encrypter" caption="Jce Encrypter Reference" required="false" javaType="org.mule.modules.security.encryption.encrypters.JCEEncrypterOverrideConfiguration"></childElement>
+      </group>
+      <group id="xML encrypter Strategy Configuration for operation" caption="XML encrypter Strategy Configuration for operation">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/encryption/xml-encrypter" caption="Xml Encrypter Reference" required="false" javaType="org.mule.modules.security.encryption.encrypters.XmlEncrypterOverrideConfiguration"></childElement>
+      </group>
+      <group id="pGP encrypter Strategy Configuration for operation" caption="PGP encrypter Strategy Configuration for operation">
+        <childElement inplace="true" allowMultiple="false" name="http://www.mulesoft.org/schema/mule/encryption/pgp-encrypter" caption="Pgp Encrypter Reference" required="false" javaType="org.mule.modules.security.encryption.encrypters.PGPEncrypterOverrideConfiguration"></childElement>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <nested xmlname="jce-encrypter" caption="" description="" localId="jce-encrypter" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Jce Encrypter Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="key" caption="Key" description="
+Key used for encryption or decryption.
+
+
+If the keystore is defined then this value is the key stored in the keystore.
+
+
+If the keystore is not defined then this is taken as plain key for encryption and has to be Base64 encrypted.
+." required="false" controlled="complex" javaType="java.lang.String"></string>
+    <password name="keyPassword" caption="Key Password" description="The key password to read the key stored in the keystore. If the keystore is not specified then this value 
+is not considered.." required="false" controlled="complex" javaType="java.lang.String"></password>
+    <enum allowsCustom="true" name="algorithm" caption="Algorithm" description="
+The encryption algorithm used
+
+
+Allowed algorithms:
+
+
+
+AES
+Blowfish
+DES
+DESede
+Camellia
+CAST5
+CAST6
+Noekeon
+Rijndael
+SEED
+Serpent
+Skipjack
+TEA
+Twofish
+XTEA
+RC2
+RC5
+RC6
+PBEWithMD5AndDES
+RSA
+
+
+
+Default algorithm: AES
+." supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.security.encryption.binary.jce.algorithms.EncryptionAlgorithm">
+      <option value="AES"></option>
+      <option value="Blowfish"></option>
+      <option value="CAST5"></option>
+      <option value="CAST6"></option>
+      <option value="Camellia"></option>
+      <option value="DES"></option>
+      <option value="DESede"></option>
+      <option value="Noekeon"></option>
+      <option value="RC2"></option>
+      <option value="RC5"></option>
+      <option value="RC6"></option>
+      <option value="RSA"></option>
+      <option value="Rijndael"></option>
+      <option value="SEED"></option>
+      <option value="Serpent"></option>
+      <option value="Skipjack"></option>
+      <option value="TEA"></option>
+      <option value="Twofish"></option>
+      <option value="XTEA"></option>
+    </enum>
+    <enum allowsCustom="true" name="encryptionMode" caption="Encryption Mode" description="
+The encryption mode used.
+
+
+
+CBC
+CFB
+ECB
+OFB
+
+
+Default mode: CBC." supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.security.encryption.binary.jce.algorithms.EncryptionMode">
+      <option value="CBC"></option>
+      <option value="CFB"></option>
+      <option value="ECB"></option>
+      <option value="OFB"></option>
+    </enum>
+  </nested>
+  <nested xmlname="jce-encrypter-config" caption="" description="" localId="jce-encrypter-config" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Jce Encrypter Config Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="key" caption="Key" description="
+Key used for encryption or decryption.
+
+
+If the keystore is defined then this value is the key stored in the keystore.
+
+
+If the keystore is not defined then this is taken as plain key for encryption and has to be Base64 encrypted.
+." required="false" controlled="complex" javaType="java.lang.String"></string>
+    <file name="keystorePath" caption="Keystore Path" description="
+Keystore path. Two types of keystore are supported JCEKS and JKS
+." required="false" controlled="complex" javaType="java.lang.String"></file>
+    <password name="keystorePassword" caption="Keystore Password" description="The keystore password.." required="false" controlled="complex" javaType="java.lang.String"></password>
+    <password name="keyPassword" caption="Key Password" description="The key password to read the key stored in the keystore. If the keystore is not specified then this value 
+is not considered.." required="false" controlled="complex" javaType="java.lang.String"></password>
+    <enum defaultValue="AES" allowsCustom="true" name="algorithm" caption="Algorithm" description="
+The encryption algorithm used
+
+
+Allowed algorithms:
+
+
+
+AES
+Blowfish
+DES
+DESede
+Camellia
+CAST5
+CAST6
+Noekeon
+Rijndael
+SEED
+Serpent
+Skipjack
+TEA
+Twofish
+XTEA
+RC2
+RC5
+RC6
+RSA
+
+
+
+Default algorithm: AES
+." supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.security.encryption.binary.jce.algorithms.EncryptionAlgorithm">
+      <option value="AES"></option>
+      <option value="Blowfish"></option>
+      <option value="CAST5"></option>
+      <option value="CAST6"></option>
+      <option value="Camellia"></option>
+      <option value="DES"></option>
+      <option value="DESede"></option>
+      <option value="Noekeon"></option>
+      <option value="RC2"></option>
+      <option value="RC5"></option>
+      <option value="RC6"></option>
+      <option value="RSA"></option>
+      <option value="Rijndael"></option>
+      <option value="SEED"></option>
+      <option value="Serpent"></option>
+      <option value="Skipjack"></option>
+      <option value="TEA"></option>
+      <option value="Twofish"></option>
+      <option value="XTEA"></option>
+    </enum>
+    <enum defaultValue="CBC" allowsCustom="true" name="encryptionMode" caption="Encryption Mode" description="
+The encryption mode used.
+
+
+
+CBC
+CFB
+ECB
+OFB
+
+
+Default mode: CBC." supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.security.encryption.binary.jce.algorithms.EncryptionMode">
+      <option value="CBC"></option>
+      <option value="CFB"></option>
+      <option value="ECB"></option>
+      <option value="OFB"></option>
+    </enum>
+  </nested>
+  <nested xmlname="pgp-encrypter" caption="" description="" localId="pgp-encrypter" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Pgp Encrypter Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="principal" caption="Principal" description="The principal.." required="false" controlled="complex" javaType="java.lang.String"></string>
+  </nested>
+  <nested xmlname="pgp-encrypter-config" caption="" description="" localId="pgp-encrypter-config" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Pgp Encrypter Config Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <file name="publicKeyRingFileName" caption="Public Key Ring File Name" description="The public key ring file path.." required="false" controlled="complex" javaType="java.lang.String"></file>
+    <file name="secretKeyRingFileName" caption="Secret Key Ring File Name" description="The secret key ring file path.." required="false" controlled="complex" javaType="java.lang.String"></file>
+    <string name="secretAliasId" caption="Secret Alias Id" description="The secret alias id.." required="false" controlled="complex" javaType="java.lang.String"></string>
+    <password name="secretPassphrase" caption="Secret Passphrase" description="The secret passphrase.." required="false" controlled="complex" javaType="java.lang.String"></password>
+    <string name="principal" caption="Principal" description="The principal.." required="false" controlled="complex" javaType="java.lang.String"></string>
+  </nested>
+  <nested xmlname="xml-encrypter" caption="" description="" localId="xml-encrypter" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Xml Encrypter Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="key" caption="Key" description="
+Key used for encryption or decryption.
+
+
+If the keystore is defined then this value is the key stored in the keystore.
+
+
+If the keystore is not defined then this is taken as plain key for encryption and has to be Base64 encrypted.
+." required="false" controlled="complex" javaType="java.lang.String"></string>
+    <password name="keyPassword" caption="Key Password" description="The key password to read the key stored in the keystore. If the keystore is not specified then this value 
+is not considered.." required="false" controlled="complex" javaType="java.lang.String"></password>
+    <string name="xpath" caption="Xpath" description="The xml xpath that has to be encrypted.." required="false" controlled="complex" javaType="java.lang.String"></string>
+    <enum allowsCustom="true" name="algorithm" caption="Algorithm" description="The encryption algorithm to encrypt a xml element
+Allowed values AES_128, AES_192, AES_256 (default), TRIPLEDES." supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.security.encryption.xml.XmlEncryptionAlgorithm">
+      <option value="AES_128"></option>
+      <option value="AES_192"></option>
+      <option value="AES_256"></option>
+      <option value="TRIPLEDES"></option>
+    </enum>
+  </nested>
+  <nested xmlname="xml-encrypter-config" caption="" description="" localId="xml-encrypter-config" abstract="false">
+    <radioBoolean name="useReference" caption="Reference or expression" description="Provide a reference to a bean or use an expression" fillLine="true"></radioBoolean>
+    <string name="ref" caption="Xml Encrypter Config Reference" description="" controlled="useReference"></string>
+    <radioBoolean name="complex" caption="Define attributes" description="Define this element's attributes" fillLine="true"></radioBoolean>
+    <string name="key" caption="Key" description="
+Key used for encryption or decryption.
+
+
+If the keystore is defined then this value is the key stored in the keystore.
+
+
+If the keystore is not defined then this is taken as plain key for encryption and has to be Base64 encrypted.
+." required="false" controlled="complex" javaType="java.lang.String"></string>
+    <file name="keystorePath" caption="Keystore Path" description="
+Keystore path. Two types of keystore are supported JCEKS and JKS
+." required="false" controlled="complex" javaType="java.lang.String"></file>
+    <password name="keystorePassword" caption="Keystore Password" description="The keystore password.." required="false" controlled="complex" javaType="java.lang.String"></password>
+    <password name="keyPassword" caption="Key Password" description="The key password to read the key stored in the keystore. If the keystore is not specified then this value 
+is not considered.." required="false" controlled="complex" javaType="java.lang.String"></password>
+    <string name="xpath" caption="Xpath" description="The xml xpath that has to be encrypted.." required="false" controlled="complex" javaType="java.lang.String"></string>
+    <enum defaultValue="AES_256" allowsCustom="true" name="algorithm" caption="Algorithm" description="The encryption algorithm to encrypt a xml element
+Allowed values AES_128, AES_192, AES_256 (default), TRIPLEDES." supportsExpressions="true" required="false" controlled="complex" javaType="org.mule.security.encryption.xml.XmlEncryptionAlgorithm">
+      <option value="AES_128"></option>
+      <option value="AES_192"></option>
+      <option value="AES_256"></option>
+      <option value="TRIPLEDES"></option>
+    </enum>
+  </nested>
+</namespace>

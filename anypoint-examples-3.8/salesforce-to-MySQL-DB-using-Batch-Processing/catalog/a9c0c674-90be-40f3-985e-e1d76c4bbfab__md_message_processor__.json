@@ -1,0 +1,16 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "SfdcContactMap"
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "DbContactMap"
+        }
+    },
+    "id": "a9c0c674-90be-40f3-985e-e1d76c4bbfab",
+    "version": "5.2.0.0"
+}

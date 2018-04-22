@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:ajax="http://www.mulesoft.org/schema/mule/ajax" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd http://www.mulesoft.org/schema/mule/ajax http://www.mulesoft.org/schema/mule/ajax/current/mule-ajax.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+   <ajax:connector doc:name="Ajax" name="ajaxServer" resourceBase="${app.home}/docroot" serverUrl="http://0.0.0.0:8090/orders"/>
+   <http:request-config doc:name="HTTP Request Configuration" host="0.0.0.0" name="HTTP_Request_Configuration"/>
+   <flow name="orderRequest">
+      <ajax:inbound-endpoint channel="/orders/request" connector-ref="ajaxServer" doc:name="/orders/request" responseTimeout="10000"/>
+        <dw:transform-message doc:name="JSON to XML" metadata:id="3489f01e-5803-4af8-a991-dcede8c33731">
+            <dw:input-payload doc:sample="json_1.json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+order: {
+  orderId: payload.orderId,
+  customer: payload.customer,
+  orderItems: payload.orderItems.item
+}]]></dw:set-payload>
+        </dw:transform-message>
+      <object-to-string-transformer doc:name="Convert Object to String"/>
+      <mulexml:xslt-transformer doc:name="XML to Soap Envelope" maxActiveTransformers="5" maxIdleTransformers="2" xsl-file="XmlToSoapEnvelope.xsl"/>
+      <object-to-string-transformer doc:name="Convert Object to String"/>
+      <http:request config-ref="HTTP_Request_Configuration" doc:name="HTTP" method="POST" path="orders" port="1080" responseTimeout="10000000"/>
+      <object-to-string-transformer doc:name="Convert Object to String"/>
+      <mulexml:xslt-transformer doc:name="Soap Envelope to XML" maxActiveTransformers="5" maxIdleTransformers="2" xsl-file="SoapEnvelopeToBodyChild.xslt"/>
+      <object-to-string-transformer doc:name="Convert Object to String"/>
+        <dw:transform-message doc:name="XML to JSON" metadata:id="4c41eed5-cc80-4015-9d14-db08dbea8ca8">
+            <dw:input-payload doc:sample="summary_1.xml"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+	orderId:  payload.summary.orderId,
+	customer: payload.summary.customer,
+	orderItems: payload.summary.orderItems 
+}]]></dw:set-payload>
+        </dw:transform-message>
+      <object-to-string-transformer doc:name="Convert Object to String"/>
+   </flow>
+   <flow name="orderProxy">
+      <ajax:inbound-endpoint channel="/orders/soap" connector-ref="ajaxServer" doc:name="/orders/soap" responseTimeout="10000"/>
+      <http:request config-ref="HTTP_Request_Configuration" doc:name="HTTP" method="POST" path="orders" port="1080"/>
+      <object-to-string-transformer doc:name="Convert Object to String"/>
+   </flow>
+   <flow name="manufacturers">
+      <ajax:inbound-endpoint channel="/orders/manufacturers" connector-ref="ajaxServer" doc:name="/orders/manufacturers" responseTimeout="10000"/>
+      <expression-transformer doc:name="Create Manufacturers" expression="#['[&quot;Samsung&quot;,&quot;Philips&quot;,&quot;Sony&quot;]']"/>
+   </flow>
+</mule>

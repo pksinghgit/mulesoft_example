@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ws="http://www.mulesoft.org/schema/mule/ws" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ws http://www.mulesoft.org/schema/mule/ws/current/mule-ws.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+	<spring:beans>
+		<spring:bean id="objectStore_FRtoSNUserSync"
+			class="org.mule.util.store.SimpleMemoryObjectStore" />
+	</spring:beans>
+    <db:mysql-config name="MySQL_Configuration1" host="${db.muleHost}" port="${db.mulePort}" user="${db.muleUsername}" password="${db.mulePwd}" database="${db.muleName}" doc:name="MySQL Configuration"/>
+
+	<flow name="createuserFlow">
+		<!-- <poll doc:name="Poll">
+			<fixed-frequency-scheduler frequency="${poll.purge.frequency}" />
+            <flow-ref name="createuserSub_Flow" doc:name="createuserSub_Flow"/>
+
+		</poll> -->
+		<set-variable variableName="lastJobDateTime"
+			value="#[server.dateTime.withTimeZone('GMT').format(&quot;yyyy-MM-dd HH:mm:ss&quot;).toString()]"
+			doc:name="lastJobDateTime Variable" />
+		<logger
+			message="END: DataSync_Flow completed with total records processed: #[flowVars.recordCount]:::: last JobDatetime in EDT::::::::::::# [flowVars.lastJobDateTime]
+			Flow::::::::::::lastJobDateTime:::::::::# flowVars.lastJobDateTime]:::::::::::::::::#[payload]"
+			level="INFO" doc:name="Logger" />
+        <scripting:component doc:name="Groovy">
+            <scripting:script engine="Groovy"><![CDATA[def gmt = message.getInvocationProperty('lastJobDateTime')
+		String[] splited = gmt.split("\\s+");
+		String res = splited[1];
+		String[] time = res.split(":");
+		String Newres = time[0]; 
+		int result = Integer.parseInt(Newres);
+		int edttime = result - 04;
+		String et = Integer.toString(edttime);
+		String c = splited[0];
+		String concat =c.concat(" "+et+":"+time[1]+":"+time[2]);
+		message.setInvocationProperty('convertedEDTTime',concat);
+		
+		]]></scripting:script>
+        </scripting:component>
+        <logger message="Converted EDT time is ::::::::::#[flowVars.convertedEDTTime]" level="INFO" doc:name="Logger"/>
+			
+            <db:update config-ref="MySQL_Configuration1" doc:name="Database">
+            <db:parameterized-query><![CDATA[update user_job_tracker set job_LastRuntime=#[flowVars.convertedEDTTime] where job_Name = "user_upsert_job"]]></db:parameterized-query>
+
+
+
+            </db:update>
+        <logger message="LastJobDateTime inserted successfully !!!!!!!!!!!!!!!!!!!!!!!" level="INFO" doc:name="Logger"/> 
+
+	</flow>
+    <sub-flow name="createuserSub_Flow">
+        <db:select config-ref="MySQL_Configuration1" doc:name="Database">
+            <db:parameterized-query><![CDATA[${mule.lastruntime.query}]]></db:parameterized-query>
+
+
+
+        </db:select>
+        <set-variable variableName="lastRunDatetime" value="#[payload[0].job_LastRuntime]" doc:name="lastRunDatetime"/>
+        <batch:execute name="batch_job_insertion_checkBatch" doc:name="batch_job_insertion_checkBatch"/>
+    </sub-flow>
+	<batch:job name="batch_job_insertion_checkBatch">
+		<batch:input>
+            <db:select config-ref="MySQL_Configuration1" doc:name="Database">
+                <db:parameterized-query><![CDATA[${mdm.data.query}]]></db:parameterized-query>
+
+
+            </db:select>
+
+			<logger message="Database Records::::::::::;;#[payload]"
+				level="INFO" doc:name="Logger" />
+		</batch:input>
+		<batch:process-records>
+			<batch:step name="Batch_Step2">
+                <choice doc:name="Choice">
+                    <when expression="#[payload.size()!=0]">
+                       <!--  <dw:transform-message doc:name="Transform Message">
+                            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml skipNullOn="everywhere"
+%namespace ns0 http://www.service-now.com/u_create_user
+{
+	ns0#insert: {
+		ns0#u_adaccountactive: payload.adAccountActive,
+		ns0#u_city: payload.city,
+		ns0#u_country: payload.country,
+		ns0#u_firstname: payload.firstName,
+		ns0#u_jobtitle: payload.jobTitle,
+		ns0#u_lastname: payload.lastName,
+		ns0#u_localecd: payload.LocaleCd,
+		ns0#u_mobile: payload.mobile,
+		ns0#u_orgname: payload.OrgName,
+		ns0#u_postaladdress: payload.postalAddress,
+		ns0#u_postalcode: payload.postalCode,
+		ns0#u_primaryemail: payload.primaryEmail,
+		ns0#u_state: payload.state,
+		ns0#u_telephonenumber: payload.telephoneNumber,
+		ns0#u_userguid: payload.ADobjectGUID,
+		ns0#u_samaccountname:payload.UserName
+	}
+}]]></dw:set-payload>
+                        </dw:transform-message> -->
+                        
+                        <dw:transform-message doc:name="Transform Message">
+                            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml skipNullOn="everywhere"
+%namespace ns0 http://www.service-now.com/u_create_user
+---
+{
+	ns0#insert: {
+		ns0#u_adaccountactive: payload.adAccountActive,
+		ns0#u_city: payload.city,
+		ns0#u_country: payload.country,
+		ns0#u_firstname: payload.firstName,
+		ns0#u_jobtitle: payload.jobTitle,
+		ns0#u_lastname: payload.lastName,
+		ns0#u_localecd: payload.LocaleCd,
+		ns0#u_mobile: payload.mobile,
+		ns0#u_orgname: payload.OrgName,
+		ns0#u_postaladdress: payload.postalAddress,
+		ns0#u_postalcode: payload.postalCode,
+		ns0#u_primaryemail: payload.primaryEmail,
+		ns0#u_state: payload.state,
+		ns0#u_telephonenumber: payload.telephoneNumber,
+		ns0#u_userguid: payload.ADobjectGUID,
+		ns0#u_samaccountname:payload.UserName,
+		ns0#u_physicallocation:payload.physicallocation,
+		ns0#u_usersource:null when  payload.userSource==null otherwise ("ldap" ++ payload.userSource),
+		ns0#u_upn:payload.upn,
+		ns0#u_usermanager:payload.usermanager
+	}
+}]]></dw:set-payload>
+                        </dw:transform-message>
+                        <ws:consumer config-ref="Create_service_Consumer" operation="insert" doc:name="Web Service Consumer"/>
+                        <mulexml:dom-to-xml-transformer doc:name="DOM to XML"/>
+                        <logger message="After Webservice consumer done :::::::::::::::::::::::::::::::#[payload]" level="INFO" doc:name="Logger"/>
+                    </when>
+                    <otherwise>
+                        <logger message="No Records found :::::::::::::::::::#[payload]" level="INFO" doc:name="Logger"/>
+                    </otherwise>
+                </choice>
+
+			</batch:step>
+		</batch:process-records>
+		<batch:on-complete>
+			<logger message="Number of failed Records: #[payload.failedRecords]"
+				level="INFO" doc:name="Failed Records" />
+			<logger message="Number of sucessfull Records: #[payload.successfulRecords]"
+				level="INFO" doc:name="Sucessfull Records" />
+			<logger message="ElapsedTime #[payload.getElapsedTimeInMillis()]"
+				level="INFO" doc:name="Elapsed Time" />
+				
+		</batch:on-complete>
+	</batch:job>
+	<flow name="trigger_CreateDataSync_Flow"
+		doc:description="This flow is the entry point to the Batch job: user  Sync"
+		processingStrategy="synchronous">
+        <http:listener config-ref="HTTP_Listener_Configuration_CompComDomain" path="/batch" doc:name="HTTP"/>
+        <db:select config-ref="MySQL_Configuration1" doc:name="Database">
+            <db:parameterized-query><![CDATA[select job_LastRuntime from user_job_tracker where job_Name='user_upsert_job';]]></db:parameterized-query>
+
+
+        </db:select>
+		<!-- <http:listener config-ref="HTTP_Listener_Configuration_CompComDomain"
+			path="/userBatch" doc:name="HTTP" /> -->
+		<set-variable variableName="lastRunDatetime"
+			value="#[payload[0].job_LastRuntime]"
+			doc:name="lastRunDatetime" />
+		<choice doc:name="Choice">
+			<when expression="#[flowVars.lastRunDatetime!=null]">
+				<set-variable variableName="mdmHwQueryDatetime"
+					value="#[flowVars.lastRunDatetime]" doc:name="lastRunDatetime" />
+			</when>
+			<otherwise>
+				<set-variable variableName="mdmHwQueryDatetime"
+					value="#[server.dateTime.withTimeZone('GMT').format(&quot;yyyy-MM-dd'T'HH:mm:ss&quot;).toString()]"
+					doc:name="lastRunDatetime" />
+			</otherwise>
+		</choice>
+		<batch:execute name="batch_job_insertion_checkBatch"
+			doc:name="trigger_CreateDataSync_Flow" />
+		<exception-strategy ref="Cron_Catch_Exception_Strategy"
+			doc:name="catch Exception and call defaultChoiceExceptionStrategy" />
+	</flow>
+	<choice-exception-strategy name="Cron_Catch_Exception_Strategy">
+		<catch-exception-strategy when="#[exception.causedBy(java.lang.Exception)]"
+			doc:name="Catch Exception Strategy">
+			<logger level="ERROR" doc:name="Logger" message="#[payload]"/>
+		</catch-exception-strategy>
+	</choice-exception-strategy>
+</mule>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<namespace xmlns="http://www.mulesoft.org/schema/mule/tooling.attributes" xmlns:mule="http://www.mulesoft.org/schema/mule/core" url="http://www.mulesoft.org/schema/mule/custom-rest" prefix="custom-rest">
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="CustomREST" description="" icon="" localId="parentConfig" image="" abstract="true" extends="http://www.mulesoft.org/schema/mule/custom-rest/abstractCustom-restConnectorGeneric"></global-cloud-connector>
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="CustomREST: HttpBasicAuth" description="Global HttpBasicAuth configuration information." icon="icons/theme.classic/custom-rest-connector-small.png" localId="config" image="icons/theme.classic/custom-rest-connector-large.png" abstract="false" extends="http://www.mulesoft.org/schema/mule/custom-rest/parentConfig" connectivityTesting="off" metaData="static" metaDataKeyDisplay="DISPLAY_NAME" supportsUserDefinedMetaData="false">
+    <attribute-category caption="General" description="Custom-rest configuration properties.">
+      <group id="custom-restGenericProperties" caption="Basic Settings">
+        <name name="name" caption="Name" description="Give a name to this configuration so it can be later referenced by config-ref." required="true"></name>
+      </group>
+      <group id="connection" caption="Connection">
+        <string name="username" caption="Username" description="" required="true" javaType="java.lang.String"></string>
+        <string name="password" caption="Password" description="" required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </global-cloud-connector>
+  <cloud-connector caption="Abstractcustom-restconnectorgeneric" description="Interact with Custom-rest." icon="icons/theme.classic/custom-rest-connector-small.png" localId="abstractCustom-restConnectorGeneric" image="icons/theme.classic/custom-rest-connector-large.png" abstract="true">
+    <attribute-category caption="General" description="General.">
+      <group id="abstractCustom-restConnectorGeneric" caption="Basic Settings">
+        <globalRef requiredType="http://www.mulesoft.org/schema/mule/custom-rest/config" name="config-ref" caption="Connector Configuration" description="Specify which configuration to use for this invocation." required="true"></globalRef>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector versions="[3.5.0,8.0.0]" aliasId="org.mule.tooling.ui.modules.core.pattern.custom-rest" caption="CustomREST" description="" icon="icons/theme.classic/custom-rest-connector-small.png" localId="custom-rest-connector" image="icons/theme.classic/custom-rest-connector-large.png" extends="http://www.mulesoft.org/schema/mule/custom-rest/abstractCustom-restConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="custom-restConnectorGeneric" caption="Basic Settings">
+        <modeSwitch alwaysCombo="true" name="Custom-rest operations to execute" caption="Operation" description="Operation.">
+          <no-operation abstractElement="http://www.mulesoft.org/schema/mule/custom-rest/abstractCustom-restConnectorGeneric" versions="[3.5.0,8.0.0]" connector-name="processor"></no-operation>
+          <mode modeId="http://www.mulesoft.org/schema/mule/custom-rest/get-state" modeLabel="Get state"></mode>
+          <mode modeId="http://www.mulesoft.org/schema/mule/custom-rest/greet" modeLabel="Greet"></mode>
+        </modeSwitch>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.lang.String" caption="Get State" icon="icons/theme.classic/custom-rest-connector-small.png" localId="get-state" image="icons/theme.classic/custom-rest-connector-large.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/custom-rest/abstractCustom-restConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="state" caption="State" description="" required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" caption="Greet" icon="icons/theme.classic/custom-rest-connector-small.png" localId="greet" image="icons/theme.classic/custom-rest-connector-large.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/custom-rest/abstractCustom-restConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="friend" caption="Friend" description="Name of a friend we want to greet." required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+</namespace>

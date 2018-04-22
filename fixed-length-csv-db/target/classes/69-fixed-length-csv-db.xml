@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:quartz="http://www.mulesoft.org/schema/mule/quartz" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+        xmlns:spring="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/quartz http://www.mulesoft.org/schema/mule/quartz/current/mule-quartz.xsd">
+
+    <http:listener-config name="HTTP_Listener_Configuration1" host="0.0.0.0" port="8081"  doc:name="HTTP Listener Configuration"/>
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="product" password="product" database="product" doc:name="MySQL Configuration"/>
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8082" doc:name="HTTP Listener Configuration"/>
+    <flow name="69-fixed-length-csv-dbFlow">
+        <file:inbound-endpoint path="C:\Users\kavya\Desktop\XMLTEST\Source" responseTimeout="10000" doc:name="File"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="0102ca03-f82a-4467-b17e-fe0f3f35beae">
+            <dw:input-payload doc:sample="sample_data\list_flatfile.flatfile" mimeType="text/plain">
+                <dw:reader-property name="schemaPath" value="C:/Users/kavya/Desktop/Mulesoft/sgt shastry/sgt shastry/sgt_shastry_full_example.ffd"/>
+                <dw:reader-property name="structureIdent" value="BankDetails"/>
+            </dw:input-payload>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+emp:payload ]]></dw:set-payload>
+        </dw:transform-message>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <splitter expression="#[json:emp]" doc:name="Splitter"/>
+        <db:insert config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[INSERT INTO `product`.`account` (`Record_Identifier`, `Clearing_Code`, `Destination_Account`, `Txn_flag`, `Transaction_Code`, `Cheque_Number`, `Unique_Sequence_Number`, `Amount_in_Cents`, `Originator_Sort_Code`, `Originating_Bank_Name`, `Beneficiary_Name`, `Advised_Account_Number`, `Remitter_Account_Number`, `Remmitter_reference`, `Currency_Code`) VALUES ( #[json:Record Identifier],#[json:Clearing Code],#[json:Destination Account],#[json:Txn flag],#[json:Transaction Code],#[json:Cheque Number],#[json:Unique Sequence Number],#[json:Amount in Cents],#[json:Originator Sort Code],#[json:Originating Bank Name],#[json:Beneficiary Name],#[json:Advised Account Number],#[json:Remitter Account Number],#[json:Remmitter reference],#[json:Currency Code]);]]></db:parameterized-query>
+        </db:insert>
+        <set-payload value="Date Inserted Successfully" doc:name="Set Payload"/>
+    </flow>
+    <flow name="69-fixed-length-csv-dbFlow1">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/ff" doc:name="HTTP"/>
+        <dw:transform-message doc:name="Copy_of_Transform Message" metadata:id="0102ca03-f82a-4467-b17e-fe0f3f35beae">
+            <dw:input-payload doc:sample="sample_data\list_flatfile.flatfile" mimeType="text/plain">
+                <dw:reader-property name="schemaPath" value="C:/Users/kavya/Desktop/Mulesoft/sgt shastry/sgt shastry/sgt_shastry_full_example.ffd"/>
+                <dw:reader-property name="structureIdent" value="BankDetails"/>
+            </dw:input-payload>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload.Data]]></dw:set-payload>
+        </dw:transform-message>
+        <set-payload value="#[payload]" doc:name="Copy_of_Set Payload"/>
+        <splitter expression="#[json:emp]" doc:name="Copy_of_Splitter"/>
+        <db:insert config-ref="MySQL_Configuration" doc:name="Copy_of_Database">
+            <db:parameterized-query><![CDATA[INSERT INTO `product`.`account` (`Record_Identifier`, `Clearing_Code`, `Destination_Account`, `Txn_flag`, `Transaction_Code`, `Cheque_Number`, `Unique_Sequence_Number`, `Amount_in_Cents`, `Originator_Sort_Code`, `Originating_Bank_Name`, `Beneficiary_Name`, `Advised_Account_Number`, `Remitter_Account_Number`, `Remmitter_reference`, `Currency_Code`) VALUES ( #[json:Record Identifier],#[json:Clearing Code],#[json:Destination Account],#[json:Txn flag],#[json:Transaction Code],#[json:Cheque Number],#[json:Unique Sequence Number],#[json:Amount in Cents],#[json:Originator Sort Code],#[json:Originating Bank Name],#[json:Beneficiary Name],#[json:Advised Account Number],#[json:Remitter Account Number],#[json:Remmitter reference],#[json:Currency Code]);]]></db:parameterized-query>
+        </db:insert>
+        <set-payload value="Date Inserted Successfully" doc:name="Copy_of_Set Payload"/>
+    </flow>
+
+</mule>

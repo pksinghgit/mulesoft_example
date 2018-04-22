@@ -1,0 +1,19 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "input_json"
+        },
+        "flowVariables": {
+            "email": {}
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "Google_Contacts",
+            "typeId": "org.mule.modules.google.contact.wrappers.GoogleContactEntry"
+        }
+    },
+    "id": "46d32bb4-26af-4479-abe9-7d737ffa50a6",
+    "version": "5.2.0.0"
+}

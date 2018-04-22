@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    MuleSoft Examples
+    Copyright 2014 MuleSoft, Inc.
+
+    This product includes software developed at
+    MuleSoft, Inc. (http://www.mulesoft.com/).
+
+-->
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="orders" type="ordersType"/>
+  <xs:complexType name="orderType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="orderId"/>
+      <xs:element type="xs:string" name="name"/>
+      <xs:element type="xs:string" name="units"/>
+      <xs:element type="xs:string" name="pricePerUnit"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ordersType">
+    <xs:sequence>
+      <xs:element type="orderType" name="order"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

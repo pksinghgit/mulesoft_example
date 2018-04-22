@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.6.1" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:sharepoint="http://www.mulesoft.org/schema/mule/sharepoint" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/sharepoint http://www.mulesoft.org/schema/mule/sharepoint/current/mule-sharepoint.xsd http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+
+	<sharepoint:online-connection-config doc:name="Microsoft SharePoint 2013: Online Connection" name="Microsoft_SharePoint_2013__Online_Connection" password="${Sharepoint.Password}" siteUrl="${Sharepoint.SiteUrl}" username="${Sharepoint.Username}"/>
+
+	<flow name="importing-a-csv-file-into-ms-sharepointFlow">
+		<file:inbound-endpoint doc:name="Poll files" moveToDirectory="src/main/resources/output" path="src/main/resources/input" pollingFrequency="10000" responseTimeout="10000"/>
+		<set-variable doc:name="Store file content" value="#[payload]" variableName="fileContent"/>
+
+		<sharepoint:folder-create config-ref="Microsoft_SharePoint_2013__Online_Connection" doc:name="Create folder in Sharepoint" url="/Shared Documents/${csvImportFolder}"/>
+
+		<sharepoint:file-add config-ref="Microsoft_SharePoint_2013__Online_Connection" doc:name="Add file to Sharepoint" fileContentStream-ref="#[flowVars.fileContent]" fileServerRelativeUrl="/Shared Documents/${csvImportFolder}/contacts.csv" overwrite="true"/>
+
+		<logger doc:name="Log message" level="INFO" message="Input file stored in the specified folder under the 'Shared Documents' folder"/>
+	</flow>
+</mule>

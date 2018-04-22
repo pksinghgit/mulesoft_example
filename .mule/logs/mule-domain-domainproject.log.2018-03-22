@@ -1,0 +1,60 @@
+INFO  2018-03-22 13:50:59,951 [main] org.mule.module.launcher.domain.DefaultMuleDomain: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ New domain 'domainproject'                               +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 13:50:59,960 [main] org.mule.module.launcher.domain.DefaultMuleDomain: 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing domain 'domainproject'                      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INFO  2018-03-22 13:51:00,531 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising RegistryBroker
+INFO  2018-03-22 13:51:01,357 [main] org.mule.config.spring.MuleDomainContext: Refreshing org.mule.config.spring.MuleDomainContext@783efb48: startup date [Thu Mar 22 13:51:01 IST 2018]; root of context hierarchy
+INFO  2018-03-22 13:51:05,866 [main] org.mule.config.spring.processors.ContextExclusiveInjectorProcessor: JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+WARN  2018-03-22 13:51:06,350 [main] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+WARN  2018-03-22 13:51:06,350 [main] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+WARN  2018-03-22 13:51:06,350 [main] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+WARN  2018-03-22 13:51:06,350 [main] org.mule.expression.DefaultExpressionManager: Expression string is not an expression.  Use isExpression(String) to validate first
+INFO  2018-03-22 13:51:07,797 [main] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\domainproject\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\domainproject\queue-tx-log\tx2.log
+INFO  2018-03-22 13:51:07,836 [main] org.mule.util.journal.TransactionJournal: Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\domainproject\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\domainproject\queue-xa-tx-log\tx2.log
+INFO  2018-03-22 13:51:07,844 [main] org.mule.lifecycle.AbstractLifecycleManager: Initialising connector: VM
+INFO  2018-03-22 13:51:08,635 [main] org.mule.config.spring.SpringXmlDomainConfigurationBuilder: Configured Mule using "org.mule.config.spring.SpringXmlDomainConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='mule-domain-config.xml'}]"
+INFO  2018-03-22 13:51:08,640 [main] org.mule.util.queue.QueueXaResourceManager: Starting ResourceManager
+INFO  2018-03-22 13:51:08,640 [main] org.mule.util.queue.QueueXaResourceManager: Started ResourceManager
+INFO  2018-03-22 13:51:08,710 [main] org.mule.module.http.internal.listener.DefaultHttpListenerConfig: Listening for requests on http://0.0.0.0:8081
+INFO  2018-03-22 13:51:08,716 [main] org.mule.transport.vm.VMConnector: Connected: VMConnector
+{
+  name=VM
+  lifecycle=initialise
+  this=11c713b7
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[vm]
+  serviceOverrides=<none>
+}
+
+INFO  2018-03-22 13:51:08,716 [main] org.mule.transport.vm.VMConnector: Starting: VMConnector
+{
+  name=VM
+  lifecycle=initialise
+  this=11c713b7
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[vm]
+  serviceOverrides=<none>
+}
+
+INFO  2018-03-22 13:51:08,784 [main] org.mule.lifecycle.AbstractLifecycleManager: Starting connector: VM
+INFO  2018-03-22 13:51:08,831 [main] org.mule.module.management.agent.WrapperManagerAgent: This JVM hasn't been launched by the wrapper, the agent will not run.
+INFO  2018-03-22 13:51:08,851 [main] org.mule.module.management.agent.AbstractJmxAgent: Registered Connector Service with name Mule.domainproject:type=Connector,name="VM"
+INFO  2018-03-22 13:51:08,857 [main] org.mule.DefaultMuleContext: 
+**********************************************************************
+* Application: domainproject                                         *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   JMX Agent                                                        *
+*   Wrapper Manager                                                  *
+**********************************************************************
+INFO  2018-03-22 13:53:04,687 [[domainproject].HTTP_Listener_Configuration1.worker.01] org.mule.module.http.internal.listener.HttpListenerRegistry: No listener found for request: (GET)/select
+INFO  2018-03-22 13:53:04,687 [[domainproject].HTTP_Listener_Configuration1.worker.01] org.mule.module.http.internal.listener.HttpListenerRegistry: Available listeners are: [(*)/select/]

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.jws.WebService"/>
+<fullyQualifiedTypeName name="javax.jws.WebMethod"/>
+<fullyQualifiedTypeName name="org.mule.api.annotations.Configurable"/>
+<fullyQualifiedTypeName name="org.mule.api.annotations.param.Default"/>
+<fullyQualifiedTypeName name="org.mule.api.lifecycle.Callable"/>
+<fullyQualifiedTypeName name="com.google.protobuf.Message"/>
+<fullyQualifiedTypeName name="com.ibm.icu.math.BigDecimal"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="java.net.URI"/>
+<fullyQualifiedTypeName name="java.net.URISyntaxException"/>
+</qualifiedTypeNameHistroy>

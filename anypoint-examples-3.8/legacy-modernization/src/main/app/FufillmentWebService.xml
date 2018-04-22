@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:salesforce="http://www.mulesoft.org/schema/mule/sfdc" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/5.0/mule-sfdc.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="1080"/>
+    <flow doc:description="This is a simple Mule Studio project that illustrates a Legacy System Modernization use case." name="Fulfillment_LegacySystemModernization">
+        <http:listener allowedMethods="POST" config-ref="HTTP_Listener_Configuration" doc:name="HTTP" path="OrderFulfillment"/>
+
+        <cxf:jaxws-service doc:description="Make a web service available via CXF" doc:name="FulfillmentWebService" enableMuleSoapHeaders="false" port="80" serviceClass="org.ordermgmt.IFulfillment"/>
+        <component class="org.ordermgmt.FulfillmentImpl" doc:description="Invoke a Java component" doc:name="Process Order" metadata:id="2184f0ca-ab4a-4d6e-96bd-ce4fe827e759"/>
+        <async doc:name="Async - Legacy Fulfillment Service">
+            <dw:transform-message doc:name="Map Fullfilment order to CSV" metadata:id="be68f0ae-d41b-4517-93c3-fb5994872ffe">
+                <dw:input-payload doc:sample="ShippingOrderConfirmation.dwl"/>
+                <dw:set-payload><![CDATA[%dw 1.0
+%output application/csv header=true
+---
+payload.shippingOrder.order.orderItemList map
+{
+	MSKU                   : $.merchantSKU, 
+	QTY                    : $.quantity,
+	BillingAddressName     : payload.shippingOrder.billingAddress.name,
+	BillingAddressStreet   : payload.shippingOrder.billingAddress.line1 ++ ' ' ++ payload.shippingOrder.billingAddress.line2,
+	BillingAddrCity        : payload.shippingOrder.billingAddress.city,
+	BillingAddrState       : payload.shippingOrder.billingAddress.stateOrProvinceCode,
+	BillingAddrCountry     : payload.shippingOrder.billingAddress.countryCode,
+	BillingAddrZipCode     : payload.shippingOrder.billingAddress.postalCode,
+	ShippingAddrName       : payload.shippingOrder.shippingAddress.name,
+	ShippingAddrStreet     : payload.shippingOrder.shippingAddress.line1 ++ ' ' ++ payload.shippingOrder.shippingAddress.line2,
+	ShippingAddrCity       : payload.shippingOrder.shippingAddress.city,
+	ShippingAddrState      : payload.shippingOrder.shippingAddress.stateOrProvinceCode,
+	ShippingAddrCountry    : payload.shippingOrder.shippingAddress.countryCode,
+	ShippingAddrZipCode    : payload.shippingOrder.shippingAddress.postalCode,
+	ShippingId             : payload.shippingOrder.shippingId
+}]]></dw:set-payload>
+            </dw:transform-message>
+            <byte-array-to-string-transformer doc:name="Transform-to-String"/>
+            <file:outbound-endpoint doc:name="LegacyFulfillment" outputPattern="ShippingOrder-#[server.dateTime.format('dd-MM-yy_HH-mm-ss.SSS')].txt" path="src/main/resources/Output" responseTimeout="10000"/>
+        </async>
+    </flow>
+</mule>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mule-project xmlns="http://www.mulesoft.com/tooling/project" runtimeId="org.mule.tooling.server.3.9.0.ee" schemaVersion="5.3.0.0">
+    <name>testapi</name>
+    <description></description>
+    <muleExtension name="CustomSDKConnectorr" qualifier="org.mule.tooling.ui.contribution.custom-sdk-connectorr.3.5.0"/>
+    <muleExtension name="CustomREST" qualifier="org.mule.tooling.ui.contribution.custom-rest.3.5.0"/>
+    <muleExtension name="APIkit SOAP" qualifier="org.mule.tooling.soapkit.contribution"/>
+    <muleExtension name="CalculatorCustomConnectors" qualifier="org.mule.tooling.ui.contribution.calculator-custom-connectors.3.5.0"/>
+</mule-project>

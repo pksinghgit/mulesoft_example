@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+        xmlns:spring="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+
+    <http:listener-config name="HTTP_Listener_Configuration1" host="0.0.0.0" port="8083"  doc:name="HTTP Listener Configuration"/>
+    <flow name="clean-slateFlow1">
+        <http:listener config-ref="HTTP_Listener_Configuration1" path="/ffd" doc:name="HTTP" metadata:id="94520bfe-4bad-4c48-8073-241e512c8335"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="40f949af-7028-4d63-a2f5-77614c405f71">
+            <dw:input-payload doc:sample="sample_data\flatfile_4.flatfile" mimeType="text/plain">
+                <dw:reader-property name="schemaPath" value="C:/Users/kavya/Desktop/Mulesoft/sgt shastry/sgt shastry/Check.ffd"/>
+                <dw:reader-property name="structureIdent" value="Check"/>
+            </dw:input-payload>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+}]]></dw:set-payload>
+        </dw:transform-message>
+
+    </flow>
+</mule>

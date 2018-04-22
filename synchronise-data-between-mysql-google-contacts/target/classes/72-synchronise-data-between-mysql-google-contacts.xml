@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:google-contacts="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:objectstore="http://www.mulesoft.org/schema/mule/objectstore" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/google-contacts http://www.mulesoft.org/schema/mule/google-contacts/current/mule-google-contacts.xsd
+http://www.mulesoft.org/schema/mule/objectstore http://www.mulesoft.org/schema/mule/objectstore/current/mule-objectstore.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8084" doc:name="HTTP Listener Configuration"/>
+    <objectstore:config name="ObjectStore__Connector" partition="contacts" entryTtl="120" expirationInterval="36000" maxEntries="6000" persistent="true" doc:name="ObjectStore: Connector"/>
+    <google-contacts:config-with-oauth name="Google_Contacts" consumerKey="509576403774-f3akd4pt9olutuhbr137h87vdv0etc9n.apps.googleusercontent.com" consumerSecret="AgULVw_iTilZS53OBwZJiLA3" doc:name="Google Contacts">
+        <google-contacts:oauth-callback-config domain="localhost" localPort="8084" remotePort="8084" path="oauth2test"/>
+    </google-contacts:config-with-oauth>
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="test" password="test" database="test" doc:name="MySQL Configuration"/>
+    <flow name="72-synchronise-data-between-mysql-google-contactsFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/authorize" doc:name="HTTP"/>
+        <logger message="Authorisation Initialised" level="INFO" doc:name="Logger"/>
+        <google-contacts:authorize config-ref="Google_Contacts" doc:name="Google Contacts"/>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <objectstore:store config-ref="ObjectStore__Connector" key="accessTokenId" value-ref="#[flowVars['OAuthAccessTokenId']]" doc:name="ObjectStore"/>
+        <logger message="You are Authorised" level="INFO" doc:name="Logger"/>
+    </flow>
+    <batch:job name="72-synchronise-data-between-mysql-google-contactsBatch">
+        <batch:input>
+            <poll doc:name="Poll">
+                <fixed-frequency-scheduler frequency="1000"/>
+                <watermark variable="maxAccountId" default-expression="0" selector="LAST" selector-expression="#[payload.id]"/>
+                <db:select config-ref="MySQL_Configuration" doc:name="Database">
+                    <db:parameterized-query><![CDATA[select * from account where id > #[flowVars.maxAccountId]]]></db:parameterized-query>
+                </db:select>
+            </poll>
+        </batch:input>
+        <batch:process-records>
+            <batch:step name="Batch_Step">
+                <enricher target="#[flowVars['enrichedTokenID']]" doc:name="Message Enricher">
+                    <objectstore:retrieve config-ref="ObjectStore__Connector" key="accessTokenId" doc:name="ObjectStore"/>
+                </enricher>
+                <dw:transform-message doc:name="Transform Message">
+                    <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+}]]></dw:set-payload>
+                </dw:transform-message>
+                <google-contacts:insert-contact config-ref="Google_Contacts" doc:name="Google Contacts"/>
+            </batch:step>
+        </batch:process-records>
+        <batch:on-complete>
+            <logger message="#[message.payload.totalRecords]" level="INFO" doc:name="Logger"/>
+        </batch:on-complete>
+    </batch:job>
+</mule>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns:context="http://www.springframework.org/schema/context" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <smtp:gmail-connector doc:name="Gmail" name="Gmail" validateConnections="true"/>
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+
+    <flow name="scatter-gatherFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="Recieve HTTP request" path="/scatterGather"/>
+        <scatter-gather doc:name="Scatter-Gather">
+            <custom-aggregation-strategy class="org.mule.examples.transformers.ContactMergeAggregationStrategy"/>
+            <expression-component doc:name="sourceA"><![CDATA[
+java.util.ArrayList sourceA = new java.util.ArrayList();
+
+java.util.Map firstContact = new java.util.HashMap();
+firstContact.put("Id", "1");
+firstContact.put("Name", "vlado");
+firstContact.put("Email", "vlado@email.com");
+
+java.util.Map secondContact = new java.util.HashMap();
+secondContact.put("Id", "2");
+secondContact.put("Name", "michal");
+secondContact.put("Email", "michal@email.com");
+
+sourceA.add(firstContact);
+sourceA.add(secondContact);
+
+payload = sourceA;]]></expression-component>
+            <expression-component doc:name="sourceB"><![CDATA[
+java.util.ArrayList sourceB = new java.util.ArrayList();
+
+java.util.Map firstContact = new java.util.HashMap();
+firstContact.put("Id", "1");
+firstContact.put("Name", "peter");
+firstContact.put("Email", "peter@email.com");
+
+java.util.Map secondContact = new java.util.HashMap();
+secondContact.put("Id", "2");
+secondContact.put("Name", "vlado");
+secondContact.put("Email", "vlado@email.com");
+
+sourceB.add(firstContact);
+sourceB.add(secondContact);
+
+payload = sourceB;]]></expression-component>
+        </scatter-gather>
+        <dw:transform-message doc:name="transform Collection of Maps to CSV Format" metadata:id="9d2bb1ee-ea22-4e89-a010-8db90d5d1c67">
+            <dw:input-payload doc:sample="list_listOfMaps.dwl"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/csv
+---
+payload map {
+	Id      : $.Id,
+	Name    : $.Name,
+	Email   : $.Email
+}]]></dw:set-payload>
+        </dw:transform-message>
+
+        <object-to-string-transformer doc:name="CSV Output Object to String"/>
+        <flow-ref doc:name="call outboundFlow" name="outboundFlow"/>
+        <set-payload doc:name="set response" value="#[payload]"/>
+    </flow>
+    <flow name="outboundFlow">
+        <set-attachment attachmentName="aggregation-report" contentType="text/plain" doc:name="attach report to email" value="#[payload]"/>
+        <set-payload doc:name="set Payload" value="Please find attached your Aggregation Report"/>
+        <smtp:outbound-endpoint connector-ref="Gmail" doc:name="Send an email via SMTP" from="${mail.from}" host="${smtp.host}" password="${smtp.password}" port="${smtp.port}" responseTimeout="10000" subject="Scatter gather example - aggregation" to="${mail.to}" user="${smtp.user}"/>
+        <remove-attachment attachmentName="aggregation-report" doc:name="remove attachment"/>
+    </flow>
+</mule>

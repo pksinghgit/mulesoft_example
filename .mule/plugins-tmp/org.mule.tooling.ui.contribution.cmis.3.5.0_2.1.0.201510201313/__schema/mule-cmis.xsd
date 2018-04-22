@@ -1,0 +1,1545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:ns2="http://www.mulesoft.org/schema/mule/devkit" xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/cmis" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"></xs:import>
+  <xs:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"></xs:import>
+  <xs:import namespace="http://www.mulesoft.org/schema/mule/core" schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></xs:import>
+  <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" substitutionGroup="mule:abstract-extension" name="config">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mule:abstractExtensionType">
+          <xs:annotation>
+            <xs:documentation></xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+            <xs:element type="mule:poolingProfileType" minOccurs="0" name="connection-pooling-profile">
+              <xs:annotation>
+                <xs:documentation>Characteristics of the connection pool.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" ref="mule:abstract-reconnection-strategy">
+              <xs:annotation>
+                <xs:documentation>Reconnection strategy that defines how Mule should handle a connection failure.</xs:documentation>
+              </xs:annotation>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute type="xs:string" use="required" name="name">
+            <xs:annotation>
+              <xs:documentation>Give a name to this configuration so it can be later referenced by config-ref.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="CMISConnectionTypeEnumType" use="optional" default="ATOM" name="endpoint">
+            <xs:annotation>
+              <xs:documentation>The type of endpoint. Values allowed: SOAP or ATOM</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="AuthenticationEnumType" use="optional" default="STANDARD" name="authentication">
+            <xs:annotation>
+              <xs:documentation>Specifies authentication provider, supports HTTP basic authentication and NTLM.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute type="xs:string" use="optional" default="org.apache.chemistry.opencmis.client.bindings.spi.webservices.CXFPortProvider" name="cxfPortProvider">
+            <xs:annotation>
+              <xs:documentation>Specifies CXF port provider, the CMIS connector includes a default implementation</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute type="xs:string" use="optional" default="10000" name="connectionTimeout">
+            <xs:annotation>
+              <xs:documentation>The connection time-out specification.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="booleanType" use="optional" default="false" name="useAlfrescoExtension">
+            <xs:annotation>
+              <xs:documentation>Specifies whether the Alfresco Object Factory implementation should be utilized.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="booleanType" use="optional" default="false" name="useCookies">
+            <xs:annotation>
+              <xs:documentation>Turn on-off cookies support.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute type="xs:string" use="required" name="baseUrl">
+            <xs:annotation>
+              <xs:documentation>CMIS repository address</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute type="xs:string" use="required" name="username">
+            <xs:annotation>
+              <xs:documentation>CMIS repository username</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute type="xs:string" use="required" name="password">
+            <xs:annotation>
+              <xs:documentation>CMIS repository password</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute type="xs:string" use="optional" name="repositoryId">
+            <xs:annotation>
+              <xs:documentation>CMIS repository identifier</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="RepositoriesType" substitutionGroup="mule:abstract-message-processor" name="repositories">
+    <xs:annotation>
+      <xs:documentation>Returns all repositories that are available at the endpoint.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RepositoriesType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="RepositoryInfoType" substitutionGroup="mule:abstract-message-processor" name="repository-info">
+    <xs:annotation>
+      <xs:documentation>Returns information about the CMIS repository, the optional capabilities it supports and its Access Control information if applicable.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="RepositoryInfoType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="ChangelogType" substitutionGroup="mule:abstract-message-processor" name="changelog">
+    <xs:annotation>
+      <xs:documentation>Gets repository changes.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ChangelogType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="changeLogToken">
+          <xs:annotation>
+            <xs:documentation>The change log token to start from or</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="booleanType" use="optional" default="false" name="includeProperties">
+          <xs:annotation>
+            <xs:documentation>Indicates if changed properties should be included in the result</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetObjectByIdType" substitutionGroup="mule:abstract-message-processor" name="get-object-by-id">
+    <xs:annotation>
+      <xs:documentation>Returns a CMIS object from the repository and puts it into the cache.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetObjectByIdType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="objectId">
+          <xs:annotation>
+            <xs:documentation>The object id</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetObjectByPathType" substitutionGroup="mule:abstract-message-processor" name="get-object-by-path">
+    <xs:annotation>
+      <xs:documentation>Returns a CMIS object from the repository and puts it into the cache.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetObjectByPathType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="path">
+          <xs:annotation>
+            <xs:documentation>Path of the object to retrieve</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="CreateDocumentByPathType" substitutionGroup="mule:abstract-message-processor" name="create-document-by-path">
+    <xs:annotation>
+      <xs:documentation>Creates a new document in the repository where the content comes directly from the payload and the target folder node is specified by a repository path. *
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateDocumentByPathType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="properties">
+            <xs:annotation>
+              <xs:documentation>the properties optional document properties to set</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:choice>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="property">
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute type="xs:string" use="optional" name="value-ref"></xs:attribute>
+                          <xs:attribute type="xs:string" name="key"></xs:attribute>
+                        </xs:extension>
+                      </xs:simpleContent>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:sequence>
+                  <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"></xs:any>
+                </xs:sequence>
+              </xs:choice>
+              <xs:attribute type="xs:string" use="optional" name="ref">
+                <xs:annotation>
+                  <xs:documentation>The reference object for this parameter</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="folderPath">
+          <xs:annotation>
+            <xs:documentation>Folder in the repository that will hold the document</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="filename">
+          <xs:annotation>
+            <xs:documentation>name of the file</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="content-ref">
+          <xs:annotation>
+            <xs:documentation>file content as specified in the payload</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="mimeType">
+          <xs:annotation>
+            <xs:documentation>stream content-type</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="VersioningStateEnumType" use="optional" default="NONE" name="versioningState">
+          <xs:annotation>
+            <xs:documentation>An enumeration specifying what the versioning state of the newly-created object MUST be. If the repository does not support versioning, the repository MUST ignore the versioningState parameter. &lt;/br&gt; Valid values are: &lt;ul&gt; &lt;li&gt;none: The document MUST be created as a non-versionable document.&lt;/li&gt; &lt;li&gt;checkedout: The document MUST be created in the checked-out state.&lt;/li&gt; &lt;li&gt;major (default): The document MUST be created as a major version.&lt;/li&gt; &lt;li&gt;minor: The document MUST be created as a minor version.&lt;/li&gt; &lt;/ul&gt;</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="objectType">
+          <xs:annotation>
+            <xs:documentation>the type of the object</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="booleanType" use="optional" default="false" name="force">
+          <xs:annotation>
+            <xs:documentation>if should folder structure must be created when there are missing intermediate folders</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetOrCreateFolderByPathType" substitutionGroup="mule:abstract-message-processor" name="get-or-create-folder-by-path">
+    <xs:annotation>
+      <xs:documentation>Creates a new folder in the repository if it doesn't already exist.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetOrCreateFolderByPathType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="folderPath">
+          <xs:annotation>
+            <xs:documentation>Path to the folder</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="CreateDocumentByIdType" substitutionGroup="mule:abstract-message-processor" name="create-document-by-id">
+    <xs:annotation>
+      <xs:documentation>Creates a new document in the repository where the content comes directly from the payload and the target folder node is specified by an object ID.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateDocumentByIdType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="properties">
+            <xs:annotation>
+              <xs:documentation>the properties optional document properties to set</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:choice>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="property">
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute type="xs:string" use="optional" name="value-ref"></xs:attribute>
+                          <xs:attribute type="xs:string" name="key"></xs:attribute>
+                        </xs:extension>
+                      </xs:simpleContent>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:sequence>
+                  <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"></xs:any>
+                </xs:sequence>
+              </xs:choice>
+              <xs:attribute type="xs:string" use="optional" name="ref">
+                <xs:annotation>
+                  <xs:documentation>The reference object for this parameter</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="folderId">
+          <xs:annotation>
+            <xs:documentation>Folder Object Id</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="filename">
+          <xs:annotation>
+            <xs:documentation>name of the file</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="content-ref">
+          <xs:annotation>
+            <xs:documentation>file content as specified in the payload</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="mimeType">
+          <xs:annotation>
+            <xs:documentation>stream content-type</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="VersioningStateEnumType" use="required" name="versioningState">
+          <xs:annotation>
+            <xs:documentation>An enumeration specifying what the versioning state of the newly-created object MUST be. If the repository does not support versioning, the repository MUST ignore the versioningState parameter. &lt;/br&gt; Valid values are: &lt;ul&gt; &lt;li&gt;none: The document MUST be created as a non-versionable document.&lt;/li&gt; &lt;li&gt;checkedout: The document MUST be created in the checked-out state.&lt;/li&gt; &lt;li&gt;major (default): The document MUST be created as a major version.&lt;/li&gt; &lt;li&gt;minor: The document MUST be created as a minor version.&lt;/li&gt; &lt;/ul&gt;</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="objectType">
+          <xs:annotation>
+            <xs:documentation>the type of the object</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="CreateFolderType" substitutionGroup="mule:abstract-message-processor" name="create-folder">
+    <xs:annotation>
+      <xs:documentation>Creates a folder. Note that this is not recursive creation. Just creates one folder
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateFolderType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="folderName">
+          <xs:annotation>
+            <xs:documentation>Folder name (eg: "my documents")</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="parentObjectId">
+          <xs:annotation>
+            <xs:documentation>Parent folder for the folder being created (eg: repository.rootFolder)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetTypeDefinitionType" substitutionGroup="mule:abstract-message-processor" name="get-type-definition">
+    <xs:annotation>
+      <xs:documentation>Returns the type definition of the given type id.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetTypeDefinitionType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="typeId">
+          <xs:annotation>
+            <xs:documentation>Object type Id</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetCheckoutDocsType" substitutionGroup="mule:abstract-message-processor" name="get-checkout-docs">
+    <xs:annotation>
+      <xs:documentation>Retrieve list of checked out documents.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetCheckoutDocsType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="filter">
+          <xs:annotation>
+            <xs:documentation>comma-separated list of properties to filter</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="orderBy">
+          <xs:annotation>
+            <xs:documentation>comma-separated list of query names and the ascending modifier "ASC" or the descending modifier "DESC" for each query name</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="QueryType" substitutionGroup="mule:abstract-message-processor" name="query">
+    <xs:annotation>
+      <xs:documentation>Sends a query to the repository
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="QueryType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="statement">
+          <xs:annotation>
+            <xs:documentation>the query statement (CMIS query language)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="booleanType" use="optional" default="false" name="searchAllVersions">
+          <xs:annotation>
+            <xs:documentation>specifies if the latest and non-latest versions of document objects should be included</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="filter">
+          <xs:annotation>
+            <xs:documentation>comma-separated list of properties to filter</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="orderBy">
+          <xs:annotation>
+            <xs:documentation>comma-separated list of query names and the ascending modifier "ASC" or the descending modifier "DESC" for each query name</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="integerType" use="optional" default="100" name="fetchSize">
+          <xs:annotation>
+            <xs:documentation>The amount of items to fetch on each invocation to the data source</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetParentFoldersType" substitutionGroup="mule:abstract-message-processor" name="get-parent-folders">
+    <xs:annotation>
+      <xs:documentation>Retrieves the parent folders of a fileable cmis object
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetParentFoldersType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="cmisObject-ref">
+          <xs:annotation>
+            <xs:documentation>the object whose parent folders are needed. can be null if "objectId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="objectId">
+          <xs:annotation>
+            <xs:documentation>id of the object whose parent folders are needed. can be null if "object" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="FolderType" substitutionGroup="mule:abstract-message-processor" name="folder">
+    <xs:annotation>
+      <xs:documentation>Navigates the folder structure.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="FolderType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="folder-ref">
+          <xs:annotation>
+            <xs:documentation>Folder Object. Can be null if "folderId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="folderId">
+          <xs:annotation>
+            <xs:documentation>Folder Object id. Can be null if "folder" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="NavigationOptionsEnumType" use="required" name="get">
+          <xs:annotation>
+            <xs:documentation>NavigationOptions that specifies whether to get the parent folder, the list of immediate children or the whole descendants tree</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="integerType" use="optional" name="depth">
+          <xs:annotation>
+            <xs:documentation>if "get" value is DESCENDANTS, represents the depth of the descendants tree</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="filter">
+          <xs:annotation>
+            <xs:documentation>comma-separated list of properties to filter (only for CHILDREN or DESCENDANTS navigation)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="orderBy">
+          <xs:annotation>
+            <xs:documentation>comma-separated list of query names and the ascending modifier "ASC" or the descending modifier "DESC" for each query name (only for CHILDREN or DESCENDANTS navigation)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetContentStreamType" substitutionGroup="mule:abstract-message-processor" name="get-content-stream">
+    <xs:annotation>
+      <xs:documentation>Retrieves the content stream of a Document.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetContentStreamType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="cmisObject-ref">
+          <xs:annotation>
+            <xs:documentation>The document from which to get the stream. Can be null if "objectId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="objectId">
+          <xs:annotation>
+            <xs:documentation>Id of the document from which to get the stream. Can be null if "object" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="MoveObjectType" substitutionGroup="mule:abstract-message-processor" name="move-object">
+    <xs:annotation>
+      <xs:documentation>Moves a fileable cmis object from one location to another. Take into account that a fileable object may be filled in several locations. Thats why you must specify a source
+folder.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="MoveObjectType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="cmisObject-ref">
+          <xs:annotation>
+            <xs:documentation>The object to move. Can be null if "objectId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="objectId">
+          <xs:annotation>
+            <xs:documentation>The object's id. Can be null if "cmisObject" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="sourceFolderId">
+          <xs:annotation>
+            <xs:documentation>Id of the source folder</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="targetFolderId">
+          <xs:annotation>
+            <xs:documentation>Id of the target folder</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="UpdateObjectPropertiesType" substitutionGroup="mule:abstract-message-processor" name="update-object-properties">
+    <xs:annotation>
+      <xs:documentation>Update an object's properties
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="UpdateObjectPropertiesType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="properties">
+            <xs:annotation>
+              <xs:documentation>The properties to update</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:choice>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="property">
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute type="xs:string" use="optional" name="value-ref"></xs:attribute>
+                          <xs:attribute type="xs:string" name="key"></xs:attribute>
+                        </xs:extension>
+                      </xs:simpleContent>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:sequence>
+                  <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"></xs:any>
+                </xs:sequence>
+              </xs:choice>
+              <xs:attribute type="xs:string" use="optional" name="ref">
+                <xs:annotation>
+                  <xs:documentation>The reference object for this parameter</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="cmisObject-ref">
+          <xs:annotation>
+            <xs:documentation>Object to be updated. Can be null if "objectId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="objectId">
+          <xs:annotation>
+            <xs:documentation>The object's id. Can be null if "cmisObject" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetObjectRelationshipsType" substitutionGroup="mule:abstract-message-processor" name="get-object-relationships">
+    <xs:annotation>
+      <xs:documentation>Returns the relationships if they have been fetched for an object.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetObjectRelationshipsType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="cmisObject-ref">
+          <xs:annotation>
+            <xs:documentation>the object whose relationships are needed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="objectId">
+          <xs:annotation>
+            <xs:documentation>the id of the object</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetAclType" substitutionGroup="mule:abstract-message-processor" name="get-acl">
+    <xs:annotation>
+      <xs:documentation>Returns the ACL if it has been fetched for an object.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetAclType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="cmisObject-ref">
+          <xs:annotation>
+            <xs:documentation>the object whose Acl is needed</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="objectId">
+          <xs:annotation>
+            <xs:documentation>the id of the object</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetAllVersionsType" substitutionGroup="mule:abstract-message-processor" name="get-all-versions">
+    <xs:annotation>
+      <xs:documentation>Retrieve an object's version history
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetAllVersionsType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="document-ref">
+          <xs:annotation>
+            <xs:documentation>the document whose versions are to be retrieved</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="documentId">
+          <xs:annotation>
+            <xs:documentation>Id of the document whose versions are to be retrieved</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="filter">
+          <xs:annotation>
+            <xs:documentation>comma-separated list of properties to filter (only for CHILDREN or DESCENDANTS navigation)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="orderBy">
+          <xs:annotation>
+            <xs:documentation>comma-separated list of query names and the ascending modifier "ASC" or the descending modifier "DESC" for each query name (only for CHILDREN or DESCENDANTS navigation)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="CheckOutType" substitutionGroup="mule:abstract-message-processor" name="check-out">
+    <xs:annotation>
+      <xs:documentation>Checks out the document and returns the object id of the PWC (private working copy).
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CheckOutType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="document-ref">
+          <xs:annotation>
+            <xs:documentation>The document to be checked out. Can be null if "documentId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="documentId">
+          <xs:annotation>
+            <xs:documentation>Id of the document to be checked out. Can be null if "document" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="CancelCheckOutType" substitutionGroup="mule:abstract-message-processor" name="cancel-check-out">
+    <xs:annotation>
+      <xs:documentation>If applied to a PWC (private working copy) of the document, the check out will be reversed. Otherwise, an exception will be thrown.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CancelCheckOutType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="document-ref">
+          <xs:annotation>
+            <xs:documentation>The checked out document. Can be null if "documentId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="documentId">
+          <xs:annotation>
+            <xs:documentation>Id of the checked out document. Can be null if "document" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="CheckInType" substitutionGroup="mule:abstract-message-processor" name="check-in">
+    <xs:annotation>
+      <xs:documentation>If applied to a PWC (private working copy) it performs a check in. Otherwise, an exception will be thrown.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CheckInType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="properties">
+            <xs:annotation>
+              <xs:documentation>custom properties</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:choice>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="property">
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute type="xs:string" use="optional" name="value-ref"></xs:attribute>
+                          <xs:attribute type="xs:string" name="key"></xs:attribute>
+                        </xs:extension>
+                      </xs:simpleContent>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:sequence>
+                  <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"></xs:any>
+                </xs:sequence>
+              </xs:choice>
+              <xs:attribute type="xs:string" use="optional" name="ref">
+                <xs:annotation>
+                  <xs:documentation>The reference object for this parameter</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="document-ref">
+          <xs:annotation>
+            <xs:documentation>The document to check-in. Can be null if "documentId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="documentId">
+          <xs:annotation>
+            <xs:documentation>Id of the document to check-in. Can be null if "document" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="content-ref">
+          <xs:annotation>
+            <xs:documentation>File content (no byte array or input stream for now)</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="filename">
+          <xs:annotation>
+            <xs:documentation>Name of the file</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="mimeType">
+          <xs:annotation>
+            <xs:documentation>Stream content-type</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="booleanType" use="optional" default="false" name="major">
+          <xs:annotation>
+            <xs:documentation>whether it is major</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="checkinComment">
+          <xs:annotation>
+            <xs:documentation>Check-in comment</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="ApplyAclType" substitutionGroup="mule:abstract-message-processor" name="apply-acl">
+    <xs:annotation>
+      <xs:documentation>Set the permissions associated with an object.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="AceObjectType">
+    <xs:sequence></xs:sequence>
+    <xs:attribute type="xs:string" use="optional" name="ref">
+      <xs:annotation>
+        <xs:documentation>The reference object for this parameter</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="ApplyAclType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="add-aces">
+            <xs:annotation>
+              <xs:documentation>list of ACEs to be added or null if no ACEs should be added.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="add-ace">
+                  <xs:complexType>
+                    <xs:complexContent>
+                      <xs:extension xmlns="http://www.mulesoft.org/schema/mule/cmis" base="AceObjectType">
+                        <xs:attribute type="xs:string" use="optional" name="value-ref"></xs:attribute>
+                      </xs:extension>
+                    </xs:complexContent>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute type="xs:string" use="optional" name="ref">
+                <xs:annotation>
+                  <xs:documentation>The reference object for this parameter</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="1" maxOccurs="1" name="remove-aces">
+            <xs:annotation>
+              <xs:documentation>list of ACEs to be removed or null if no ACEs should be removed.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="remove-ace">
+                  <xs:complexType>
+                    <xs:complexContent>
+                      <xs:extension xmlns="http://www.mulesoft.org/schema/mule/cmis" base="AceObjectType">
+                        <xs:attribute type="xs:string" use="optional" name="value-ref"></xs:attribute>
+                      </xs:extension>
+                    </xs:complexContent>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute type="xs:string" use="optional" name="ref">
+                <xs:annotation>
+                  <xs:documentation>The reference object for this parameter</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="cmisObject-ref">
+          <xs:annotation>
+            <xs:documentation>the object whose Acl is intended to change.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="objectId">
+          <xs:annotation>
+            <xs:documentation>the id of the object</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="AclPropagationEnumType" use="required" name="aclPropagation">
+          <xs:annotation>
+            <xs:documentation>whether to propagate changes or not. can be REPOSITORYDETERMINED | OBJECTONLY | PROPAGATE</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="GetAppliedPoliciesType" substitutionGroup="mule:abstract-message-processor" name="get-applied-policies">
+    <xs:annotation>
+      <xs:documentation>Get the policies that are applied to an object.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="GetAppliedPoliciesType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="cmisObject-ref">
+          <xs:annotation>
+            <xs:documentation>The document from which to get the stream. Can be null if "objectId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="objectId">
+          <xs:annotation>
+            <xs:documentation>Id of the document from which to get the stream. Can be null if "object" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="ApplyPolicyType" substitutionGroup="mule:abstract-message-processor" name="apply-policy">
+    <xs:annotation>
+      <xs:documentation>Applies policies to this object.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ObjectIdObjectType">
+    <xs:sequence></xs:sequence>
+    <xs:attribute type="xs:string" use="optional" name="ref">
+      <xs:annotation>
+        <xs:documentation>The reference object for this parameter</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="ApplyPolicyType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:sequence>
+          <xs:element minOccurs="1" maxOccurs="1" name="policy-ids">
+            <xs:annotation>
+              <xs:documentation>Policy ID's to apply</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="policy-id">
+                  <xs:complexType>
+                    <xs:complexContent>
+                      <xs:extension xmlns="http://www.mulesoft.org/schema/mule/cmis" base="ObjectIdObjectType">
+                        <xs:attribute type="xs:string" use="optional" name="value-ref"></xs:attribute>
+                      </xs:extension>
+                    </xs:complexContent>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute type="xs:string" use="optional" name="ref">
+                <xs:annotation>
+                  <xs:documentation>The reference object for this parameter</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="cmisObject-ref">
+          <xs:annotation>
+            <xs:documentation>The document from which to get the stream. Can be null if "objectId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="objectId">
+          <xs:annotation>
+            <xs:documentation>Id of the document from which to get the stream. Can be null if "object" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="DeleteType" substitutionGroup="mule:abstract-message-processor" name="delete">
+    <xs:annotation>
+      <xs:documentation>Remove an object
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="cmisObject-ref">
+          <xs:annotation>
+            <xs:documentation>The object to be deleted. Can be null if "objectId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="objectId">
+          <xs:annotation>
+            <xs:documentation>The object's id. Can be null if "cmisObject" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="booleanType" use="optional" default="false" name="allVersions">
+          <xs:annotation>
+            <xs:documentation>If true, deletes all version history of the object. Defaults to "false".</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="DeleteTreeType" substitutionGroup="mule:abstract-message-processor" name="delete-tree">
+    <xs:annotation>
+      <xs:documentation>Deletes a folder and all subfolders.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DeleteTreeType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="folder-ref">
+          <xs:annotation>
+            <xs:documentation>Folder Object. Can be null if "folderId" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" name="folderId">
+          <xs:annotation>
+            <xs:documentation>Folder Object id. Can be null if "folder" is set.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="UnfileObjectEnumType" use="optional" name="unfile">
+          <xs:annotation>
+            <xs:documentation>Specifies how the repository must process file-able child- or descendant-objects.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="booleanType" use="required" name="allversions">
+          <xs:annotation>
+            <xs:documentation>If true, then delete all versions of the document. If false, delete only the document object specified.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/cmis" type="booleanType" use="required" name="continueOnFailure">
+          <xs:annotation>
+            <xs:documentation>Specified whether to continue attempting to perform this operation even if deletion of a child- or descendant-object in the specified folder cannot be deleted or not.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="ApplyAspectType" substitutionGroup="mule:abstract-message-processor" name="apply-aspect">
+    <xs:annotation>
+      <xs:documentation>Apply aspect properties to an object.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="ApplyAspectType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="properties">
+            <xs:annotation>
+              <xs:documentation>The properties to set.</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:choice>
+                <xs:sequence>
+                  <xs:element minOccurs="0" maxOccurs="unbounded" name="property">
+                    <xs:complexType>
+                      <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                          <xs:attribute type="xs:string" use="optional" name="value-ref"></xs:attribute>
+                          <xs:attribute type="xs:string" name="key"></xs:attribute>
+                        </xs:extension>
+                      </xs:simpleContent>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+                <xs:sequence>
+                  <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"></xs:any>
+                </xs:sequence>
+              </xs:choice>
+              <xs:attribute type="xs:string" use="optional" name="ref">
+                <xs:annotation>
+                  <xs:documentation>The reference object for this parameter</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="objectId">
+          <xs:annotation>
+            <xs:documentation>The object's id.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="aspectName">
+          <xs:annotation>
+            <xs:documentation>The name of the aspect to be applied to the object.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/cmis" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="CreateRelationshipType" substitutionGroup="mule:abstract-message-processor" name="create-relationship">
+    <xs:annotation>
+      <xs:documentation>Creates a parent/child relationships between two nodes in the repository of the specified relationship object type.
+&lt;p/&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="CreateRelationshipType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:attribute type="xs:string" use="required" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="parentObjectId">
+          <xs:annotation>
+            <xs:documentation>The ID of the parent (or source) object in the relationship.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="childObjectId">
+          <xs:annotation>
+            <xs:documentation>The ID of the child (or target) object in the relationship.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="required" name="relationshipType">
+          <xs:annotation>
+            <xs:documentation>The name of the relationship type that should be associated with the objects.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="UnfileObjectEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="UNFILE">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DELETESINGLEFILED">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DELETE">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="VersioningStateEnumType">
+    <xs:annotation>
+      <xs:documentation>Enum holding all the possible versioning states</xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NONE">
+            <xs:annotation>
+              <xs:documentation>The document MUST be created as a non-versionable document.</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="MAJOR">
+            <xs:annotation>
+              <xs:documentation>The document MUST be created as a major version</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="MINOR">
+            <xs:annotation>
+              <xs:documentation>The document MUST be created as a minor version.</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CHECKEDOUT">
+            <xs:annotation>
+              <xs:documentation>The document MUST be created in the checked-out state.</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="CMISConnectionTypeEnumType">
+    <xs:annotation>
+      <xs:documentation>Connection Type for CMIS</xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ATOM">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SOAP">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="NavigationOptionsEnumType">
+    <xs:annotation>
+      <xs:documentation>Enum holding all the possible navigation options</xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="PARENT">
+            <xs:annotation>
+              <xs:documentation>Returns the parent Folder</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CHILDREN">
+            <xs:annotation>
+              <xs:documentation>Returns a list of objects contained in the current folder</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DESCENDANTS">
+            <xs:annotation>
+              <xs:documentation>Returns the whole descentants tree of the current folder</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TREE">
+            <xs:annotation>
+              <xs:documentation>Returns the folder tree starting with this folder.</xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="AuthenticationEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="STANDARD">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="NTLM">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="AclPropagationEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="REPOSITORYDETERMINED">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="OBJECTONLY">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PROPAGATE">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="OnNoTokenPolicyEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="EXCEPTION"></xs:enumeration>
+          <xs:enumeration value="STOP_FLOW"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="integerType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:integer"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="decimalType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:decimal"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="floatType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:float"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="doubleType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:double"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="dateTimeType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:dateTime"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="longType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:long"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="byteType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:byte"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="booleanType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:boolean"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="anyUriType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:anyURI"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="charType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="1"></xs:minLength>
+          <xs:maxLength value="1"></xs:maxLength>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+</xs:schema>

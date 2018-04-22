@@ -1,0 +1,31 @@
+version: 1
+
+dn: cn=testgroup,ou=groups,dc=my-domain,dc=com
+changetype: delete
+
+dn: cn=mmc,ou=people,dc=my-domain,dc=com
+changetype: delete
+
+dn: cn=testuser1,ou=people,dc=my-domain,dc=com
+changetype: delete
+
+dn: cn=Developers,ou=groups,dc=my-domain,dc=com
+changetype: delete
+
+dn: cn=admin,ou=people,dc=my-domain,dc=com
+changetype: delete
+
+dn: cn=Administrators,ou=groups,dc=my-domain,dc=com
+changetype: delete
+
+dn: ou=people,dc=my-domain,dc=com
+changetype: delete
+
+dn: ou=groups,dc=my-domain,dc=com
+changetype: delete
+
+dn: cn=Manager,dc=my-domain,dc=com
+changetype: delete
+
+dn: dc=my-domain,dc=com
+changetype: delete

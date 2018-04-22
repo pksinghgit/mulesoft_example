@@ -1,0 +1,90 @@
+<!--
+
+    MuleSoft Examples
+    Copyright 2014 MuleSoft, Inc.
+
+    This product includes software developed at
+    MuleSoft, Inc. (http://www.mulesoft.com/).
+
+-->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Mule WMQ Example</title>
+    <!-- stripped down version of dojo that just includes the necessary functionality -->
+    <script type="text/javascript" src="mule-resource/js/dojo/dojo.js"></script>
+    <script type="text/javascript" src="mule-resource/js/mule.js"></script>
+
+
+    <script type="text/javascript">
+
+        function init()
+        {
+            mule.subscribe("/services/wmqExample/dequeue", dequeueCallback);
+        }
+
+        function dispose()
+        {
+            mule.unsubscribe("/services/wmqExample/dequeue", dequeueCallback);
+        }
+
+        function dequeueCallback(message)
+        {
+            console.debug("data:" + message.data);
+
+            if (!message.data)
+            {
+                console.debug("bad message format " + message);
+                return;
+            }
+
+            document.getElementById("whatYouReceived").innerHTML = "<b>You just received:&nbsp;</b>" + message.data + "\n";
+            
+            var table = document.getElementById('dequeueTable');
+            var newRow = table.insertRow(1);
+            newRow.insertCell(0).innerHTML = message.data;
+
+            table.scrollTop = table.scrollHeight - table.clientHeight
+        }
+
+        function rpcEnqueue() {
+            var data = document.getElementById('phrase').value;
+            if(data) {
+                mule.rpc("/services/wmqExample/enqueue", data);
+                document.getElementById("whatYouSent").innerHTML = "<b>You just sent:&nbsp;</b>" + data + "\n";
+            } else {
+                alert("Please provide a message");
+            }
+        }
+
+    </script>
+</head>
+
+
+<body onload="init();" onunload="dispose();">
+
+<h1>WMQ Example</h1>
+
+<div>
+	
+    Message to send to WMQ: <input id="phrase" type="text"/>
+    <input id="sendButton" class="button" type="submit" name="Go" value="Send" onclick="rpcEnqueue();"/>
+    
+</div>
+
+<pre id="whatYouSent"></pre>
+<pre id="whatYouReceived"></pre>
+<p/>
+    <div style="position:relative;width:800px;height:300px;overflow:auto;">
+        <table id="dequeueTable">
+            <thead>
+                <tr>
+                    <th width="100%">Messages received from queue</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</body>
+</html>

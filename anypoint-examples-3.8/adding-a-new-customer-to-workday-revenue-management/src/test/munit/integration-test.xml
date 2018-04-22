@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" 
+	xmlns:wd-connector="http://www.mulesoft.org/schema/mule/wd-connector" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" 
+	xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" 
+	xmlns:synchronize="http://www.mulesoft.org/schema/mule/synchronize" 
+	xmlns="http://www.mulesoft.org/schema/mule/core" 
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" 
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:core="http://www.mulesoft.org/schema/mule/core" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/synchronize http://www.mulesoft.org/schema/mule/synchronize/current/mule-synchronize.xsd
+http://www.mulesoft.org/schema/mule/wd-connector http://www.mulesoft.org/schema/mule/wd-connector/current/mule-wd-connector.xsd
+http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd">
+
+    <context:property-placeholder location="mule.test.properties"/>
+    
+    <munit:config name="munit" doc:name="MUnit configuration"/>
+    <spring:beans>
+        <spring:import resource="classpath:add_a_new_customer.xml"/>
+    </spring:beans>
+    
+    <munit:before-test name="Before_Test" description="Before tests actions">
+        <set-variable variableName="CustomerName" value="#[&quot;John&quot; + System.currentTimeMillis()]" doc:name="Generate CustomerName"/>
+    </munit:before-test>
+    
+    <munit:test name="Test" description="Test">
+        <dw:transform-message doc:name="Input data" metadata:id="53a832ae-2114-4e7e-a550-71e334bca817">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+root : {
+	Account: {
+		CustomerName : flowVars.CustomerName,
+		BusinessEntityName : flowVars.CustomerName,
+		Customer_Category_Reference_Type : "Customer_Category_ID",
+		Customer_Category_Reference_Value : "CUSTOMER_CATEGORY-5",
+		Customer_Status_Reference_Type : "Business_Entity_Status_Value_ID",
+		Customer_Status_Reference_Value : "ACTIVE"
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <logger message="Calling main flow..." level="INFO" doc:name="Log calling main flow"/>
+        <flow-ref name="add-customer-flow" doc:name="call add-customer-flow"/>
+
+        <logger message="Retrieving Customer from Workday.." level="INFO" doc:name="Log retrieval of Customer from Workday"/>
+        <flow-ref name="retrieveAccountFromWdayFlow" doc:name="retrieveAccountFromWdayFlow"/>
+
+        <munit:assert-on-equals expectedValue="1" actualValue="#[dw('payload.Get_Customers_Response.Response_Results.Total_Results')]" doc:name="One customer should be retrieved"/>
+        <flow-ref name="inactivateCustomerInWorkdayFlow" doc:name="inactivateCustomerInWorkdayFlow"/>
+
+    </munit:test>
+    
+    <sub-flow name="retrieveAccountFromWdayFlow">
+        <dw:transform-message metadata:id="b1ad40ed-5c86-4941-ad86-6cc5760094a2" doc:name="Create GetCustomers request">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%namespace ns0 urn:com.workday/bsvc
+---
+{
+	ns0#Get_Customers_Request: {
+		ns0#Request_Criteria: {
+			ns0#Customer_Reference_ID: flowVars.CustomerName
+		},
+		ns0#Response_Group: {
+			ns0#Include_Reference: true,
+			ns0#Include_Customer_Data: true
+		}
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <wd-connector:invoke config-ref="Workday" type="Revenue_Management||Get_Customers" doc:name="Query for customer"/>
+        <mulexml:xml-to-dom-transformer doc:name="XML to DOM"/>
+    </sub-flow>
+    
+    <sub-flow name="inactivateCustomerInWorkdayFlow">
+        <logger message="Invalidating customer... #[flowVars.CustomerName]" level="INFO" doc:name="Log beginning of customer invalidation"/>
+        <dw:transform-message doc:name="Create PutCustomer request">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%namespace ns0 urn:com.workday/bsvc
+---
+using (customer = payload.Get_Customers_Response.Response_Data.Customer.Customer_Data){
+	ns0#Put_Customer_Request: {
+		ns0#Customer_Reference: {
+			 ns0#ID @(ns0#type: "Customer_Reference_ID") : flowVars.CustomerName
+		},
+		ns0#Customer_Data: {
+			ns0#Business_Entity_Data: {
+				ns0#Business_Entity_Name: flowVars.CustomerName
+			},
+			ns0#Customer_Name: flowVars.CustomerName,
+			ns0#Customer_Category_Reference: {
+				ns0#ID @(ns0#type: "Customer_Category_ID"): 
+				(customer.Customer_Category_Reference.*ID filter $.@type == "Customer_Category_ID")[0]
+			},
+			ns0#Customer_Status_Data: {
+				ns0#Customer_Status_Value_Reference: {
+					ns0#ID @(ns0#type: "WID"): p('wday.status.id')
+				},
+				ns0#Reason_for_Customer_Status_Change_Reference: {
+ 					ns0#ID @(ns0#type: "WID"): p('wday.reason.id')
+				}
+			}
+			
+		}
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+
+        <wd-connector:invoke config-ref="Workday" type="Revenue_Management||Put_Customer" doc:name="Put Customer"/>
+
+        <logger message="Customer invalidation flow finished.." level="INFO" doc:name="Log end or customer invalidation"/>
+    </sub-flow>
+    
+</mule>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns:netsuite="http://www.mulesoft.org/schema/mule/netsuite"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/netsuite http://www.mulesoft.org/schema/mule/netsuite/current/mule-netsuite.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <http:listener-config name="netsuite-api-httpListenerConfig" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration" connectionIdleTimeout="3000000"/>
+    <apikit:config name="netsuite-api-config" raml="netsuite-api.raml" consoleEnabled="true" consolePath="console" doc:name="Router">
+        <apikit:flow-mapping resource="/customers" action="get" flow-ref="get:/customers:netsuite-api-config"/>
+        <apikit:flow-mapping resource="/items" action="get" flow-ref="get:/items:netsuite-api-config"/>
+        <apikit:flow-mapping resource="/opportunities" action="get" flow-ref="get:/oportunities:netsuite-api-config"/>
+    </apikit:config>
+    <netsuite:config-login-authentication name="NetSuite__Login_Authentication" email="${nets.email}" password="${nets.password}" account="${nets.account}" roleId="${nets.roleId}" applicationId="${nets.applicationId}" doc:name="NetSuite: Login Authentication"/>
+    
+    <flow name="netsuite-api-main">
+        <http:listener config-ref="netsuite-api-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
+        <apikit:router config-ref="netsuite-api-config" doc:name="APIkit Router"/>
+        <exception-strategy ref="netsuite-api-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="get:/customers:netsuite-api-config">
+        <dw:transform-message doc:name="Prepare CustomerSearch according to input params">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	basic: {
+		(companyName: {
+			operator: "STARTS_WITH",
+			searchValue: inboundProperties."http.query.params"."name"
+		}) when (inboundProperties."http.query.params"."name" != null)
+	}
+} as :object {
+	class : "com.netsuite.webservices.lists.relationships.CustomerSearch"
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <netsuite:search config-ref="NetSuite__Login_Authentication" searchRecord="CUSTOMER" doc:name="Get Customers from Netsuite"/>
+
+        <dw:transform-message doc:name="Transform response into JSON">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload map $]]></dw:set-payload>
+        </dw:transform-message>
+
+        <logger message="Get customers completes successfully." level="INFO" doc:name="Log the success"/>
+
+
+    </flow>
+    <flow name="get:/items:netsuite-api-config">
+        <dw:transform-message doc:name="Prepare ItemSupplyPlanSearchBasic according to input params" metadata:id="7843a410-f7d4-4258-a849-5d1783127e52">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	quantity: {
+		operator: inboundProperties."http.query.params"."operator",
+		searchValue: inboundProperties."http.query.params"."quantity" as :number
+	}
+} as :object {
+	class : "com.netsuite.webservices.platform.common.ItemSupplyPlanSearchBasic"
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <netsuite:search config-ref="NetSuite__Login_Authentication" searchRecord="ITEM_SUPPLY_PLAN_BASIC" doc:name="Get Item supply plan basic from NetSuite"/>
+        <dw:transform-message doc:name="Transform response into JSON">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload map $]]></dw:set-payload>
+        </dw:transform-message>
+
+        <logger message="Get items completes successfully." level="INFO" doc:name="Log the success"/>
+
+    </flow>
+     <flow name="get:/oportunities:netsuite-api-config">
+        <dw:transform-message doc:name="Prepare OpportunitySearch according to input params" metadata:id="2e81d186-847f-4024-a8fb-cc3488bd6dee">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	basic: {
+		(title: {
+				operator: "STARTS_WITH",
+				searchValue: inboundProperties."http.query.params"."title"
+			} as :object {
+				class : "com.netsuite.webservices.platform.core.SearchStringField"
+		}) when (inboundProperties."http.query.params"."title" != null)
+	}
+} as :object {
+	class : "com.netsuite.webservices.transactions.sales.OpportunitySearch"
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <netsuite:search config-ref="NetSuite__Login_Authentication" searchRecord="OPPORTUNITY" doc:name="Get Opportunities from Netsuite"/>
+        <dw:transform-message doc:name="Transform response into JSON">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+payload map $
+]]></dw:set-payload>
+        </dw:transform-message>
+        <logger message="Get oportunities completes successfully." level="INFO" doc:name="Log the success"/>
+    </flow>
+    <apikit:mapping-exception-strategy name="netsuite-api-apiKitGlobalExceptionMapping">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="405">
+            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Method not allowed&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="415">
+            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="406">
+            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="400">
+            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+   
+</mule>

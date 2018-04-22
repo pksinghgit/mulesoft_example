@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="product" password="product" database="product" doc:name="MySQL Configuration"/>
+    <flow name="deleteproductsFlow">
+        <http:request config-ref="HTTP_Request_Configuration" path="/validate-token" method="GET" doc:name="HTTP"/>
+        <choice doc:name="Choice">
+            <when expression="#[json:id==12]">
+                <db:delete config-ref="MySQL_Configuration" doc:name="delete products">
+                    <db:parameterized-query><![CDATA[DELETE FROM `product`.`product` WHERE `product`.`id` = #[message.inboundProperties['http.uri.params'].productId]]]></db:parameterized-query>
+                </db:delete>
+                <set-payload value="{ &quot;message&quot; : &quot;Product Deleted Susccesfully.&quot; }" doc:name="message"/>
+            </when>
+        </choice>
+    </flow>
+</mule>

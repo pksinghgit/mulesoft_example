@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:cmis="http://www.mulesoft.org/schema/mule/cmis" xmlns:context="http://www.springframework.org/schema/context" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.mulesoft.org/schema/mule/cmis http://www.mulesoft.org/schema/mule/cmis/current/mule-cmis.xsd http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd">
+    <cmis:config baseUrl="http://demo.openkm.com/OpenKM/cmis/atom" doc:name="CMIS" name="openkm" password="pass3" repositoryId="default" username="user3"/>
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+    <flow name="CMIS">
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="HTTP" path="cmis"/>
+
+
+        <scripting:component doc:name="Load file">
+            <scripting:script engine="Groovy"><![CDATA[import java.io.FileInputStream;
+				return new FileInputStream("./src/main/resources/mulesoft-logo.jpg");]]></scripting:script>
+        </scripting:component>
+        <cmis:create-document-by-path-from-content config-ref="openkm" doc:name="Create document from local file" filename="pic#[System.currentTimeMillis()].jpg" folderPath="/okm:root/" mimeType="image/jpg" objectType="cmis:document" versioningState="NONE"/>
+        <json:object-to-json-transformer doc:name="Convert object to JSON for output"/>
+    </flow>
+</mule>

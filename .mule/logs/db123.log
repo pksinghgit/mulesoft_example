@@ -1,0 +1,50 @@
+2017-10-31 07:42:38,592 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'db123'                                 +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-10-31 07:42:39,496 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-10-31 07:42:39,818 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-10-31 07:42:40,199 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-10-31 07:42:40,199 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.8)
+2017-10-31 07:42:40,826 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@73fc518f: startup date [Tue Oct 31 07:42:40 IST 2017]; root of context hierarchy
+2017-10-31 07:42:45,458 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-10-31 07:42:46,880 [main] WARN  org.mule.expression.DefaultExpressionManager - Expression string is not an expression.  Use isExpression(String) to validate first
+2017-10-31 07:42:46,880 [main] WARN  org.mule.expression.DefaultExpressionManager - Expression string is not an expression.  Use isExpression(String) to validate first
+2017-10-31 07:42:46,880 [main] WARN  org.mule.expression.DefaultExpressionManager - Expression string is not an expression.  Use isExpression(String) to validate first
+2017-10-31 07:42:46,880 [main] WARN  org.mule.expression.DefaultExpressionManager - Expression string is not an expression.  Use isExpression(String) to validate first
+2017-10-31 07:42:48,902 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2017-10-31 07:42:50,550 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\db123\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\db123\queue-tx-log\tx2.log
+2017-10-31 07:42:50,587 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\db123\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\db123\queue-xa-tx-log\tx2.log
+2017-10-31 07:42:50,902 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-10-31 07:42:50,916 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: db123Flow
+2017-10-31 07:42:50,917 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@3eb9c575
+2017-10-31 07:42:50,999 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: db123Flow.stage1
+2017-10-31 07:42:51,873 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\db123\db123.xml'}]"
+2017-10-31 07:42:51,874 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\db123\db123.xml'}]"
+2017-10-31 07:42:54,966 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'db123'                                     +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-10-31 07:42:54,969 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-10-31 07:42:54,969 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-10-31 07:42:55,052 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-10-31 07:42:55,056 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-10-31 07:42:55,060 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-10-31 07:42:55,064 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: db123Flow
+2017-10-31 07:42:55,065 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: db123Flow.stage1
+2017-10-31 07:42:55,188 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-10-31 07:43:04,316 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: db123                                                 *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Batch module default engine                                      *
+*   Wrapper Manager                                                  *
+**********************************************************************

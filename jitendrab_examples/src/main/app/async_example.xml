@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <flow name="async_example_1_Flow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/async" doc:name="HTTP"/>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <async doc:name="Async">
+            <flow-ref name="async_2_flow" doc:name="Flow Reference"/>
+        </async>
+        <logger message="first flow" level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="async_2_flow">
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <scripting:component doc:name="Groovy">
+            <scripting:script engine="Groovy"><![CDATA[sleep(3000)]]></scripting:script>
+        </scripting:component>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <logger message="second flow" level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>

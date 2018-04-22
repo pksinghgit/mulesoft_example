@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<summary>
+	<orderId>12</orderId>
+	<customer>
+		<address>Main Street 123</address>
+		<firstName>John</firstName>
+		<lastName>Doe</lastName>
+	</customer>
+	<orderItems>
+		<item>
+			<manufacturer>Samsung</manufacturer>
+			<name>s-1</name>
+			<productId>AX02</productId>
+			<purchaseReceipt>
+				<id>1</id>
+				<status>ACCEPTED</status>
+				<totalPrice>2550.0</totalPrice>
+			</purchaseReceipt>
+			<quantity>1</quantity>
+		</item>
+	</orderItems>
+</summary>

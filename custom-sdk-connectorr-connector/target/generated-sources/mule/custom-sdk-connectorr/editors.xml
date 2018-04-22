@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<namespace xmlns="http://www.mulesoft.org/schema/mule/tooling.attributes" xmlns:mule="http://www.mulesoft.org/schema/mule/core" url="http://www.mulesoft.org/schema/mule/custom-sdk-connectorr" prefix="custom-sdk-connectorr">
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="CustomSDKConnectorr" description="" icon="" localId="parentConfig" image="" abstract="true" extends="http://www.mulesoft.org/schema/mule/custom-sdk-connectorr/abstractCustom-sdk-connectorrConnectorGeneric"></global-cloud-connector>
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="CustomSDKConnectorr: Configuration" description="Global Configuration configuration information." icon="icons/theme.classic/custom-sdk-connectorr-connector-small.png" localId="config" image="icons/theme.classic/custom-sdk-connectorr-connector-large.png" abstract="false" extends="http://www.mulesoft.org/schema/mule/custom-sdk-connectorr/parentConfig" connectivityTesting="off" metaData="static" metaDataKeyDisplay="DISPLAY_NAME" supportsUserDefinedMetaData="false">
+    <attribute-category caption="General" description="Custom-sdk-connectorr configuration properties.">
+      <group id="custom-sdk-connectorrGenericProperties" caption="Basic Settings">
+        <name name="name" caption="Name" description="Give a name to this configuration so it can be later referenced by config-ref." required="true"></name>
+      </group>
+      <group id="general" caption="General">
+        <integer defaultValue="5" min="0" step="1" name="value1" caption="Value1" description="" supportsExpressions="false" required="false" javaType="int"></integer>
+        <integer defaultValue="5" min="0" step="1" name="value2" caption="Value2" description="" supportsExpressions="false" required="false" javaType="int"></integer>
+        <string defaultValue="add" name="action" caption="Action" description="" supportsExpressions="false" required="false" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </global-cloud-connector>
+  <cloud-connector caption="Abstractcustom-sdk-connectorrconnectorgeneric" description="Interact with Custom-sdk-connectorr." icon="icons/theme.classic/custom-sdk-connectorr-connector-small.png" localId="abstractCustom-sdk-connectorrConnectorGeneric" image="icons/theme.classic/custom-sdk-connectorr-connector-large.png" abstract="true">
+    <attribute-category caption="General" description="General.">
+      <group id="abstractCustom-sdk-connectorrConnectorGeneric" caption="Basic Settings">
+        <globalRef requiredType="http://www.mulesoft.org/schema/mule/custom-sdk-connectorr/config" name="config-ref" caption="Connector Configuration" description="Specify which configuration to use for this invocation." required="true"></globalRef>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector versions="[3.5.0,8.0.0]" aliasId="org.mule.tooling.ui.modules.core.pattern.custom-sdk-connectorr" caption="CustomSDKConnectorr" description="" icon="icons/theme.classic/custom-sdk-connectorr-connector-small.png" localId="custom-sdk-connectorr-connector" image="icons/theme.classic/custom-sdk-connectorr-connector-large.png" extends="http://www.mulesoft.org/schema/mule/custom-sdk-connectorr/abstractCustom-sdk-connectorrConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="custom-sdk-connectorrConnectorGeneric" caption="Basic Settings">
+        <modeSwitch alwaysCombo="true" name="Custom-sdk-connectorr operations to execute" caption="Operation" description="Operation.">
+          <no-operation abstractElement="http://www.mulesoft.org/schema/mule/custom-sdk-connectorr/abstractCustom-sdk-connectorrConnectorGeneric" versions="[3.5.0,8.0.0]" connector-name="processor"></no-operation>
+          <mode modeId="http://www.mulesoft.org/schema/mule/custom-sdk-connectorr/get-calculator" modeLabel="Get calculator"></mode>
+        </modeSwitch>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.lang.String" caption="Get Calculator" icon="icons/theme.classic/custom-sdk-connectorr-connector-small.png" localId="get-calculator" image="icons/theme.classic/custom-sdk-connectorr-connector-large.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/custom-sdk-connectorr/abstractCustom-sdk-connectorrConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <integer min="0" step="1" name="value1" caption="Value1" description="" required="true" javaType="int"></integer>
+        <integer min="0" step="1" name="value2" caption="Value2" description="" required="true" javaType="int"></integer>
+        <string name="actions" caption="Actions" description="" required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+</namespace>

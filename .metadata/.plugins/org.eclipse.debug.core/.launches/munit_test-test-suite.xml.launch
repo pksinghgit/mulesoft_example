@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.munit.launchconfig">
+<listAttribute key="Mpath">
+<listEntry value="F:\workspace_mulesoft1\munit_test\src\test\munit\munit_test-test-suite.xml"/>
+</listAttribute>
+<stringAttribute key="Ppath" value="F:\workspace_mulesoft1\munit_test"/>
+<stringAttribute key="launch_mule_server_version" value="org.mule.tooling.server.3.9.0.ee"/>
+<listAttribute key="mule-project-names">
+<listEntry value="munit_test"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="munit_test-test-suite.xml"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="munit_test"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.library.path=&#13;&#10;-DmunitProjectName=munit_test&#13;&#10;-Dlog4j.skipJansi=true"/>
+<stringAttribute key="resource" value="munit_test-test-suite.xml"/>
+</launchConfiguration>

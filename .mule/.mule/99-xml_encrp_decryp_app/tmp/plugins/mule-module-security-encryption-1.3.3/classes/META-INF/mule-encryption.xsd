@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:ns2="http://www.mulesoft.org/schema/mule/devkit" xmlns:mule="http://www.mulesoft.org/schema/mule/core" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.mulesoft.org/schema/mule/encryption" attributeFormDefault="unqualified" elementFormDefault="qualified">
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace"></xs:import>
+  <xs:import namespace="http://www.springframework.org/schema/beans" schemaLocation="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"></xs:import>
+  <xs:import namespace="http://www.mulesoft.org/schema/mule/core" schemaLocation="http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></xs:import>
+  <xs:element xmlns:mule="http://www.mulesoft.org/schema/mule/core" substitutionGroup="mule:abstract-extension" name="config" ns2:javaClass="org.mule.modules.security.encryption.adapters.EncryptionModuleLicenseChecker">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="mule:abstractExtensionType">
+          <xs:annotation>
+            <xs:documentation>&lt;p&gt;Module for Payload encryption.&lt;/p&gt;</xs:documentation>
+          </xs:annotation>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="1" name="xml-encrypter-config">
+              <xs:annotation>
+                <xs:documentation></xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:extension xmlns="http://www.mulesoft.org/schema/mule/encryption" base="XmlEncrypterConfigurationObjectType"></xs:extension>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" name="jce-encrypter-config">
+              <xs:annotation>
+                <xs:documentation></xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:extension xmlns="http://www.mulesoft.org/schema/mule/encryption" base="JCEEncrypterConfigurationObjectType"></xs:extension>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" maxOccurs="1" name="pgp-encrypter-config">
+              <xs:annotation>
+                <xs:documentation></xs:documentation>
+              </xs:annotation>
+              <xs:complexType>
+                <xs:complexContent>
+                  <xs:extension xmlns="http://www.mulesoft.org/schema/mule/encryption" base="PGPEncrypterConfigurationObjectType"></xs:extension>
+                </xs:complexContent>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+          <xs:attribute type="xs:string" use="optional" name="name">
+            <xs:annotation>
+              <xs:documentation>Give a name to this configuration so it can be later referenced by config-ref.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/encryption" type="EncrypterTypeEnumType" use="optional" default="JCE_ENCRYPTER" name="defaultEncrypter">
+            <xs:annotation>
+              <xs:documentation>&lt;p&gt;
+The encryption configuration used by default.
+&lt;/p&gt;</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/encryption" type="booleanType" use="optional" default="false" name="enableLanguage">
+            <xs:annotation>
+              <xs:documentation>&lt;p&gt;
+Set to TRUE if this module can be use with MEL
+&lt;/p&gt;</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="XmlEncrypterConfigurationObjectType">
+    <xs:sequence></xs:sequence>
+    <xs:attribute type="xs:string" use="optional" name="key">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;
+Key used for encryption or decryption.
+&lt;/p&gt;
+&lt;p&gt;
+If the keystore is defined then this value is the key stored in the keystore.
+&lt;/p&gt;
+&lt;p&gt;
+If the keystore is not defined then this is taken as plain key for encryption and has to be Base64 encrypted.
+&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="keystorePath">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;
+Keystore path. Two types of keystore are supported JCEKS and JKS
+&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="keystorePassword">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The keystore password.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="keyPassword">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The key password to read the key stored in the keystore. If the keystore is not specified then this value &lt;/p&gt;
+&lt;p&gt;is not considered.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="xpath">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The xml xpath that has to be encrypted.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/encryption" type="XmlEncryptionAlgorithmEnumType" use="optional" default="AES_256" name="algorithm">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The encryption algorithm to encrypt a xml element&lt;/p&gt;
+&lt;p&gt;Allowed values AES_128, AES_192, AES_256 (default), TRIPLEDES&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="ref">
+      <xs:annotation>
+        <xs:documentation>The reference object for this parameter</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="JCEEncrypterConfigurationObjectType">
+    <xs:sequence></xs:sequence>
+    <xs:attribute type="xs:string" use="optional" name="key">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;
+Key used for encryption or decryption.
+&lt;/p&gt;
+&lt;p&gt;
+If the keystore is defined then this value is the key stored in the keystore.
+&lt;/p&gt;
+&lt;p&gt;
+If the keystore is not defined then this is taken as plain key for encryption and has to be Base64 encrypted.
+&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="keystorePath">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;
+Keystore path. Two types of keystore are supported JCEKS and JKS
+&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="keystorePassword">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The keystore password.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="keyPassword">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The key password to read the key stored in the keystore. If the keystore is not specified then this value &lt;/p&gt;
+&lt;p&gt;is not considered.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/encryption" type="EncryptionAlgorithmEnumType" use="optional" default="AES" name="algorithm">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;
+The encryption algorithm used
+&lt;/p&gt;
+&lt;p&gt;
+Allowed algorithms:
+&lt;/p&gt;
+&lt;p&gt;
+&lt;ul&gt;
+&lt;li&gt;AES&lt;/li&gt;
+&lt;li&gt;Blowfish&lt;/li&gt;
+&lt;li&gt;DES&lt;/li&gt;
+&lt;li&gt;DESede&lt;/li&gt;
+&lt;li&gt;Camellia&lt;/li&gt;
+&lt;li&gt;CAST5&lt;/li&gt;
+&lt;li&gt;CAST6&lt;/li&gt;
+&lt;li&gt;Noekeon&lt;/li&gt;
+&lt;li&gt;Rijndael&lt;/li&gt;
+&lt;li&gt;SEED&lt;/li&gt;
+&lt;li&gt;Serpent&lt;/li&gt;
+&lt;li&gt;Skipjack&lt;/li&gt;
+&lt;li&gt;TEA&lt;/li&gt;
+&lt;li&gt;Twofish&lt;/li&gt;
+&lt;li&gt;XTEA&lt;/li&gt;
+&lt;li&gt;RC2&lt;/li&gt;
+&lt;li&gt;RC5&lt;/li&gt;
+&lt;li&gt;RC6&lt;/li&gt;
+&lt;li&gt;RSA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+&lt;p&gt;
+Default algorithm: AES
+&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/encryption" type="EncryptionModeEnumType" use="optional" default="CBC" name="encryptionMode">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;
+The encryption mode used.
+&lt;/p&gt;
+&lt;p&gt;
+&lt;ul&gt;
+&lt;li&gt;CBC&lt;/li&gt;
+&lt;li&gt;CFB&lt;/li&gt;
+&lt;li&gt;ECB&lt;/li&gt;
+&lt;li&gt;OFB&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+&lt;p&gt;Default mode: CBC&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="ref">
+      <xs:annotation>
+        <xs:documentation>The reference object for this parameter</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="PGPEncrypterConfigurationObjectType">
+    <xs:sequence></xs:sequence>
+    <xs:attribute type="xs:string" use="optional" name="publicKeyRingFileName">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The public key ring file path.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="secretKeyRingFileName">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The secret key ring file path.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="secretAliasId">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The secret alias id.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="secretPassphrase">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The secret passphrase.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="principal">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The principal.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="ref">
+      <xs:annotation>
+        <xs:documentation>The reference object for this parameter</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/encryption" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="EncryptType" substitutionGroup="mule:abstract-message-processor" name="encrypt">
+    <xs:annotation>
+      <xs:documentation>&lt;p&gt;Encrypts the input.&lt;/p&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="JCEEncrypterOverrideConfigurationObjectType">
+    <xs:sequence></xs:sequence>
+    <xs:attribute type="xs:string" use="optional" name="key">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;
+Key used for encryption or decryption.
+&lt;/p&gt;
+&lt;p&gt;
+If the keystore is defined then this value is the key stored in the keystore.
+&lt;/p&gt;
+&lt;p&gt;
+If the keystore is not defined then this is taken as plain key for encryption and has to be Base64 encrypted.
+&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="keyPassword">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The key password to read the key stored in the keystore. If the keystore is not specified then this value &lt;/p&gt;
+&lt;p&gt;is not considered.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/encryption" type="EncryptionAlgorithmEnumType" use="optional" name="algorithm">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;
+The encryption algorithm used
+&lt;/p&gt;
+&lt;p&gt;
+Allowed algorithms:
+&lt;/p&gt;
+&lt;p&gt;
+&lt;ul&gt;
+&lt;li&gt;AES&lt;/li&gt;
+&lt;li&gt;Blowfish&lt;/li&gt;
+&lt;li&gt;DES&lt;/li&gt;
+&lt;li&gt;DESede&lt;/li&gt;
+&lt;li&gt;Camellia&lt;/li&gt;
+&lt;li&gt;CAST5&lt;/li&gt;
+&lt;li&gt;CAST6&lt;/li&gt;
+&lt;li&gt;Noekeon&lt;/li&gt;
+&lt;li&gt;Rijndael&lt;/li&gt;
+&lt;li&gt;SEED&lt;/li&gt;
+&lt;li&gt;Serpent&lt;/li&gt;
+&lt;li&gt;Skipjack&lt;/li&gt;
+&lt;li&gt;TEA&lt;/li&gt;
+&lt;li&gt;Twofish&lt;/li&gt;
+&lt;li&gt;XTEA&lt;/li&gt;
+&lt;li&gt;RC2&lt;/li&gt;
+&lt;li&gt;RC5&lt;/li&gt;
+&lt;li&gt;RC6&lt;/li&gt;
+&lt;li&gt;PBEWithMD5AndDES&lt;/li&gt;
+&lt;li&gt;RSA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+&lt;p&gt;
+Default algorithm: AES
+&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/encryption" type="EncryptionModeEnumType" use="optional" name="encryptionMode">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;
+The encryption mode used.
+&lt;/p&gt;
+&lt;p&gt;
+&lt;ul&gt;
+&lt;li&gt;CBC&lt;/li&gt;
+&lt;li&gt;CFB&lt;/li&gt;
+&lt;li&gt;ECB&lt;/li&gt;
+&lt;li&gt;OFB&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/p&gt;
+&lt;p&gt;Default mode: CBC&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="ref">
+      <xs:annotation>
+        <xs:documentation>The reference object for this parameter</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="XmlEncrypterOverrideConfigurationObjectType">
+    <xs:sequence></xs:sequence>
+    <xs:attribute type="xs:string" use="optional" name="key">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;
+Key used for encryption or decryption.
+&lt;/p&gt;
+&lt;p&gt;
+If the keystore is defined then this value is the key stored in the keystore.
+&lt;/p&gt;
+&lt;p&gt;
+If the keystore is not defined then this is taken as plain key for encryption and has to be Base64 encrypted.
+&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="keyPassword">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The key password to read the key stored in the keystore. If the keystore is not specified then this value &lt;/p&gt;
+&lt;p&gt;is not considered.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="xpath">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The xml xpath that has to be encrypted.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/encryption" type="XmlEncryptionAlgorithmEnumType" use="optional" name="algorithm">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The encryption algorithm to encrypt a xml element&lt;/p&gt;
+&lt;p&gt;Allowed values AES_128, AES_192, AES_256 (default), TRIPLEDES&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="ref">
+      <xs:annotation>
+        <xs:documentation>The reference object for this parameter</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="PGPEncrypterOverrideConfigurationObjectType">
+    <xs:sequence></xs:sequence>
+    <xs:attribute type="xs:string" use="optional" name="principal">
+      <xs:annotation>
+        <xs:documentation>&lt;p&gt;The principal.&lt;/p&gt;</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute type="xs:string" use="optional" name="ref">
+      <xs:annotation>
+        <xs:documentation>The reference object for this parameter</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="EncryptType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="jce-encrypter">
+            <xs:annotation>
+              <xs:documentation>overrides the jce encrypter Strategy configuration that is configured in the module config</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns="http://www.mulesoft.org/schema/mule/encryption" base="JCEEncrypterOverrideConfigurationObjectType"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="xml-encrypter">
+            <xs:annotation>
+              <xs:documentation>overrides the xml encrypter Strategy configuration that is configured in the module config</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns="http://www.mulesoft.org/schema/mule/encryption" base="XmlEncrypterOverrideConfigurationObjectType"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="pgp-encrypter">
+            <xs:annotation>
+              <xs:documentation>overrides the pgp encrypter Strategy configuration that is configured in the module config</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns="http://www.mulesoft.org/schema/mule/encryption" base="PGPEncrypterOverrideConfigurationObjectType"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="optional" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="input-ref">
+          <xs:annotation>
+            <xs:documentation>input that has to be encrypted. By default is the payload.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/encryption" type="EncrypterTypeEnumType" use="optional" name="using">
+          <xs:annotation>
+            <xs:documentation>which encrypter needs to be used in the processor call.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element xmlns="http://www.mulesoft.org/schema/mule/encryption" xmlns:mule="http://www.mulesoft.org/schema/mule/core" type="DecryptType" substitutionGroup="mule:abstract-message-processor" name="decrypt">
+    <xs:annotation>
+      <xs:documentation>&lt;p&gt;Decrypts the input.&lt;/p&gt;</xs:documentation>
+    </xs:annotation>
+  </xs:element>
+  <xs:complexType name="DecryptType">
+    <xs:complexContent>
+      <xs:extension xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:abstractMessageProcessorType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="1" name="jce-encrypter">
+            <xs:annotation>
+              <xs:documentation>overrides the jce encrypter Strategy configuration that is configured in the module config</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns="http://www.mulesoft.org/schema/mule/encryption" base="JCEEncrypterOverrideConfigurationObjectType"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="xml-encrypter">
+            <xs:annotation>
+              <xs:documentation>overrides the xml encrypter Strategy configuration that is configured in the module config</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns="http://www.mulesoft.org/schema/mule/encryption" base="XmlEncrypterOverrideConfigurationObjectType"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="1" name="pgp-encrypter">
+            <xs:annotation>
+              <xs:documentation>overrides the pgp encrypter Strategy configuration that is configured in the module config</xs:documentation>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension xmlns="http://www.mulesoft.org/schema/mule/encryption" base="PGPEncrypterOverrideConfigurationObjectType"></xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+        <xs:attribute type="xs:string" use="optional" name="config-ref">
+          <xs:annotation>
+            <xs:documentation>Specify which configuration to use for this invocation.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute type="xs:string" use="optional" default="#[payload]" name="input-ref">
+          <xs:annotation>
+            <xs:documentation>Message that has to be decrypted.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attribute xmlns="http://www.mulesoft.org/schema/mule/encryption" type="EncrypterTypeEnumType" use="optional" name="using">
+          <xs:annotation>
+            <xs:documentation>which encrypter needs to be used in the processor call.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:simpleType name="EncryptionAlgorithmEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="AES">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Blowfish">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DES">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="DESede">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Camellia">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CAST5">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CAST6">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Noekeon">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Rijndael">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="SEED">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Serpent">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Skipjack">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TEA">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="Twofish">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="XTEA">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RC2">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RC5">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RC6">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="RSA">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="XmlEncryptionAlgorithmEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="AES_128">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AES_192">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="AES_256">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="TRIPLEDES">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="EncryptionModeEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CBC">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="CFB">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="ECB">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="OFB">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="EncrypterTypeEnumType">
+    <xs:annotation>
+      <xs:documentation></xs:documentation>
+    </xs:annotation>
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="JCE_ENCRYPTER">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="XML_ENCRYPTER">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+          <xs:enumeration value="PGP_ENCRYPTER">
+            <xs:annotation>
+              <xs:documentation></xs:documentation>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="OnNoTokenPolicyEnumType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="EXCEPTION"></xs:enumeration>
+          <xs:enumeration value="STOP_FLOW"></xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="integerType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:integer"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="decimalType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:decimal"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="floatType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:float"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="doubleType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:double"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="dateTimeType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:dateTime"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="longType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:long"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="byteType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:byte"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="booleanType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:boolean"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="anyUriType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:anyURI"></xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+  <xs:simpleType name="charType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="1"></xs:minLength>
+          <xs:maxLength value="1"></xs:maxLength>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction xmlns:mule="http://www.mulesoft.org/schema/mule/core" base="mule:propertyPlaceholderType"></xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <flow name="postproductsFlow">
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <db:insert config-ref="MySQL_Configuration" doc:name="post database">
+            <db:parameterized-query><![CDATA[INSERT INTO `product`.`product` (`name`, `model`, `price`) VALUES (#[json:name], #[json:model], #[json:price]);]]></db:parameterized-query>
+        </db:insert>
+        <set-payload value="{ &quot;message&quot;:&quot;Product added successfully.&quot; }" doc:name="message"/>
+    </flow>
+</mule>

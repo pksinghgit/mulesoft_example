@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking"
+	xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+	<http:listener-config name="HTTP_Listener_Configuration"
+		host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration" />
+
+	<configuration doc:name="configuration2">
+		<expression-language>
+			<global-functions>
+				def toLower(name){
+				return name.toLowerCase();
+				}
+				def
+				toUpper(name){
+				return name.toUpperCase();
+				}
+			</global-functions>
+		</expression-language>
+	</configuration>
+
+
+
+	<flow name="91-dataweave-appFlow">
+		<http:listener config-ref="HTTP_Listener_Configuration"
+			path="/dataweave" doc:name="HTTP" />
+		<byte-array-to-string-transformer
+			doc:name="Byte Array to String" />
+		<set-payload value="#[payload]" doc:name="Set Payload" />
+		<dw:transform-message doc:name="Transform Message"
+			metadata:id="62a79ebc-9d22-43eb-8ab0-bedaa5169fd9">
+			<dw:input-payload doc:sample="C:\Users\kavya\Desktop\Mulesoft\example\test.json"
+				mimeType="application/json" />
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+	name:  toUpper(payload.first_name ++ ' '
+++ payload.last_name),
+	age: payload.age,
+	designation: payload.designation
+}
+]]></dw:set-payload>
+		</dw:transform-message>
+		<set-payload value="#[payload]" doc:name="Set Payload" />
+	</flow>
+	<flow name="map">
+		<http:listener config-ref="HTTP_Listener_Configuration"
+			path="/map" doc:name="HTTP" />
+		<set-payload value="#[payload]" doc:name="Set Payload" />
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+%function toUser(user){firstName: user.givenName, lastName: user.sn}
+---
+{
+  "user" : toUser({givenName : "Annie", sn : "Point" })
+}]]></dw:set-payload>
+		</dw:transform-message>
+		<set-payload value="#[payload]" doc:name="Set Payload" />
+	</flow>
+	<flow name="while-otherwise">
+		<http:listener config-ref="HTTP_Listener_Configuration"
+			path="/while_otherwise" doc:name="HTTP" />
+		<byte-array-to-string-transformer
+			doc:name="Byte Array to String" />
+		<set-payload value="#[payload]" doc:name="Set Payload" />
+		<dw:transform-message doc:name="Transform Message"
+			metadata:id="62a79ebc-9d22-43eb-8ab0-bedaa5169fd9">
+			<dw:input-payload doc:sample="C:\Users\kavya\Desktop\Mulesoft\example\test.json"
+				mimeType="application/json" />
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+	name: toUpper(payload.first_name ++ ' '
+++ payload.last_name),
+	age: payload.age,
+	designation: payload.designation,
+	country: {
+		country: "USA"
+	} when payload.designation == "USA"
+	otherwise
+	{
+		country: "UK"
+	}
+}
+]]></dw:set-payload>
+		</dw:transform-message>
+		<set-payload value="#[payload]" doc:name="Set Payload" />
+	</flow>
+
+	<flow name="groupBy_distict">
+		<http:listener config-ref="HTTP_Listener_Configuration"
+			path="/distinct" doc:name="HTTP" />
+		<byte-array-to-string-transformer
+			doc:name="Byte Array to String" />
+		<set-payload value="#[payload]" doc:name="Set Payload" />
+		<dw:transform-message doc:name="Transform Message"
+			metadata:id="62a79ebc-9d22-43eb-8ab0-bedaa5169fd9">
+			<dw:input-payload doc:sample="C:\Users\kavya\Desktop\Mulesoft\example\test.json"
+				mimeType="application/json" />
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+	name: toUpper(payload.first_name ++ ' '
+++ payload.last_name),
+	age: payload.age,
+	designation: payload.designation,
+	country: {
+		country: "USA"
+	} when payload.designation == "USA"
+	otherwise
+	{
+		country: "UK"
+	}
+}
+]]></dw:set-payload>
+		</dw:transform-message>
+		<set-payload value="#[payload]" doc:name="Set Payload" />
+	</flow>
+	<flow name="lookup_function">
+		<http:listener config-ref="HTTP_Listener_Configuration"
+			path="/lookup" doc:name="HTTP" />
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+  a: p('Workgroup')
+}]]></dw:set-payload>
+		</dw:transform-message>
+	</flow>
+	<flow name="second-flow-lookup-service">
+		<set-payload doc:name="Set Payload" value="#[payload.b + ' world!' ]" />
+	</flow>
+</mule>

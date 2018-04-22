@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="test" password="test" database="test" doc:name="MySQL Configuration"/>
+    <flow name="75-rollback-exception-strategyFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/rollbackException" doc:name="HTTP"/>
+        <db:stored-procedure config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[{CALL insert_procedure(:name,:state,:country)}]]></db:parameterized-query>
+            <db:in-param name="name" value="#[json:name]"/>
+            <db:in-param name="state" value="#[json:state]"/>
+            <db:in-param name="country" value="#[json:country]"/>
+        </db:stored-procedure>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <set-payload value="#['Data Inserted']" doc:name="Set Payload"/>
+        <rollback-exception-strategy maxRedeliveryAttempts="2000" doc:name="Rollback Exception Strategy">
+            <logger message="#['Rollback Exception']" level="INFO" doc:name="Logger"/>
+            <set-payload value="#['Rollback Exception setpayload']" doc:name="Set Payload"/>
+            <on-redelivery-attempts-exceeded>
+                <set-payload value="#['Redelivery Exhausted ']" doc:name="Set Payload"/>
+            </on-redelivery-attempts-exceeded>
+        </rollback-exception-strategy>
+    </flow>
+</mule>

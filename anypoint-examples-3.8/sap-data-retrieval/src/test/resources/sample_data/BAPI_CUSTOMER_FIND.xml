@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<BAPI_CUSTOMER_FIND>
+  <import>
+    <MAX_CNT>5</MAX_CNT>
+    <PL_HOLD>X</PL_HOLD>
+  </import>
+  <tables>
+    <RESULT_TAB>
+      <row>
+        <COMP_CODE>0001</COMP_CODE>
+        <TABNAME>KNA1</TABNAME>
+        <FIELDNAME>NAME1</FIELDNAME>
+        <FIELDVALUE>CustomerName</FIELDVALUE>
+        <CUSTOMER>10000456</CUSTOMER>
+        <PSTG_BLK_G></PSTG_BLK_G>
+        <PSTG_BLK_C></PSTG_BLK_C>
+        <DEL_FLAG_G></DEL_FLAG_G>
+        <DEL_FLAG_C></DEL_FLAG_C>
+        <TYPE>Customer</TYPE>
+        <ID>Id</ID>
+        <NUMBER>1234</NUMBER>
+        <MESSAGE>Test data preview</MESSAGE>
+        <LOG_NO></LOG_NO>
+        <LOG_MSG_NO></LOG_MSG_NO>
+        <MESSAGE_V1></MESSAGE_V1>
+        <MESSAGE_V2></MESSAGE_V2>
+        <MESSAGE_V3></MESSAGE_V3>
+        <MESSAGE_V4></MESSAGE_V4>
+      </row>
+    </RESULT_TAB>
+  </tables>
+</BAPI_CUSTOMER_FIND>

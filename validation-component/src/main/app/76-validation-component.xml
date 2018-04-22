@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:validation="http://www.mulesoft.org/schema/mule/validation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/validation http://www.mulesoft.org/schema/mule/validation/current/mule-validation.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <validation:config name="Validation_Configuration" doc:name="Validation Configuration"/>
+    <flow name="76-validation-componentFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/validation" doc:name="HTTP"/>
+        <validation:all config-ref="Validation_Configuration" doc:name="Validation">
+            <validation:validations>
+                <validation:is-email email="#[json:email]" message="Enter Correct Email Id"/>
+                <validation:matches-regex value="#[json:mob]" regex="^[1-9]\d*$" message="Enter Correct Mob No"/>
+            </validation:validations>
+        </validation:all>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+    </flow>
+</mule>

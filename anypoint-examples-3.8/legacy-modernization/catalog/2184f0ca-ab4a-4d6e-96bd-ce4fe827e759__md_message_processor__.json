@@ -1,0 +1,11 @@
+{
+    "inputMessageMetadata": {},
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "ShippingOrderConfirmation"
+        }
+    },
+    "id": "2184f0ca-ab4a-4d6e-96bd-ce4fe827e759",
+    "version": "5.2.0.0"
+}

@@ -1,0 +1,25 @@
+<!--
+
+    MuleSoft Examples
+    Copyright 2014 MuleSoft, Inc.
+
+    This product includes software developed at
+    MuleSoft, Inc. (http://www.mulesoft.com/).
+
+-->
+<style>input{display:block;}select{display: block;}</style>
+<html>
+	<body>
+		
+		<h1>Salesforce data retrieval</h1>
+		<form action="/" method="POST">
+			Object: <select name="object" >
+				#[message.payload]
+			</select>
+			Field: <input type="text" name="field" />
+			Search Key: <input type="text" name="searchKey" />
+			Search Value: <input type="text" name="searchValue" />
+			<input type="submit" name="Submit" value="Submit" id="submit"/>
+		</form>
+	</body>
+</html>

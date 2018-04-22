@@ -1,0 +1,140 @@
+#%RAML 0.8
+title: SAP-Customer-Search
+
+version: v1
+baseUri: http://localhost:8081/api
+    
+/materials:
+  get:  
+    description: "Return a list of materials"
+    queryParameters:
+      name:
+        description: "Define that material name have to start with this String"
+      max_count:
+        description: "Maximum returned materials"
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "materials": [
+                {
+                  "MATERIAL": "MD100-103-1    ",
+                  "MATL_DESC": " Board (purchased – Lot tracked)",
+                  "MATERIAL_EXTERNAL": "",
+                  "MATERIAL_GUID": "",
+                  "MATERIAL_VERSION": ""
+                }]
+              }
+/salesOrders: 
+  get:
+    description: "Return a list of sales orders"
+    queryParameters:
+      customer_number: {
+          description: "Customer number for Sales orders",
+          default: " "
+        }
+      sales_organization: {
+          description: "The sales organization for Sales orders",
+          default: " "
+        }
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+              "salesOrders": [
+                {
+                  "SD_DOC": "1234",
+                  "ITM_NUMBER": "000456",
+                  "MATERIAL": "MAT1234",
+                  "SHORT_TEXT": "TstMat",
+                  "DOC_TYPE": "TA",
+                  "DOC_DATE": "01-12-2015",
+                  "REQ_QTY": "10",
+                  "REQ_DATE": "01-12-2015",
+                  "PURCH_NO": "1234",
+                  "BATCH": "",
+                  "VALID_FROM": "01-11-2015",
+                  "VALID_TO": "01-12-2016",
+                  "BILL_BLOCK": "",
+                  "DLV_BLOCK": "",
+                  "SOLD_TO": "",
+                  "NAME": "",
+                  "EXCHG_RATE": "10",
+                  "DLV_QTY": "10",
+                  "BASE_UOM": "",
+                  "NET_PRICE": "9",
+                  "COND_P_UNT": "5",
+                  "COND_UNIT": "5",
+                  "NET_VAL_HD": "8",
+                  "NET_VALUE": "8",
+                  "DIVISION": "20",
+                  "DOC_STATUS": "",
+                  "SALES_GRP": "",
+                  "SALES_OFF": "",
+                  "SALES_ORG": "3020",
+                  "SALES_UNIT": "KG",
+                  "SHIP_POINT": "",
+                  "DISTR_CHAN": "00",
+                  "GI_DATE": "01-12-2015",
+                  "CURRENCY": "EUR",
+                  "PLANT": "",
+                  "STORE_LOC": "",
+                  "ORD_REASON": "",
+                  "REASON_REJ": "",
+                  "B_UOM_ISO": "",
+                  "CD_UNT_ISO": "",
+                  "S_UNIT_ISO": "",
+                  "CURR_ISO": "EUR",
+                  "PURCH_NO_C": "123",
+                  "EXCHG_RATE_V": "10",
+                  "MAT_EXT": "",
+                  "MAT_GUID": "",
+                  "MAT_VERS": "",
+                  "CREATION_DATE": "01-11-2015",
+                  "CREATION_TIME": "",
+                  "STATUS_DOC": ""
+                }]
+              }
+            
+/customers:
+  get:
+    description: "Return a list of customers"
+    queryParameters:
+      name:
+        description: "Define that customer name have to start with this String"
+      max_count:
+        description: "Maximum returned customers"
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+              "customers": [
+                {
+                  "COMP_CODE": "0001",
+                  "TABNAME": "KNA1",
+                  "FIELDNAME": "NAME1",
+                  "FIELDVALUE": "Nelson Tax & Associates",
+                  "CUSTOMER": "0000000001",
+                  "PSTG_BLK_G": "",
+                  "PSTG_BLK_C": "",
+                  "DEL_FLAG_G": "",
+                  "DEL_FLAG_C": "",
+                  "TYPE": "E",
+                  "ID": "FN",
+                  "NUMBER": "503",
+                  "MESSAGE": "Customer 0000000001 exists.",
+                  "LOG_NO": "",
+                  "LOG_MSG_NO": "000000",
+                  "MESSAGE_V1": "0000000001",
+                  "MESSAGE_V2": "0001",
+                  "MESSAGE_V3": "",
+                  "MESSAGE_V4": ""
+                }]
+              }
+            

@@ -1,0 +1,16 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "upsertPatientResponse"
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "createEpisodeRequest"
+        }
+    },
+    "id": "0ef1c948-e8a1-41c1-a9cd-4310121fd98d",
+    "version": "5.2.0.0"
+}

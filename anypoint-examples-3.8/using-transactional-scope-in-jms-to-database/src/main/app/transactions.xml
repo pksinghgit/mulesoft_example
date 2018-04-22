@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:jbossts="http://www.mulesoft.org/schema/mule/jbossts" xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd http://www.mulesoft.org/schema/mule/jbossts http://www.mulesoft.org/schema/mule/jbossts/current/mule-jbossts.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <jms:activemq-connector doc:name="Active MQ" maxRedelivery="2" name="Active_MQ" validateConnections="true"/>
+    <db:generic-config doc:name="Generic Database Configuration" driverClassName="com.mysql.jdbc.Driver" name="MySQL_Configuration" url="${jdbc.url}"/>
+    
+    <flow doc:name="transactionsFlow1" name="transactionsFlow1" processingStrategy="synchronous">
+        <jms:inbound-endpoint connector-ref="Active_MQ" doc:name="Listen to JMS messages" queue="in"/>
+        <mulexml:xml-to-object-transformer doc:name="Convert XML to Order" metadata:id="808bc736-893f-4647-90a2-5451a3b45e29" returnClass="org.mule.examples.Order">
+        	<mulexml:alias class="org.mule.examples.Order" name="order"/>
+        </mulexml:xml-to-object-transformer>
+        <logger doc:name="Log the order" level="INFO" message="XXXXXXX order: #[payload]"/>
+        <ee:multi-transactional action="ALWAYS_BEGIN" doc:name="Transactional">
+            <db:insert config-ref="MySQL_Configuration" doc:name="Insert into Database">
+                <db:parameterized-query><![CDATA[insert into orders(item_id,item_units,customer_id) values (#[payload.itemId], #[payload.itemUnits], #[payload.customerId])]]></db:parameterized-query>
+
+            </db:insert>
+            <component class="org.mule.examples.TestComponent" doc:name="Throw an exception"/>
+            <jms:outbound-endpoint connector-ref="Active_MQ" doc:name="Send a JMS message" queue="out">
+                <jms:transaction action="JOIN_IF_POSSIBLE"/>
+            </jms:outbound-endpoint>
+        </ee:multi-transactional>
+    </flow>
+</mule>

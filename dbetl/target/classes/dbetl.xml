@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:batch="http://www.mulesoft.org/schema/mule/batch" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <db:mysql-config name="MySQL_Configuration" host="${mysql.host}" port="${mysql.port}" user="${mysql.user}" password="${mysql.password}" database="${mysql.database}" doc:name="MySQL Configuration"/>
+    <batch:job name="dbetlBatch">
+        <batch:input>
+            <poll doc:name="Capture Changed Records">
+                <fixed-frequency-scheduler frequency="24" timeUnit="HOURS"/>
+                <watermark variable="watermark" default-expression="#[server .dateTime.plusDays(-1).toString()]" selector="MAX" selector-expression="#[payload.OrderDate]"/>
+            <db:select config-ref="MySQL_Configuration" doc:name="Poll for new order updates">
+                    <db:parameterized-query><![CDATA[select * from ORDERS where OrderDate > #[watermark]]]></db:parameterized-query>
+                </db:select>
+            </poll>
+        </batch:input>
+        <batch:process-records>
+            <batch:step name="Transform_QuerySKU">
+                <dw:transform-message doc:name="Store order and sku list">
+                    <dw:set-variable variableName="order"><![CDATA[%dw 1.0
+%output application/java
+---
+payload]]></dw:set-variable>
+                    <dw:set-variable variableName="sku"><![CDATA[%dw 1.0
+%output application/java
+---
+(payload.SKUs splitBy ',') when payload.SKUs contains ',' otherwise payload.SKUs]]></dw:set-variable>
+                </dw:transform-message>
+                <foreach collection="#[flowVars.sku]" counterVariableName="index" doc:name="For each sku">
+                    <enricher target="#[flowVars.skuproduct]" doc:name="Message Enricher">
+                        <db:select config-ref="MySQL_Configuration" doc:name="Query SKU">
+                            <db:parameterized-query><![CDATA[SELECT Product from SKU where SKU = #[flowVars.order.SKUs.contains(',') ? flowVars.sku[payload-1] : flowVars.sku]]]></db:parameterized-query>
+                        </db:select>
+                    </enricher>
+                    <dw:transform-message metadata:id="b88440ed-8302-4567-aff4-ab8fa14587b1" doc:name="Concatenate product">
+                        <dw:set-variable variableName="product"><![CDATA[%dw 1.0
+%output application/java
+---
+flowVars.skuproduct[0].Product when flowVars.index==1 otherwise flowVars.product ++ ',' ++ flowVars.skuproduct[0].Product]]></dw:set-variable>
+                    </dw:transform-message>
+                </foreach>
+                <batch:set-record-variable variableName="resultproduct" value="#[flowVars.product]" doc:name="Store Product"/>
+            </batch:step>
+            <batch:step name="Transform_QueryOrderStatus">
+                <enricher target="#[recordVars.orderstatus]" doc:name="Message Enricher">
+                <db:select config-ref="MySQL_Configuration" doc:name="Query Order Status">
+                        <db:parameterized-query><![CDATA[SELECT Status from ORDER_STATUS where OrderID = #[payload.OrderID]]]></db:parameterized-query>
+                    </db:select>
+                    </enricher>
+            </batch:step>
+            <batch:step name="Load_Status">
+            <db:insert config-ref="MySQL_Configuration" doc:name="Insert into Status Report">
+                    <db:parameterized-query><![CDATA[INSERT INTO STATUS_REPORT(OrderID,Products,RetailerName,Status,OrderDate) VALUES (#[payload.OrderID],#[recordVars.resultproduct] ,#[payload.RetailerName],#[recordVars.orderstatus[0].Status] ,#[payload.OrderDate])]]></db:parameterized-query>
+                </db:insert>
+                </batch:step>
+        </batch:process-records>
+        <batch:on-complete>
+            <logger message="Processing is complete" level="INFO" doc:name="Log Status"/>
+        </batch:on-complete>
+    </batch:job>
+</mule>

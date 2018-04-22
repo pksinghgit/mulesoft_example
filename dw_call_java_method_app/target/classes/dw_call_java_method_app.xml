@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:secure-property-placeholder="http://www.mulesoft.org/schema/mule/secure-property-placeholder" xmlns:context="http://www.springframework.org/schema/context" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw"
+	xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/secure-property-placeholder http://www.mulesoft.org/schema/mule/secure-property-placeholder/current/mule-secure-property-placeholder.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd">
+	<http:listener-config name="HTTP_Listener_Configuration"
+		host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration" />
+	<configuration doc:name="calculator">
+		<expression-language>
+			<import class="com.calc.Calc" />
+			<global-functions>
+				def calAdd(a,b){
+				return new
+				com.calc.Calc().addTwoNumbers(a,b);
+				}
+
+				def calSub(a,b){
+				return new
+				com.calc.Calc().subTwoNumbers(a,b);
+				}
+
+			</global-functions>
+		</expression-language>
+	</configuration>
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="${db.host}" user="${db.username}" password="${db.password}" database="product" doc:name="MySQL Configuration"/>
+    <secure-property-placeholder:config name="Secure_Property_Placeholder" encryptionAlgorithm="Blowfish" key="123" location="db-config-${env}.properties" doc:name="Secure Property Placeholder"/>
+	<flow name="dw_call_java_method_appFlow">
+		<http:listener config-ref="HTTP_Listener_Configuration"
+			path="/calc" doc:name="HTTP" />
+		<object-to-string-transformer doc:name="Object to String" />
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	sum: calAdd(payload.a,payload.b),
+	sub: calSub(payload.a,payload.b)
+}]]></dw:set-payload>
+		</dw:transform-message>
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[select * from product]]></db:parameterized-query>
+        </db:select>
+		<set-payload value="#[payload]" doc:name="Set Payload" />
+	</flow>
+</mule>

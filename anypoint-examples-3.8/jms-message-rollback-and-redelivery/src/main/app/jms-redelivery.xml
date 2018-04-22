@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:https="http://www.mulesoft.org/schema/mule/https" xmlns:jbossts="http://www.mulesoft.org/schema/mule/jbossts" xmlns:jms="http://www.mulesoft.org/schema/mule/jms" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:ss="http://www.springframework.org/schema/security" xmlns:test="http://www.mulesoft.org/schema/mule/test" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xm="http://www.mulesoft.org/schema/mule/xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/jbossts http://www.mulesoft.org/schema/mule/jbossts/current/mule-jbossts.xsd http://www.mulesoft.org/schema/mule/https http://www.mulesoft.org/schema/mule/https/current/mule-https.xsd http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd http://www.mulesoft.org/schema/mule/jms http://www.mulesoft.org/schema/mule/jms/current/mule-jms.xsd http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+
+	<spring:beans>
+		<!-- ActiveMQ -->
+		<spring:bean class="org.apache.activemq.RedeliveryPolicy" id="redeliveryPolicy">
+			<spring:property name="maximumRedeliveries" value="5"/>
+			<spring:property name="initialRedeliveryDelay" value="5000"/>
+			<spring:property name="redeliveryDelay" value="2000"/>
+			<spring:property name="useExponentialBackOff" value="false"/>
+			<spring:property name="backOffMultiplier" value="2"/>
+		</spring:bean>
+		<spring:bean class="org.apache.activemq.ActiveMQConnectionFactory" id="amqFactory" lazy-init="true">
+			<spring:property name="brokerURL" value="failover:(tcp://localhost:61616)"/>
+			<spring:property name="redeliveryPolicy" ref="redeliveryPolicy"/>
+		</spring:bean>
+	</spring:beans>
+
+	<jms:activemq-connector connectionFactory-ref="amqFactory" doc:name="Active MQ" maxRedelivery="5" name="jmsConnector" persistentDelivery="true" specification="1.1" validateConnections="true"/>
+
+	<flow doc:name="JMSRedeliver" name="JMSRedeliver">
+		<jms:inbound-endpoint connector-ref="jmsConnector" doc:name="Listen to JMS queue" queue="in">
+			<jms:transaction action="ALWAYS_BEGIN"/>
+		</jms:inbound-endpoint>
+
+        <choice doc:name="Choice">
+            <when expression="#[message.inboundProperties['JMSXDeliveryCount']==5]">
+                <logger doc:name="No exception thrown" level="INFO" message="Transaction without errors"/>
+            </when>
+            <otherwise>
+                <test:component doc:name="Throws custom exception" exceptionToThrow="org.exceptions.MyException" throwException="true"/>
+            </otherwise>
+        </choice>
+
+		<jms:outbound-endpoint connector-ref="jmsConnector" doc:name="Send to JMS topic" topic="topic1">
+			<jms:transaction action="ALWAYS_JOIN"/>
+		</jms:outbound-endpoint>
+        
+        <choice-exception-strategy doc:name="Choice Exception Strategy">
+            <catch-exception-strategy doc:name="Catch Exception Strategy" when="#[!exception.causedBy(org.exceptions.MyException)]">
+        		<logger doc:name="Commit transaction" level="INFO" message="Entered catch exception strategy. The transaction is commited."/>
+            </catch-exception-strategy>
+            
+            <rollback-exception-strategy doc:name="Rollback Exception Strategy" when="#[exception.causedBy(org.exceptions.MyException)]">
+                <logger doc:name="Rollback transaction" level="INFO" message="Entered rollback exception strategy. The message rolls back to its original state for reprocessing."/>
+            </rollback-exception-strategy>
+        </choice-exception-strategy>
+	</flow>
+</mule>

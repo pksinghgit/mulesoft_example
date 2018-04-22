@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;authenticating-salesforce-using-oauth2_1.3.6-SNAPSHOT&apos;" deleteContents="true" description="Delete resource &apos;authenticating-salesforce-using-oauth2_1.3.6-SNAPSHOT&apos;" element1="/authenticating-salesforce-using-oauth2_1.3.6-SNAPSHOT" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1516429095406"/>
+</session>

@@ -1,0 +1,3 @@
+<!-- BEGIN_INCLUDE(custom-sdk-connectorr:greet) -->
+    <custom-sdk-connectorr:greet config-ref="" friend="#[map-payload:friend]" />
+<!-- END_INCLUDE(custom-sdk-connectorr:greet) -->

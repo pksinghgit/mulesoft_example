@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:objectstore="http://www.mulesoft.org/schema/mule/objectstore" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/objectstore http://www.mulesoft.org/schema/mule/objectstore/current/mule-objectstore.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <objectstore:config name="ObjectStore__Connector" partition="emp" doc:name="ObjectStore: Connector"/>
+    <flow name="88-object-storeFlow1">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/storeObject" doc:name="HTTP"/>
+        <objectstore:store config-ref="ObjectStore__Connector" key="#[message.inboundProperties['http.query.params'].name]" value-ref="#[message.inboundProperties['http.query.params']name]" doc:name="StoreObjectStore"/>
+        <catch-exception-strategy doc:name="88-object-storeCatch_Exception_Strategy">
+            <set-payload value="#['duplicate data  '+exception]" doc:name="Set Payload"/>
+        </catch-exception-strategy>
+    </flow>
+    <flow name="getObjectFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/getobjetstore"  doc:name="HTTP"/>
+        <objectstore:retrieve config-ref="ObjectStore__Connector" key="#[message.inboundProperties['http.query.params']name]" doc:name="ObjectStore"/>
+        <catch-exception-strategy doc:name="Catch Exception Strategy">
+            <set-payload value="#['Object not found with name  ' ] #[message.inboundProperties['http.query.params'].name ]" doc:name="Set Payload"/>
+        </catch-exception-strategy>
+    </flow>
+</mule>

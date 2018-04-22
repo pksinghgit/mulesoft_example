@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:context="http://www.springframework.org/schema/context" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:smtp="http://www.mulesoft.org/schema/mule/smtp" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd http://www.mulesoft.org/schema/mule/smtp http://www.mulesoft.org/schema/mule/smtp/current/mule-smtp.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <smtp:gmail-connector doc:name="Gmail" name="Gmail" validateConnections="true"/>
+    <flow name="csv-to-smtpFlow">
+    	<file:inbound-endpoint doc:name="Poll files" metadata:id="a75d5954-7fb4-4721-85f6-7ee66b793750" path="src/main/resources/input" responseTimeout="10000"/>
+        <dw:transform-message doc:name="Transform CSV to Map" metadata:id="84d175de-b3c6-4480-af9d-150e736f051e">
+            <dw:input-payload doc:sample="list_csv.csv"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload map {
+	name: $.name,
+	orderId: $.orderId,
+	pricePerUnit: $.pricePerUnit as :number,
+	units: $.units as :number,
+	totalPrice: ($.units * $.pricePerUnit ) as :number
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <logger doc:name="Log the processed objects" level="INFO" message="Processing objects: #[payload]"/>
+        <smtp:outbound-endpoint connector-ref="Gmail" doc:name="Send an email via SMTP" from="${mail.from}" host="${smtp.host}" password="${smtp.password}" port="587" responseTimeout="10000" subject="${mail.subject}" to="${mail.to}" user="${smtp.user}"/>
+    </flow>
+</mule>

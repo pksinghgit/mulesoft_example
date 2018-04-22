@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="product" password="product" database="product" doc:name="MySQL Configuration"/>
+    <flow name="maven_db_jenkinsFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/maven" doc:name="HTTP"/>
+        <flow-ref name="maven_db_jenkinsFlow1" doc:name="Flow Reference flow1"/>
+        <flow-ref name="maven_db_jenkinsFlow2" doc:name="Flow Reference flw 2"/>
+    </flow>
+    <flow name="maven_db_jenkinsFlow2">
+        <logger message="sub flow 2" level="INFO" doc:name="sub flow 2"/>
+    </flow>
+    <flow name="maven_db_jenkinsFlow1">
+        <logger message="sub flow 1" level="INFO" doc:name="sub Flow 1"/>
+    </flow>
+</mule>

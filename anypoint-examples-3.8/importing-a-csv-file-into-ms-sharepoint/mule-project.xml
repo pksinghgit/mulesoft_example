@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule-project runtimeId="org.mule.tooling.server.3.6.1.ee" schemaVersion="3.5.0.0" xmlns="http://www.mulesoft.com/tooling/project">
+    <name>importing-a-csv-file-into-ms-sharepoint</name>
+    <description/>
+    <muleExtension name="Microsoft SharePoint 2013" qualifier="org.mule.tooling.ui.contribution.sharepoint.3.5.0"/>
+</mule-project>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:encryption="http://www.mulesoft.org/schema/mule/encryption" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/encryption http://www.mulesoft.org/schema/mule/encryption/current/mule-encryption.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <encryption:config name="Encryption" doc:name="Encryption">
+        <encryption:jce-encrypter-config key="test123412341234"/>
+    </encryption:config>
+    <flow name="100-jce_encryptionFlow1">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/JCE_ENCRYPT_DECRYPT" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <encryption:encrypt config-ref="Encryption" input-ref="#[payload.toString()]" doc:name="Encryption">
+            <encryption:jce-encrypter key="test123412341234"/>
+        </encryption:encrypt>
+        <set-payload doc:name="Set Payload" value="#[payload]"/>
+    </flow>
+    <flow name="100-jce_decryptionFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/decryption" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <encryption:decrypt config-ref="Encryption" input-ref="#[payload.toString()]" doc:name="Encryption">
+            <encryption:jce-encrypter key="test123412341239" algorithm="AES" encryptionMode="CBC"/>
+        </encryption:decrypt>
+        <object-to-string-transformer doc:name="Object to String"/>
+    </flow>
+</mule>

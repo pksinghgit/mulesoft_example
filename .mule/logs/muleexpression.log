@@ -1,0 +1,327 @@
+2017-11-30 09:34:58,401 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'muleexpression'                        +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:34:58,421 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-11-30 09:34:58,434 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-11-30 09:34:58,569 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-11-30 09:34:58,569 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-11-30 09:34:58,579 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@5c192acd: startup date [Thu Nov 30 09:34:58 IST 2017]; root of context hierarchy
+2017-11-30 09:34:59,208 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-11-30 09:34:59,406 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-tx-log\tx2.log
+2017-11-30 09:34:59,419 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-xa-tx-log\tx2.log
+2017-11-30 09:34:59,433 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-11-30 09:34:59,439 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: muleexpressionFlow
+2017-11-30 09:34:59,439 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@2c7bf153
+2017-11-30 09:34:59,451 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: muleexpressionFlow.stage1
+2017-11-30 09:34:59,504 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\muleexpression\muleexpression.xml'}]"
+2017-11-30 09:34:59,504 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\muleexpression\muleexpression.xml'}]"
+2017-11-30 09:34:59,505 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'muleexpression'                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:34:59,524 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-11-30 09:34:59,525 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-11-30 09:34:59,559 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-11-30 09:34:59,565 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:34:59,567 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-11-30 09:34:59,568 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: muleexpressionFlow
+2017-11-30 09:34:59,568 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: muleexpressionFlow.stage1
+2017-11-30 09:34:59,609 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-11-30 09:34:59,627 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: muleexpression                                        *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-11-30 09:35:04,769 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app 'muleexpression'                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:04,770 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: muleexpressionFlow
+2017-11-30 09:35:04,770 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: muleexpressionFlow.stage1
+2017-11-30 09:35:04,789 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-11-30 09:35:04,793 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-11-30 09:35:04,794 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-11-30 09:35:04,794 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-11-30 09:35:04,797 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app 'muleexpression'                           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:04,797 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-11-30 09:35:04,797 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: muleexpressionFlow
+2017-11-30 09:35:04,797 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: muleexpressionFlow.stage1
+2017-11-30 09:35:04,798 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-11-30 09:35:04,809 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@5c192acd: startup date [Thu Nov 30 09:34:58 IST 2017]; root of context hierarchy
+2017-11-30 09:35:04,811 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "muleexpression" shut down normally on: 11/30/17 9:35  *
+* AM                                                                 *
+* Up for: 0 days, 0 hours, 0 mins, 5.306 sec                         *
+**********************************************************************
+2017-11-30 09:35:35,041 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'muleexpression'                        +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:35,054 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-11-30 09:35:35,066 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-11-30 09:35:35,133 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-11-30 09:35:35,133 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-11-30 09:35:35,142 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@7b482043: startup date [Thu Nov 30 09:35:35 IST 2017]; root of context hierarchy
+2017-11-30 09:35:35,565 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-11-30 09:35:35,739 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-tx-log\tx2.log
+2017-11-30 09:35:35,740 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-xa-tx-log\tx2.log
+2017-11-30 09:35:35,750 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-11-30 09:35:35,751 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: muleexpressionFlow
+2017-11-30 09:35:35,752 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@4aaba67b
+2017-11-30 09:35:35,765 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: muleexpressionFlow.stage1
+2017-11-30 09:35:35,806 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\muleexpression\muleexpression.xml'}]"
+2017-11-30 09:35:35,806 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\muleexpression\muleexpression.xml'}]"
+2017-11-30 09:35:35,807 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'muleexpression'                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:35,809 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-11-30 09:35:35,809 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-11-30 09:35:35,824 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-11-30 09:35:35,827 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:35,828 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-11-30 09:35:35,829 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: muleexpressionFlow
+2017-11-30 09:35:35,829 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: muleexpressionFlow.stage1
+2017-11-30 09:35:35,845 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-11-30 09:35:35,849 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: muleexpression                                        *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-11-30 09:35:37,604 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'muleexpression'                        +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:38,008 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-11-30 09:35:38,241 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-11-30 09:35:38,463 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-11-30 09:35:38,463 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-11-30 09:35:38,729 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@9d157ff: startup date [Thu Nov 30 09:35:38 IST 2017]; root of context hierarchy
+2017-11-30 09:35:40,858 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app 'muleexpression'                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:40,859 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: muleexpressionFlow
+2017-11-30 09:35:40,860 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: muleexpressionFlow.stage1
+2017-11-30 09:35:41,000 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-11-30 09:35:41,036 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-11-30 09:35:41,038 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-11-30 09:35:41,053 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-11-30 09:35:41,057 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app 'muleexpression'                           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:41,058 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-11-30 09:35:41,059 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: muleexpressionFlow
+2017-11-30 09:35:41,060 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: muleexpressionFlow.stage1
+2017-11-30 09:35:41,062 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-11-30 09:35:41,083 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@7b482043: startup date [Thu Nov 30 09:35:35 IST 2017]; root of context hierarchy
+2017-11-30 09:35:41,089 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "muleexpression" shut down normally on: 11/30/17 9:35  *
+* AM                                                                 *
+* Up for: 0 days, 0 hours, 0 mins, 5.282 sec                         *
+**********************************************************************
+2017-11-30 09:35:41,908 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-11-30 09:35:43,958 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2017-11-30 09:35:44,988 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-tx-log\tx2.log
+2017-11-30 09:35:45,020 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-xa-tx-log\tx2.log
+2017-11-30 09:35:45,251 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-11-30 09:35:45,259 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: muleexpressionFlow
+2017-11-30 09:35:45,259 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@56e9a474
+2017-11-30 09:35:45,333 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: muleexpressionFlow.stage1
+2017-11-30 09:35:46,179 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\muleexpression\muleexpression.xml'}]"
+2017-11-30 09:35:46,179 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\muleexpression\muleexpression.xml'}]"
+2017-11-30 09:35:46,196 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'muleexpression'                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:46,203 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-11-30 09:35:46,203 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-11-30 09:35:46,311 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-11-30 09:35:46,317 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:46,318 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-11-30 09:35:46,322 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: muleexpressionFlow
+2017-11-30 09:35:46,323 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: muleexpressionFlow.stage1
+2017-11-30 09:35:46,408 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-11-30 09:35:55,537 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: muleexpression                                        *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-11-30 09:35:55,586 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app 'muleexpression'                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:55,597 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: muleexpressionFlow
+2017-11-30 09:35:55,599 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: muleexpressionFlow.stage1
+2017-11-30 09:35:55,753 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-11-30 09:35:55,799 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-11-30 09:35:55,801 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-11-30 09:35:55,801 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-11-30 09:35:55,813 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app 'muleexpression'                           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:35:55,816 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-11-30 09:35:55,826 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: muleexpressionFlow
+2017-11-30 09:35:55,827 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: muleexpressionFlow.stage1
+2017-11-30 09:35:55,832 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-11-30 09:35:56,141 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@9d157ff: startup date [Thu Nov 30 09:35:38 IST 2017]; root of context hierarchy
+2017-11-30 09:35:56,161 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "muleexpression" shut down normally on: 11/30/17 9:35  *
+* AM                                                                 *
+* Up for: 0 days, 0 hours, 0 mins, 9.960 sec                         *
+**********************************************************************
+2017-11-30 09:36:16,476 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'muleexpression'                        +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:36:16,490 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-11-30 09:36:16,502 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-11-30 09:36:16,535 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-11-30 09:36:16,535 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-11-30 09:36:16,541 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@2026d8bb: startup date [Thu Nov 30 09:36:16 IST 2017]; root of context hierarchy
+2017-11-30 09:36:16,941 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-11-30 09:36:17,063 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-tx-log\tx2.log
+2017-11-30 09:36:17,064 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-xa-tx-log\tx2.log
+2017-11-30 09:36:17,073 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-11-30 09:36:17,074 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: muleexpressionFlow
+2017-11-30 09:36:17,074 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@4a695bbd
+2017-11-30 09:36:17,195 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: muleexpressionFlow.stage1
+2017-11-30 09:36:17,219 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\muleexpression\muleexpression.xml'}]"
+2017-11-30 09:36:17,219 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\muleexpression\muleexpression.xml'}]"
+2017-11-30 09:36:17,220 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'muleexpression'                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:36:17,222 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-11-30 09:36:17,222 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-11-30 09:36:17,232 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-11-30 09:36:17,234 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:36:17,235 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-11-30 09:36:17,236 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: muleexpressionFlow
+2017-11-30 09:36:17,236 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: muleexpressionFlow.stage1
+2017-11-30 09:36:17,249 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-11-30 09:36:17,252 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: muleexpression                                        *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-11-30 09:36:22,259 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app 'muleexpression'                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:36:22,261 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: muleexpressionFlow
+2017-11-30 09:36:22,261 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: muleexpressionFlow.stage1
+2017-11-30 09:36:22,462 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2017-11-30 09:36:22,469 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8083
+2017-11-30 09:36:22,472 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2017-11-30 09:36:22,472 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2017-11-30 09:36:22,478 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app 'muleexpression'                           +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:36:22,478 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2017-11-30 09:36:22,479 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: muleexpressionFlow
+2017-11-30 09:36:22,479 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: muleexpressionFlow.stage1
+2017-11-30 09:36:22,482 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2017-11-30 09:36:22,519 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@2026d8bb: startup date [Thu Nov 30 09:36:16 IST 2017]; root of context hierarchy
+2017-11-30 09:36:22,532 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "muleexpression" shut down normally on: 11/30/17 9:36  *
+* AM                                                                 *
+* Up for: 0 days, 0 hours, 0 mins, 5.309 sec                         *
+**********************************************************************
+2017-11-30 09:41:05,467 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'muleexpression'                        +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:41:06,022 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-11-30 09:41:06,360 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-11-30 09:41:06,708 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-11-30 09:41:06,708 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-11-30 09:41:07,930 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@3f92a84e: startup date [Thu Nov 30 09:41:07 IST 2017]; root of context hierarchy
+2017-11-30 09:41:11,018 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-11-30 09:41:12,721 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2017-11-30 09:41:13,657 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-tx-log\tx2.log
+2017-11-30 09:41:13,692 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\muleexpression\queue-xa-tx-log\tx2.log
+2017-11-30 09:41:13,889 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-11-30 09:41:13,897 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: muleexpressionFlow
+2017-11-30 09:41:13,898 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@47eaf55c
+2017-11-30 09:41:14,143 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: muleexpressionFlow.stage1
+2017-11-30 09:41:14,763 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\muleexpression\muleexpression.xml'}]"
+2017-11-30 09:41:14,764 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\muleexpression\muleexpression.xml'}]"
+2017-11-30 09:41:14,775 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'muleexpression'                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:41:14,782 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-11-30 09:41:14,782 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-11-30 09:41:14,892 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-11-30 09:41:14,899 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-30 09:41:14,900 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-11-30 09:41:14,902 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: muleexpressionFlow
+2017-11-30 09:41:14,903 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: muleexpressionFlow.stage1
+2017-11-30 09:41:14,983 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-11-30 09:41:24,132 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: muleexpression                                        *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************

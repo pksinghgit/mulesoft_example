@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:context="http://www.springframework.org/schema/context" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:pop3="http://www.mulesoft.org/schema/mule/pop3" xmlns:pop3s="http://www.mulesoft.org/schema/mule/pop3s" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/pop3s http://www.mulesoft.org/schema/mule/pop3s/current/mule-pop3s.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <pop3s:connector checkFrequency="100" doc:name="POP3" name="POP3" validateConnections="true"/>
+
+    <flow name="pop-to-xmlFlow1">
+        <pop3s:inbound-endpoint connector-ref="POP3" doc:name="Poll emails" host="${pop3.host}" password="${pop3.password}" port="995" responseTimeout="10000" user="${pop3.user}"/>
+		<expression-transformer doc:name="Put Attachments to Payload">
+			<return-argument evaluator="attachments-list" expression="*"/>
+		</expression-transformer>
+		<set-payload doc:name="Set Payload to content" metadata:id="9aa78c67-4bc3-47dd-9707-bf255cf8fa3b" mimeType="application/csv" value="#[payload[0].getContent()]"/>
+        <dw:transform-message doc:name="Map CSV to XML" metadata:id="4dccd4bd-151e-4213-8e73-aa86e66a2585">
+            <dw:input-payload doc:sample="list_csv.csv"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+---
+orders: {
+	(payload map 
+	order: {
+		orderId : $.orderId,
+		name : $.name,
+		units : $.units,
+		pricePerUnit : $.pricePerUnit
+	})
+}
+]]></dw:set-payload>
+        </dw:transform-message>        
+        <logger doc:name="Log the converted XML" level="INFO" message="Received: #[message.payloadAs(java.lang.String)]"/>
+        <file:outbound-endpoint doc:name="File" outputPattern="orders.xml" path="src/test/resources/output" responseTimeout="10000"/>
+    </flow>
+</mule>

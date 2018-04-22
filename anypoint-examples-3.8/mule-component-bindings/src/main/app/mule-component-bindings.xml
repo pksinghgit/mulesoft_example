@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.6.0" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:axis="http://www.mulesoft.org/schema/mule/axis" xmlns:context="http://www.springframework.org/schema/context" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:jersey="http://www.mulesoft.org/schema/mule/jersey" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:twitter="http://www.mulesoft.org/schema/mule/twitter" xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/axis http://www.mulesoft.org/schema/mule/axis/current/mule-axis.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/jersey http://www.mulesoft.org/schema/mule/jersey/current/mule-jersey.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/twitter http://www.mulesoft.org/schema/mule/twitter/current/mule-twitter.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd">
+    <twitter:config accessKey="${twitter.accessKey}" accessSecret="${twitter.accessSecret}" consumerKey="${twitter.apiKey}" consumerSecret="${twitter.apiSecret}" doc:name="Twitter" name="Twitter"/>
+
+	<spring:beans>	
+    	<spring:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    		<spring:property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_FALLBACK"/> 
+    	</spring:bean>
+    	
+        <spring:bean class="stockstats.impl.StockStatsResourceImpl" id="stackStatsResource" name="Bean" scope="singleton">
+            <spring:property name="stockService">
+                <spring:bean class="stockstats.impl.stocklytics.StocklyticsStockService" name="aaa">
+                    <spring:constructor-arg index="0" value="${stockstats.stocklyticsApiKey}"/>
+                </spring:bean>
+            </spring:property>
+            <spring:property name="sentimentService">
+                <spring:bean class="stockstats.impl.sentiment140.Sentiment140SentimentService">
+                    <spring:constructor-arg index="0" value="${stockstats.sentiment140ApiKey}"/>
+                </spring:bean>
+            </spring:property>
+            
+        </spring:bean>
+    </spring:beans>
+	<http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8081" doc:name="HTTP Listener Configuration"/>
+    <flow  name="mule-component-bindingsFlow1">
+		<http:listener config-ref="HTTP_Listener_Configuration" path="/" doc:name="HTTP"/>
+        <twitter:search config-ref="Twitter" doc:name="Call Twitter Search" query="AAPL" since="2014-10-26" until="2014-11-04"/>
+        <custom-processor class="stockstats.impl.mule.TwitterResponseProcessor" doc:name="Process Twitter Response" name="TwitterResponseProcessor1"/>
+    </flow>
+    
+    
+    
+	<http:listener-config name="HTTP_Listener_Configuration2" host="localhost" port="8180" doc:name="HTTP Listener Configuration"/>
+   <flow  name="StockServiceFlow">
+		<http:listener config-ref="HTTP_Listener_Configuration2" path="/api/*" doc:name="HTTP"/>
+        <jersey:resources doc:name="Provide REST api">
+            <component>
+            	<spring-object bean="stackStatsResource"/>
+            	
+            	<binding interface="stockstats.impl.TwitterService" method="search">
+            		<vm:outbound-endpoint exchange-pattern="request-response" path="twitterFlowRequest"/>
+            	</binding>
+            </component>
+        </jersey:resources>
+    </flow>
+    
+    
+    
+    <flow  name="TwitterFlow">
+        <vm:inbound-endpoint doc:name="Start Twitter Search process" exchange-pattern="request-response" name="tfStart" path="twitterFlowRequest"/>
+        <custom-processor class="stockstats.impl.mule.TwitterRequestProcessor" doc:name="Prepare Twitter Request" name="TwitterRequestProcessor"/>
+        <twitter:search config-ref="Twitter" doc:name="Call Twitter Search" query="#[header:invocation:stock]" since="#[header:invocation:since]" until="#[header:invocation:until]"/>
+        <custom-processor class="stockstats.impl.mule.TwitterResponseProcessor" doc:name="Process Twitter Response" name="TwitterResponseProcessor"/>        
+    </flow>
+</mule>

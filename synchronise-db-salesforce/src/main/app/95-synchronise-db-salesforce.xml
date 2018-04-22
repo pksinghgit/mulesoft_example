@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc"
+	xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<db:mysql-config name="MySQL_Configuration" host="localhost"
+		port="3306" user="test" password="test" database="test" doc:name="MySQL Configuration" />
+	<sfdc:config name="Salesforce__Basic_Authentication"
+		username="pksingh_1@yahoo.com" password="Maharouli@6812"
+		securityToken="4IpBtEyiuJd1wV1Xt32XoqEY" doc:name="Salesforce: Basic Authentication" />
+	<flow name="96-synchronize-db-salesforceFlow">
+		<poll doc:name="Poll">
+			<fixed-frequency-scheduler frequency="1000" />
+			<watermark variable="maxAccountId" default-expression="0"
+				selector="MIN" selector-expression="#[payload.id]" />
+			<db:select config-ref="MySQL_Configuration" doc:name="Database">
+				<db:parameterized-query><![CDATA[select * from account where id > #[flowVars.maxAccountId]]]></db:parameterized-query>
+			</db:select>
+		</poll>
+		<dw:transform-message doc:name="Transform Message">
+			<dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload map ((payload01 , indexOfPayload01) -> {
+	Name: payload01.name,
+	BillingState: payload01.state,
+	BillingCountry: payload01.country
+})]]></dw:set-payload>
+		</dw:transform-message>
+		<sfdc:create config-ref="Salesforce__Basic_Authentication"
+			type="Account" doc:name="Salesforce" />
+	</flow>
+</mule>

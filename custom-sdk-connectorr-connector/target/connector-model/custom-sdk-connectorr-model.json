@@ -1,0 +1,138 @@
+{
+  "minMuleVersion": "3.5.0",
+  "requiresEntitlement": false,
+  "requiresEnterpriseLicense": false,
+  "configs": [
+    {
+      "configElementName": "config",
+      "attributes": [
+        {
+          "javaTypeName": "Integer",
+          "fullQualifiedJavaTypeName": "int",
+          "defaultValue": "5",
+          "isOptional": true,
+          "isRefOnly": false,
+          "isPayload": false,
+          "isComplexType": false,
+          "isEnum": false,
+          "isString": false,
+          "typeMirror": "int",
+          "isHttpCallback": false,
+          "isArrayOrListOrMap": false,
+          "javaName": "value1"
+        },
+        {
+          "javaTypeName": "Integer",
+          "fullQualifiedJavaTypeName": "int",
+          "defaultValue": "5",
+          "isOptional": true,
+          "isRefOnly": false,
+          "isPayload": false,
+          "isComplexType": false,
+          "isEnum": false,
+          "isString": false,
+          "typeMirror": "int",
+          "isHttpCallback": false,
+          "isArrayOrListOrMap": false,
+          "javaName": "value2"
+        },
+        {
+          "javaTypeName": "String",
+          "fullQualifiedJavaTypeName": "java.lang.String",
+          "defaultValue": "add",
+          "isOptional": true,
+          "isRefOnly": false,
+          "isPayload": false,
+          "isComplexType": false,
+          "isEnum": false,
+          "isString": true,
+          "typeMirror": "java.lang.String",
+          "isHttpCallback": false,
+          "isArrayOrListOrMap": false,
+          "javaName": "action"
+        }
+      ],
+      "javaName": "ConnectorConfig",
+      "friendlyName": "Configuration",
+      "type": "ConfigurationConfig"
+    }
+  ],
+  "attributes": [],
+  "processors": [
+    {
+      "isPaged": false,
+      "isBatch": false,
+      "samples": [],
+      "javaReturnType": {
+        "javaTypeName": "String",
+        "fullQualifiedJavaTypeName": "java.lang.String",
+        "isOptional": false,
+        "isRefOnly": false,
+        "isPayload": false,
+        "isComplexType": false,
+        "isEnum": false,
+        "isString": false,
+        "isHttpCallback": false,
+        "description": ""
+      },
+      "parameters": [
+        {
+          "javaTypeName": "int",
+          "fullQualifiedJavaTypeName": "int",
+          "isOptional": false,
+          "isRefOnly": false,
+          "isPayload": false,
+          "isComplexType": false,
+          "isEnum": false,
+          "isString": false,
+          "typeMirror": "int",
+          "isHttpCallback": false,
+          "isArrayOrListOrMap": false,
+          "javaName": "value1",
+          "description": ""
+        },
+        {
+          "javaTypeName": "int",
+          "fullQualifiedJavaTypeName": "int",
+          "isOptional": false,
+          "isRefOnly": false,
+          "isPayload": false,
+          "isComplexType": false,
+          "isEnum": false,
+          "isString": false,
+          "typeMirror": "int",
+          "isHttpCallback": false,
+          "isArrayOrListOrMap": false,
+          "javaName": "value2",
+          "description": ""
+        },
+        {
+          "javaTypeName": "String",
+          "fullQualifiedJavaTypeName": "java.lang.String",
+          "isOptional": false,
+          "isRefOnly": false,
+          "isPayload": false,
+          "isComplexType": false,
+          "isEnum": false,
+          "isString": true,
+          "typeMirror": "java.lang.String",
+          "isHttpCallback": false,
+          "isArrayOrListOrMap": false,
+          "javaName": "actions",
+          "description": ""
+        }
+      ],
+      "apiDocUrl": "",
+      "javaName": "getCalculator",
+      "friendlyName": "Get calculator",
+      "description": "",
+      "xsdName": "get-calculator"
+    }
+  ],
+  "filters": [],
+  "transformers": [],
+  "sources": [],
+  "javaName": "CustomSDKConnectorrConnector",
+  "friendlyName": "CustomSDKConnectorr",
+  "xsdName": "custom-sdk-connectorr"
+}

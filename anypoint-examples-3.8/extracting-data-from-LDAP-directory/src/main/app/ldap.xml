@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:context="http://www.springframework.org/schema/context" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ldap="http://www.mulesoft.org/schema/mule/ldap" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ldap http://www.mulesoft.org/schema/mule/ldap/current/mule-ldap.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <ldap:config authDn="${ldap.dn}" authPassword="${ldap.password}" doc:name="LDAP" name="LDAP" url="ldap://localhost:${ldap.port}/dc=my-domain,dc=com">
+        <ldap:connection-pooling-profile exhaustedAction="WHEN_EXHAUSTED_GROW" initialisationPolicy="INITIALISE_ONE"/>
+    </ldap:config>
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+    <flow name="ldapFlow1">
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="HTTP" path="/"/>
+        <ldap:search baseDn="ou=people" config-ref="LDAP" doc:name="Search for users in LDAP" filter="(objectClass=*)"/>
+        <byte-array-to-object-transformer doc:name="Convert Byte Array to Object"/>
+        <collection-splitter doc:name="Split the list of users"/>
+        <logger doc:name="Log each LDAP user" level="INFO" message="LDAP user: #[payload]"/>
+        <collection-aggregator doc:name="Aggregate the users into the list" failOnTimeout="true"/>
+        <logger doc:name="Logg all users" level="INFO" message="all users: #[payload]"/>
+        <object-to-string-transformer doc:name="Convert Object to String"/>
+    </flow>
+</mule>

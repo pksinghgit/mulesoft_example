@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd">
+    <sfdc:config doc:name="Salesforce: Basic authentication" name="Salesforce__Basic_authentication" password="${sfdc.password}" securityToken="${sfdc.securityToken}" username="${sfdc.user}"/>
+
+    
+    <flow doc:description="From the content of a CSV file, creates new accounts in Salesforce." name="CreateNewSalesforceAccountFlow">
+        <file:inbound-endpoint doc:name="Poll for files" metadata:id="9bf66750-ef55-4ebd-8853-9a94fe72d017" moveToDirectory="src/main/resources/output" path="src/main/resources/input" pollingFrequency="10000" responseTimeout="10000"/>
+        <dw:transform-message doc:name="CSV to Maps" metadata:id="debb27f3-d39d-4bb9-8098-769bf0193538">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+payload map {
+  Name: $.company_name,
+  BillingStreet: $.company_address,
+  BillingCity: $.company_city,
+  BillingState: upper $.company_state,
+  BillingPostalCode: $.company_zip,
+  Region__c: lookup("LookUpSalesRegionFlow", $).region
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <sfdc:create config-ref="Salesforce__Basic_authentication" doc:name="Salesforce" type="Account">
+            <sfdc:objects ref="#[payload]"/>
+        </sfdc:create>
+    </flow>
+
+    <flow doc:description="The script uses data in the state field to add a region to the payload according to location." name="LookUpSalesRegionFlow" processingStrategy="synchronous">
+        <scripting:component doc:name="Get Region by State">
+            <scripting:script engine="Groovy"><![CDATA[def region = "UNKNOWN"
+def state = payload.company_state
+if (state != null) {
+	state = state.toUpperCase()
+}
+println "State to lookup is: " + state
+switch (state) {
+	case ["CT","ME","MA","NH","VT","RI","NY","NJ","DE","DC","MD","NH"]:
+      region = "North East"
+      break
+      case ["AL","AR","FL", "GA","LA" ,"SC","NC","TN","TX"]:
+      region = "South East"
+      break
+      case ["ID","IL", "IA","KS","MT", "WY","ND","SD","OH" ]:
+      region = "Mid West"
+      break
+      case ["AZ","CO","OK","NM", "NV"]:
+      region = "South West"
+      break
+      case ["CA","HI","WA","OR", "AK"]:
+      region = "West Coast"
+      break
+}
+return ["region":region]]]></scripting:script>
+        </scripting:component>
+        <logger doc:name="Log the Region" level="INFO" message="Region is : #[payload.region]"/>
+    </flow>
+</mule>

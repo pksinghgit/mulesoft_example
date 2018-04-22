@@ -1,0 +1,734 @@
+2018-02-26 08:41:38,648 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '56-merge-payload-using-dataweave'      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 08:41:39,093 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2018-02-26 08:41:39,409 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2018-02-26 08:41:39,736 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2018-02-26 08:41:39,737 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2018-02-26 08:41:39,934 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@76c548f: startup date [Mon Feb 26 08:41:39 IST 2018]; root of context hierarchy
+2018-02-26 08:41:43,878 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-02-26 08:41:45,991 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2018-02-26 08:41:47,156 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx2.log
+2018-02-26 08:41:47,189 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx2.log
+2018-02-26 08:41:47,215 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising connector: connector.quartz.mule.default
+2018-02-26 08:41:47,401 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2018-02-26 08:41:47,461 [main] INFO  org.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2018-02-26 08:41:47,484 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.2.1 created.
+2018-02-26 08:41:47,484 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2018-02-26 08:41:47,519 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.2.1) 'scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 16 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2018-02-26 08:41:47,519 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default' initialized from an externally provided properties instance.
+2018-02-26 08:41:47,519 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.2.1
+2018-02-26 08:41:47,861 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2018-02-26 08:41:47,869 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 08:41:47,870 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@27358a19
+2018-02-26 08:41:47,916 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 08:41:48,495 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 08:41:48,495 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 08:41:48,513 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 08:41:48,521 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2018-02-26 08:41:48,521 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2018-02-26 08:41:48,689 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8082
+2018-02-26 08:41:48,694 [main] INFO  org.mule.transport.quartz.QuartzConnector - Connected: QuartzConnector
+{
+  name=connector.quartz.mule.default
+  lifecycle=initialise
+  this=3ffd4b12
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[quartz]
+  serviceOverrides=<none>
+}
+
+2018-02-26 08:41:48,694 [main] INFO  org.mule.transport.quartz.QuartzConnector - Starting: QuartzConnector
+{
+  name=connector.quartz.mule.default
+  lifecycle=initialise
+  this=3ffd4b12
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[quartz]
+  serviceOverrides=<none>
+}
+
+2018-02-26 08:41:48,700 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting connector: connector.quartz.mule.default
+2018-02-26 08:41:48,700 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_$_NON_CLUSTERED started.
+2018-02-26 08:41:48,712 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 08:41:48,716 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2018-02-26 08:41:48,720 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 08:41:48,722 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 08:41:48,862 [main] INFO  org.mule.transport.quartz.QuartzConnector - Registering listener: 56-merge-payload-using-dataweaveFlow on endpointUri: quartz://trigger
+2018-02-26 08:41:48,965 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising: 'null'. Object is: QuartzMessageReceiver
+2018-02-26 08:41:48,975 [main] INFO  org.mule.transport.quartz.QuartzMessageReceiver - Connecting clusterizable message receiver
+2018-02-26 08:41:48,980 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting: 'null'. Object is: QuartzMessageReceiver
+2018-02-26 08:41:48,980 [main] INFO  org.mule.transport.quartz.QuartzMessageReceiver - Starting clusterizable message receiver
+2018-02-26 08:41:49,130 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2018-02-26 08:41:49,180 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-1] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:41:49,208 [main] INFO  org.mule.module.management.agent.AbstractJmxAgent - Attempting to register service with name: Mule.56-merge-payload-using-dataweave:type=Endpoint,service="56-merge-payload-using-dataweaveFlow",connector=connector.quartz.mule.default,name="endpoint.quartz.trigger"
+2018-02-26 08:41:49,208 [main] INFO  org.mule.module.management.agent.AbstractJmxAgent - Registered Endpoint Service with name: Mule.56-merge-payload-using-dataweave:type=Endpoint,service="56-merge-payload-using-dataweaveFlow",connector=connector.quartz.mule.default,name="endpoint.quartz.trigger"
+2018-02-26 08:41:49,220 [main] INFO  org.mule.module.management.agent.AbstractJmxAgent - Registered Connector Service with name Mule.56-merge-payload-using-dataweave:type=Connector,name="connector.quartz.mule.default"
+2018-02-26 08:41:49,226 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 56-merge-payload-using-dataweave                      *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2018-02-26 08:41:50,041 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-2] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:41:51,043 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-3] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:41:52,037 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-4] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:41:53,042 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-5] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:41:54,039 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-6] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:41:55,040 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-7] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:41:56,040 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-8] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:41:57,042 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-9] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:41:58,037 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-10] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:41:59,039 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-11] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:00,036 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-12] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:01,037 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-13] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:02,041 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-14] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:03,039 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-15] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:04,037 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-16] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:05,041 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-1] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:06,036 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-2] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:07,039 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-3] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:08,041 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-4] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:09,037 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-5] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:10,038 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-6] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:11,041 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-7] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:12,039 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-8] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:13,039 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-9] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:14,040 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-10] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:15,036 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-11] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:16,038 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-12] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:42:17,039 [scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_Worker-13] INFO  org.quartz.core.JobRunShell - Job mule.quartz://trigger threw a JobExecutionException: 
+org.quartz.JobExecutionException: When dispatching a Quartz event the payload must be of type org.quartz.Job or the jobObject or jobReference property must be set on the event
+	at org.mule.transport.quartz.jobs.CustomJob.doExecute(CustomJob.java:37) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.mule.transport.quartz.jobs.AbstractJob.execute(AbstractJob.java:35) ~[mule-transport-quartz-3.9.0.jar:3.9.0]
+	at org.quartz.core.JobRunShell.run(JobRunShell.java:202) ~[quartz-2.2.1.jar:?]
+	at org.quartz.simpl.SimpleThreadPool$WorkerThread.run(SimpleThreadPool.java:573) ~[quartz-2.2.1.jar:?]
+2018-02-26 08:43:08,281 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '56-merge-payload-using-dataweave'      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 08:43:08,780 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2018-02-26 08:43:09,088 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2018-02-26 08:43:09,382 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2018-02-26 08:43:09,382 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2018-02-26 08:43:09,567 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@76c548f: startup date [Mon Feb 26 08:43:09 IST 2018]; root of context hierarchy
+2018-02-26 08:43:13,251 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-02-26 08:43:15,283 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2018-02-26 08:43:16,544 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx2.log
+2018-02-26 08:43:16,571 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx2.log
+2018-02-26 08:43:16,581 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising connector: connector.quartz.mule.default
+2018-02-26 08:43:16,752 [main] INFO  org.quartz.impl.StdSchedulerFactory - Using default implementation for ThreadExecutor
+2018-02-26 08:43:16,804 [main] INFO  org.quartz.core.SchedulerSignalerImpl - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+2018-02-26 08:43:16,808 [main] INFO  org.quartz.core.QuartzScheduler - Quartz Scheduler v.2.2.1 created.
+2018-02-26 08:43:16,812 [main] INFO  org.quartz.simpl.RAMJobStore - RAMJobStore initialized.
+2018-02-26 08:43:16,812 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler meta-data: Quartz Scheduler (v2.2.1) 'scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default' with instanceId 'NON_CLUSTERED'
+  Scheduler class: 'org.quartz.core.QuartzScheduler' - running locally.
+  NOT STARTED.
+  Currently in standby mode.
+  Number of jobs executed: 0
+  Using thread pool 'org.quartz.simpl.SimpleThreadPool' - with 16 threads.
+  Using job-store 'org.quartz.simpl.RAMJobStore' - which does not support persistence. and is not clustered.
+
+2018-02-26 08:43:16,812 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler 'scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default' initialized from an externally provided properties instance.
+2018-02-26 08:43:16,812 [main] INFO  org.quartz.impl.StdSchedulerFactory - Quartz scheduler version: 2.2.1
+2018-02-26 08:43:16,996 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2018-02-26 08:43:17,001 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 08:43:17,001 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@4899799b
+2018-02-26 08:43:17,056 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 08:43:17,626 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 08:43:17,626 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 08:43:17,637 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 08:43:17,644 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2018-02-26 08:43:17,644 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2018-02-26 08:43:17,702 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8082
+2018-02-26 08:43:17,706 [main] INFO  org.mule.transport.quartz.QuartzConnector - Connected: QuartzConnector
+{
+  name=connector.quartz.mule.default
+  lifecycle=initialise
+  this=150d6eaf
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[quartz]
+  serviceOverrides=<none>
+}
+
+2018-02-26 08:43:17,706 [main] INFO  org.mule.transport.quartz.QuartzConnector - Starting: QuartzConnector
+{
+  name=connector.quartz.mule.default
+  lifecycle=initialise
+  this=150d6eaf
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[quartz]
+  serviceOverrides=<none>
+}
+
+2018-02-26 08:43:17,706 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting connector: connector.quartz.mule.default
+2018-02-26 08:43:17,710 [main] INFO  org.quartz.core.QuartzScheduler - Scheduler scheduler-56-merge-payload-using-dataweave-connector.quartz.mule.default_$_NON_CLUSTERED started.
+2018-02-26 08:43:17,714 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 08:43:17,718 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2018-02-26 08:43:17,718 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 08:43:17,718 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 08:43:17,801 [main] INFO  org.mule.transport.quartz.QuartzConnector - Registering listener: 56-merge-payload-using-dataweaveFlow on endpointUri: quartz://trigger
+2018-02-26 08:43:17,837 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising: 'null'. Object is: QuartzMessageReceiver
+2018-02-26 08:43:17,842 [main] INFO  org.mule.transport.quartz.QuartzMessageReceiver - Connecting clusterizable message receiver
+2018-02-26 08:43:17,844 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting: 'null'. Object is: QuartzMessageReceiver
+2018-02-26 08:43:17,844 [main] INFO  org.mule.transport.quartz.QuartzMessageReceiver - Starting clusterizable message receiver
+2018-02-26 08:43:17,897 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2018-02-26 08:43:17,956 [main] INFO  org.mule.module.management.agent.AbstractJmxAgent - Attempting to register service with name: Mule.56-merge-payload-using-dataweave:type=Endpoint,service="56-merge-payload-using-dataweaveFlow",connector=connector.quartz.mule.default,name="endpoint.quartz.trigger"
+2018-02-26 08:43:17,956 [main] INFO  org.mule.module.management.agent.AbstractJmxAgent - Registered Endpoint Service with name: Mule.56-merge-payload-using-dataweave:type=Endpoint,service="56-merge-payload-using-dataweaveFlow",connector=connector.quartz.mule.default,name="endpoint.quartz.trigger"
+2018-02-26 08:43:17,977 [main] INFO  org.mule.module.management.agent.AbstractJmxAgent - Registered Connector Service with name Mule.56-merge-payload-using-dataweave:type=Connector,name="connector.quartz.mule.default"
+2018-02-26 08:43:17,987 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 56-merge-payload-using-dataweave                      *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2018-02-26 08:43:18,081 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:18,858 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:19,866 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:20,866 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:21,871 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:22,868 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:23,865 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:24,866 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:25,864 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:26,866 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:27,866 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:28,866 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:29,862 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:30,862 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:31,863 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:32,867 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:33,864 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:34,860 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:35,867 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:36,862 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:37,858 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:38,863 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:39,867 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:40,861 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:41,859 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:42,862 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:43,861 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:44,864 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:45,864 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:46,862 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:47,864 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:48,864 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:49,864 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:50,863 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:51,862 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:52,859 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:53,864 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:54,858 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:55,860 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:56,863 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 08:43:57,861 [[56-merge-payload-using-dataweave].56-merge-payload-using-dataweaveFlow.stage1.02] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 09:14:30,268 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '56-merge-payload-using-dataweave'      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:14:30,765 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2018-02-26 09:14:31,131 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2018-02-26 09:14:31,809 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2018-02-26 09:14:31,811 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2018-02-26 09:14:32,700 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@174e1b69: startup date [Mon Feb 26 09:14:32 IST 2018]; root of context hierarchy
+2018-02-26 09:14:35,463 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-02-26 09:14:37,590 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2018-02-26 09:14:38,840 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx2.log
+2018-02-26 09:14:38,877 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx2.log
+2018-02-26 09:14:39,137 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2018-02-26 09:14:39,147 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:14:39,148 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@f95d64d
+2018-02-26 09:14:39,288 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:14:39,901 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 09:14:39,906 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 09:14:39,920 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:14:39,925 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2018-02-26 09:14:39,925 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2018-02-26 09:14:40,036 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8082
+2018-02-26 09:14:40,041 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:14:40,041 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2018-02-26 09:14:40,046 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:14:40,046 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:14:40,168 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2018-02-26 09:14:44,724 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 56-merge-payload-using-dataweave                      *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2018-02-26 09:15:22,558 [[56-merge-payload-using-dataweave].HTTP_Listener_Configuration.worker.01] INFO  org.mule.api.processor.LoggerMessageProcessor - Test
+2018-02-26 09:15:22,575 [[56-merge-payload-using-dataweave].HTTP_Listener_Configuration.worker.01] WARN  org.mule.module.http.internal.listener.HttpResponseBuilder - Payload is a Map which will be used to generate an url encoded http body but Contenty-Type specified is application/java; charset=windows-1252 and not application/x-www-form-urlencoded
+2018-02-26 09:16:04,852 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:16:04,860 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:16:04,864 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:16:05,056 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2018-02-26 09:16:05,066 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8082
+2018-02-26 09:16:05,079 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2018-02-26 09:16:05,081 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2018-02-26 09:16:05,106 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '56-merge-payload-using-dataweave'         +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:16:05,111 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2018-02-26 09:16:05,111 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:16:05,111 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:16:05,116 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2018-02-26 09:16:05,474 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@174e1b69: startup date [Mon Feb 26 09:14:32 IST 2018]; root of context hierarchy
+2018-02-26 09:16:05,485 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "56-merge-payload-using-dataweave" shut down normally  *
+* on: 2/26/18 9:16 AM                                                *
+* Up for: 0 days, 0 hours, 1 mins, 25.561 sec                        *
+**********************************************************************
+2018-02-26 09:16:05,778 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '56-merge-payload-using-dataweave'      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:16:05,786 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2018-02-26 09:16:05,798 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2018-02-26 09:16:05,822 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2018-02-26 09:16:05,822 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2018-02-26 09:16:05,834 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@1245200c: startup date [Mon Feb 26 09:16:05 IST 2018]; root of context hierarchy
+2018-02-26 09:16:06,635 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-02-26 09:16:06,905 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx2.log
+2018-02-26 09:16:06,906 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx2.log
+2018-02-26 09:16:06,917 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2018-02-26 09:16:06,917 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:16:06,922 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@3f2ee03f
+2018-02-26 09:16:06,932 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:16:06,972 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 09:16:06,977 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 09:16:06,977 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:16:06,982 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2018-02-26 09:16:06,982 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2018-02-26 09:16:07,007 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8082
+2018-02-26 09:16:07,013 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:16:07,023 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2018-02-26 09:16:07,033 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:16:07,033 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:16:07,058 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2018-02-26 09:16:07,068 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 56-merge-payload-using-dataweave                      *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2018-02-26 09:16:12,088 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:16:12,088 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:16:12,088 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:16:12,111 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2018-02-26 09:16:12,118 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8082
+2018-02-26 09:16:12,125 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2018-02-26 09:16:12,125 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2018-02-26 09:16:12,133 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '56-merge-payload-using-dataweave'         +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:16:12,133 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2018-02-26 09:16:12,141 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:16:12,149 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:16:12,157 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2018-02-26 09:16:12,203 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@1245200c: startup date [Mon Feb 26 09:16:05 IST 2018]; root of context hierarchy
+2018-02-26 09:16:12,211 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "56-merge-payload-using-dataweave" shut down normally  *
+* on: 2/26/18 9:16 AM                                                *
+* Up for: 0 days, 0 hours, 0 mins, 5.233 sec                         *
+**********************************************************************
+2018-02-26 09:16:12,389 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '56-merge-payload-using-dataweave'      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:16:12,407 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2018-02-26 09:16:12,419 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2018-02-26 09:16:12,449 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2018-02-26 09:16:12,451 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2018-02-26 09:16:12,458 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@7cb8d727: startup date [Mon Feb 26 09:16:12 IST 2018]; root of context hierarchy
+2018-02-26 09:16:13,139 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-02-26 09:16:13,368 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx2.log
+2018-02-26 09:16:13,370 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx2.log
+2018-02-26 09:16:13,382 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2018-02-26 09:16:13,385 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:16:13,385 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@56f2d596
+2018-02-26 09:16:13,399 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:16:13,434 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 09:16:13,434 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 09:16:13,436 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:16:13,441 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2018-02-26 09:16:13,441 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2018-02-26 09:16:13,456 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8082
+2018-02-26 09:16:13,460 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:16:13,461 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2018-02-26 09:16:13,463 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:16:13,463 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:16:13,487 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2018-02-26 09:16:13,505 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 56-merge-payload-using-dataweave                      *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2018-02-26 09:16:25,595 [[56-merge-payload-using-dataweave].HTTP_Listener_Configuration.worker.01] INFO  org.mule.api.processor.LoggerMessageProcessor - {test={flights=[{code=ER9fje, price=845, origin=MUA, destination=CLE, departureDate=2015/07/11, planeType=Boeing 727, airlineName=United, emptySeats=32}, {code=ER3kfd, price=245, origin=MUA, destination=CLE, departureDate=2015/08/11, planeType=Boeing 747, airlineName=United, emptySeats=13}]}}Test
+2018-02-26 09:17:08,570 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:17:08,570 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:17:08,570 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:17:08,643 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2018-02-26 09:17:08,650 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8082
+2018-02-26 09:17:08,655 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2018-02-26 09:17:08,655 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2018-02-26 09:17:08,660 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '56-merge-payload-using-dataweave'         +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:17:08,660 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2018-02-26 09:17:08,665 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:17:08,665 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:17:08,670 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2018-02-26 09:17:08,777 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@7cb8d727: startup date [Mon Feb 26 09:16:12 IST 2018]; root of context hierarchy
+2018-02-26 09:17:08,785 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "56-merge-payload-using-dataweave" shut down normally  *
+* on: 2/26/18 9:17 AM                                                *
+* Up for: 0 days, 0 hours, 0 mins, 55.349 sec                        *
+**********************************************************************
+2018-02-26 09:17:08,927 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '56-merge-payload-using-dataweave'      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:17:08,943 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2018-02-26 09:17:08,951 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2018-02-26 09:17:09,006 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2018-02-26 09:17:09,011 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2018-02-26 09:17:09,016 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@43371b73: startup date [Mon Feb 26 09:17:09 IST 2018]; root of context hierarchy
+2018-02-26 09:17:09,708 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-02-26 09:17:09,908 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx2.log
+2018-02-26 09:17:09,909 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx2.log
+2018-02-26 09:17:09,923 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2018-02-26 09:17:09,924 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:17:09,924 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@1ef22930
+2018-02-26 09:17:09,931 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:17:09,960 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 09:17:09,960 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 09:17:09,962 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:17:09,965 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2018-02-26 09:17:09,965 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2018-02-26 09:17:09,978 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8082
+2018-02-26 09:17:09,982 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:17:09,983 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2018-02-26 09:17:09,985 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:17:09,985 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:17:10,017 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2018-02-26 09:17:10,030 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 56-merge-payload-using-dataweave                      *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2018-02-26 09:17:20,055 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Stopping app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:17:20,058 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Stopping flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:17:20,058 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Stopping service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:17:20,103 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Stopping model: _muleSystemModel
+2018-02-26 09:17:20,108 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Stopped listener on http://0.0.0.0:8082
+2018-02-26 09:17:20,113 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopping ResourceManager
+2018-02-26 09:17:20,113 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Stopped ResourceManager
+2018-02-26 09:17:20,124 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Disposing app '56-merge-payload-using-dataweave'         +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:17:20,124 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing RegistryBroker
+2018-02-26 09:17:20,124 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Disposing flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:17:20,128 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Disposing service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:17:20,132 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Disposing model: _muleSystemModel
+2018-02-26 09:17:20,164 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Closing org.mule.config.spring.MuleArtifactContext@43371b73: startup date [Mon Feb 26 09:17:09 IST 2018]; root of context hierarchy
+2018-02-26 09:17:20,169 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application "56-merge-payload-using-dataweave" shut down normally  *
+* on: 2/26/18 9:17 AM                                                *
+* Up for: 0 days, 0 hours, 0 mins, 10.207 sec                        *
+**********************************************************************
+2018-02-26 09:17:20,294 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '56-merge-payload-using-dataweave'      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:17:20,302 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2018-02-26 09:17:20,314 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2018-02-26 09:17:20,338 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2018-02-26 09:17:20,338 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2018-02-26 09:17:20,345 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@3820bb0b: startup date [Mon Feb 26 09:17:20 IST 2018]; root of context hierarchy
+2018-02-26 09:17:20,745 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2018-02-26 09:17:20,938 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-tx-log\tx2.log
+2018-02-26 09:17:20,939 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\56-merge-payload-using-dataweave\queue-xa-tx-log\tx2.log
+2018-02-26 09:17:20,960 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2018-02-26 09:17:20,964 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:17:20,966 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@6e13a217
+2018-02-26 09:17:20,978 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:17:21,016 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 09:17:21,016 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\56-merge-payload-using-dataweave\56-merge-payload-using-dataweave.xml'}]"
+2018-02-26 09:17:21,018 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '56-merge-payload-using-dataweave'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:17:21,023 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2018-02-26 09:17:21,023 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2018-02-26 09:17:21,041 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8082
+2018-02-26 09:17:21,047 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (0) used in this application 
+                             +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2018-02-26 09:17:21,059 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2018-02-26 09:17:21,062 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 56-merge-payload-using-dataweaveFlow
+2018-02-26 09:17:21,064 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: 56-merge-payload-using-dataweaveFlow.stage1
+2018-02-26 09:17:21,092 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2018-02-26 09:17:21,100 [Mule.app.deployer.monitor.1.thread.1] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 56-merge-payload-using-dataweave                      *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************

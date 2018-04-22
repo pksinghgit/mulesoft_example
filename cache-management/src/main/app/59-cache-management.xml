@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <ee:object-store-caching-strategy name="Caching_Strategy" keyGenerationExpression="#[flowVars.var1]" doc:name="Caching Strategy">
+        <in-memory-store/>
+    </ee:object-store-caching-strategy>
+    <flow name="59-cache-managementFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/cache" doc:name="HTTP"/>
+        <enricher source="#[flowVars.var1&gt;1]" doc:name="Message Enricher">
+            <set-variable variableName="var1" value="#[message.inboundProperties['http.query.params'].var1]" doc:name="Variable"/>
+        </enricher>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <logger message="#[flowVars.var1]" level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>

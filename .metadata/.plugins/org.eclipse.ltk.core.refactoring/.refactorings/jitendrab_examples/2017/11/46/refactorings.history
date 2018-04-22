@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;jitendrab_examples/src/main/app/jitendrab_examples.xml&apos; to &apos;db_mysql_crud.xml&apos;" description="Rename resource &apos;jitendrab_examples.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/app/jitendrab_examples.xml" name="db_mysql_crud.xml" stamp="1510997460262" updateReferences="true"/>
+</session>

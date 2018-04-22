@@ -1,0 +1,43 @@
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:oauth2="http://www.mulesoft.org/schema/mule/oauth2" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+     xmlns:spring="http://www.springframework.org/schema/beans" 
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/oauth2 http://www.mulesoft.org/schema/mule/oauth2/current/mule-oauth2.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+     <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8083" doc:name="HTTP Listener Configuration"/>
+     <http:request-config name="HTTP_Request_Configuration" host="localhost"  port="9443" doc:name="HTTP Request Configuration" protocol="HTTPS">
+ 
+     </http:request-config>
+     <flow name="getCode">
+         <http:listener config-ref="HTTP_Listener_Configuration" path="/callBackUrl" doc:name="HTTP"/>
+         <http:request path="/login/oauth/authorize" config-ref="HTTP_Request_Configuration" method="GET" doc:name="HTTP">
+             <http:request-builder >
+                <http:query-param paramName="client_id" value="2aa4844ff4be0aab915f"/>
+                <http:query-param paramName="client_secret" value="6ff32eb4b61427196c8c3a3780e845caefec3371"/>
+                <http:query-param paramName="redirect_uri" value="http://localhost:8083/callBackUrl"/>
+             </http:request-builder>
+         </http:request>
+ 
+         <logger message="#[message.inboundProperties]" level="INFO" doc:name="Logger"/>
+     </flow>
+    <flow name="getAccessToken">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/access_token" doc:name="HTTP"/>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <http:request config-ref="HTTP_Request_Configuration" path="/oauth2/token" method="GET" doc:name="HTTP">
+            <http:request-builder>
+                <http:query-param paramName="client_id" value="43U2rsFSWtDgl5AD9cJMzWFhkN8a"/>
+                <http:query-param paramName="client_secret" value="95fSfSxpsPBC_BxAsA_7ORgYCT0a"/>
+                <http:query-param paramName="redirect_uri" value="http://localhost:8081/callBackURL"/>
+                <http:query-param paramName="grant_type" value="client_credentials"/>
+                <http:query-param paramName="scope" value="scope"/>
+            </http:request-builder>
+        </http:request>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+    </flow>
+    <flow name="validate-tokenFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/validate_token" doc:name="HTTP"/>
+        <http:request config-ref="HTTP_Request_Configuration" path="/user?access_token=632fed0f2697f2f5d5e7ee541a65c1036a6206e6" method="GET" doc:name="HTTP"/>
+    </flow>
+ </mule>

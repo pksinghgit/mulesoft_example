@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <flow name="67-java_transformerFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/javaTransformer" doc:name="HTTP"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="90f60978-407b-4ea0-a4c8-87fd6aca09a9">
+            <dw:input-payload doc:sample="C:\Users\kavya\Desktop\Mulesoft\sgt shastry\customer_details.JSON" mimeType="application/json"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	customer_details:payload
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <custom-transformer returnClass="com.custom.transformer.CustomerDetails" class="com.custom.transformer.CustomTransformer" doc:name="Java"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+    </flow>
+</mule>

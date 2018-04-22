@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <flow name="80-groovy-componentFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/groovy" doc:name="HTTP"/>
+        <set-variable variableName="num1" value="#[json:num1]" doc:name="num1"/>
+        <set-variable variableName="num2" value="#[json:num2]" doc:name="num2"/>
+        <scripting:component doc:name="Groovy">
+            <scripting:script engine="Groovy">
+            <![CDATA[sleep(3000);
+x=message.getInvocationProperty('num1')
+y=message.getInvocationProperty('num2')
+Integer.parseInt(x)+Integer.parseInt(y);]]>
+            </scripting:script>
+        </scripting:component>
+        <object-to-string-transformer doc:name="Object to String"/>
+    </flow>
+</mule>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.mule.tooling.runtime.muleServerLaunchType">
+<listAttribute key="Mpath"/>
+<stringAttribute key="Ppath" value="F:\workspace_mulesoft1\drool_impl_app"/>
+<stringAttribute key="launch_mule_server_version" value="org.mule.tooling.server.3.9.0.ee"/>
+<listAttribute key="mule-project-names">
+<listEntry value="drool_impl_app"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="drool_impl_app"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XX:PermSize=128M -XX:MaxPermSize=256M"/>
+</launchConfiguration>

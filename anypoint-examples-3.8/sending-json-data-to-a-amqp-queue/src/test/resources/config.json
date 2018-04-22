@@ -1,0 +1,35 @@
+{
+  "name" : "Broker",
+  "defaultVirtualHost" : "default",
+  "modelVersion" : "1.0",
+  "storeVersion" : 1,
+  "authenticationproviders" : [ {
+    "name" : "passwordFile",
+    "path" : "${qpid.work_dir}/etc/passwd",
+    "type" : "PlainPasswordFile"
+  } ],
+  "ports" : [ {
+    "authenticationProvider" : "passwordFile",
+    "name" : "HTTP",
+    "port" : "8080",
+    "protocols" : [ "HTTP" ]
+  }, {
+    "authenticationProvider" : "passwordFile",
+    "name" : "JMX_CONNECTOR",
+    "port" : "9099",
+    "protocols" : [ "JMX_RMI" ]
+  }, {
+    "name" : "RMI_REGISTRY",
+    "port" : "8999",
+    "protocols" : [ "RMI" ]
+  }, {
+    "authenticationProvider" : "passwordFile",
+    "name" : "AMQP",
+    "port" : "5672"
+  }],
+  "virtualhosts" : [ {
+    "name" : "default",
+    "storePath" : "${qpid.work_dir}/derbystore/default",
+    "storeType" : "DERBY"
+  } ]
+}

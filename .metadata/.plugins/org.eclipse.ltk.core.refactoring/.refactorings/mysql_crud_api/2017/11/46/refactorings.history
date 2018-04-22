@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;mysql_crud_api/src/main/app/encryptionflow.xml&apos; to &apos;authentication.xml&apos;" description="Rename resource &apos;encryptionflow.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/app/encryptionflow.xml" name="authentication.xml" stamp="1510462106447" updateReferences="true"/>
+</session>

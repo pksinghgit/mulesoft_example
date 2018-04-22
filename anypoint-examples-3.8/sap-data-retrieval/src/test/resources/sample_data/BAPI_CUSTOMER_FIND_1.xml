@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<BAPI_CUSTOMER_FIND>
+  <export>
+    <RETURN/>
+  </export>
+  <tables>
+    <RESULT_TAB>
+    	<row>
+    	<CUSTOMER>10000123
+    	</CUSTOMER>
+    	</row>
+    </RESULT_TAB>
+    <SELOPT_TAB/>
+  </tables>
+</BAPI_CUSTOMER_FIND>

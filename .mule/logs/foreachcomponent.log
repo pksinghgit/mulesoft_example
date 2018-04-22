@@ -1,0 +1,50 @@
+2017-11-16 21:46:43,538 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app 'foreachcomponent'                      +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-16 21:46:44,298 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-11-16 21:46:44,879 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-11-16 21:46:45,317 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-11-16 21:46:45,318 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-11-16 21:46:46,515 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@5524b72f: startup date [Thu Nov 16 21:46:46 IST 2017]; root of context hierarchy
+2017-11-16 21:46:50,084 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-11-16 21:46:51,860 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2017-11-16 21:46:53,200 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\foreachcomponent\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\foreachcomponent\queue-tx-log\tx2.log
+2017-11-16 21:46:53,245 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\foreachcomponent\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\foreachcomponent\queue-xa-tx-log\tx2.log
+2017-11-16 21:46:53,709 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-11-16 21:46:53,719 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: foreachcomponentFlow
+2017-11-16 21:46:53,719 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@18c820d2
+2017-11-16 21:46:53,816 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Initialising service: foreachcomponentFlow.stage1
+2017-11-16 21:46:54,556 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\foreachcomponent\foreachcomponent.xml'}]"
+2017-11-16 21:46:54,556 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\foreachcomponent\foreachcomponent.xml'}]"
+2017-11-16 21:46:54,565 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app 'foreachcomponent'                          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-16 21:46:54,569 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-11-16 21:46:54,569 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-11-16 21:46:54,653 [main] INFO  org.mule.module.http.internal.listener.DefaultHttpListenerConfig - Listening for requests on http://0.0.0.0:8083
+2017-11-16 21:46:54,661 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (1) used in this application 
+Customonn 1.0.0-SNAPSHOT     +
++ (DevKit 3.9.0 Build UNNAMED.2793.f49b6c7)+
+                                  +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-11-16 21:46:54,663 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-11-16 21:46:54,666 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: foreachcomponentFlow
+2017-11-16 21:46:54,667 [main] INFO  org.mule.processor.SedaStageLifecycleManager - Starting service: foreachcomponentFlow.stage1
+2017-11-16 21:46:54,776 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-11-16 21:47:03,902 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: foreachcomponent                                      *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-11-17 14:30:36,755 [[foreachcomponent].HTTP_Listener_Configuration.worker.01] INFO  org.mule.module.http.internal.listener.HttpListenerRegistry - No listener found for request: (GET)/test
+2017-11-17 14:30:36,755 [[foreachcomponent].HTTP_Listener_Configuration.worker.01] INFO  org.mule.module.http.internal.listener.HttpListenerRegistry - Available listeners are: [(*)/costomConnector/]

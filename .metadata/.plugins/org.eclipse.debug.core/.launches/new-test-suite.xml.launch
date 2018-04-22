@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.jdt.munit.launchconfig">
+<listAttribute key="Mpath">
+<listEntry value="F:\workspace_mulesoft1\scatter-gather\src\test\munit\new-test-suite.xml"/>
+</listAttribute>
+<stringAttribute key="Ppath" value="F:\workspace_mulesoft1\scatter-gather"/>
+<stringAttribute key="launch_mule_server_version" value="org.mule.tooling.server.3.9.0.ee"/>
+<listAttribute key="mule-project-names">
+<listEntry value="scatter-gather"/>
+</listAttribute>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="new-test-suite.xml"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="scatter-gather"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Djava.library.path=&#13;&#10;-DmunitProjectName=scatter-gather&#13;&#10;-Dlog4j.skipJansi=true"/>
+<stringAttribute key="resource" value="new-test-suite.xml"/>
+</launchConfiguration>

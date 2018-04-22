@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:x12-edi="http://www.mulesoft.org/schema/mule/x12-edi" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:sftp="http://www.mulesoft.org/schema/mule/sftp" xmlns:encryption="http://www.mulesoft.org/schema/mule/encryption" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/encryption http://www.mulesoft.org/schema/mule/encryption/current/mule-encryption.xsd
+http://www.mulesoft.org/schema/mule/sftp http://www.mulesoft.org/schema/mule/sftp/current/mule-sftp.xsd
+http://www.mulesoft.org/schema/mule/x12-edi http://www.mulesoft.org/schema/mule/x12-edi/current/mule-x12-edi.xsd">
+    <file:connector name="File" autoDelete="true" streaming="true" validateConnections="true" doc:name="File"/>
+    <encryption:config name="Encryption" defaultEncrypter="PGP_ENCRYPTER" doc:name="Encryption">
+        <encryption:pgp-encrypter-config publicKeyRingFileName="pubring.gpg" secretKeyRingFileName="secring.gpg" secretAliasId="${pgp.aliasid}" secretPassphrase="${pgp.passphrase}" principal="${pgp.principal}"/>
+    </encryption:config>
+    <sftp:connector name="SFTP" validateConnections="true" doc:name="SFTP"/>
+    <x12-edi:config name="X12_EDI" doc:name="X12 EDI"/>
+    <flow name="fileb2bFlow">
+        <file:inbound-endpoint path="${file.input}" moveToDirectory="${file.archive}" connector-ref="File" responseTimeout="10000" metadata:id="c6d40939-5e60-44c9-93a6-762a0ac04425" doc:name="Poll Product Catalog"/>
+        <dw:transform-message metadata:id="88cf4574-5414-4552-a517-758db860da97" doc:name="Transform Product Catalog for Partner">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/csv
+---
+payload map ((payload01 , indexOfPayload01) -> {
+	Company: "Infinity Solutions",
+	Description: payload01.Description,
+	ProductID: payload01.SKU,
+	ProductName: payload01."Product Name",
+	ProductType: payload01.Type
+})]]></dw:set-payload>
+        </dw:transform-message>
+        <object-to-string-transformer doc:name="Convert to String for Encryption"/>
+        <encryption:encrypt config-ref="Encryption" using="PGP_ENCRYPTER" doc:name="PGP Encryption"/>
+        <file:outbound-endpoint path="src/main/resources/sftp" outputPattern="#[function:datestamp]-#[message.inboundProperties['originalFilename']]" connector-ref="File" responseTimeout="10000" doc:name="Create Product Catalog Target File"/>
+        <sftp:outbound-endpoint exchange-pattern="one-way" connector-ref="SFTP" outputPattern="#[function:datestamp]-#[message.inboundProperties['originalFilename']]" host="${sftp.host}" port="${sftp.port}" path="${sftp.path}" user="${sftp.user}" password="${sftp.password}" responseTimeout="10000" doc:name="Transfer file to SFTP Server"/>
+    </flow>
+</mule>

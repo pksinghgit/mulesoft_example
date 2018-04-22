@@ -1,0 +1,21 @@
+// created on: Dec 24, 2014
+package com.drool.drl
+
+// list any import classes here.
+import com.drools.Customer;
+// declare any global variables here
+
+dialect "mvel"
+declare Customer @role('event')
+end
+
+rule "decide platinum customer"
+		
+     when
+      customer : Customer(purchage >= 10000)
+      then
+      	modify($customer){
+      	customer.setCustomerType("Gold")
+      	}
+end
+

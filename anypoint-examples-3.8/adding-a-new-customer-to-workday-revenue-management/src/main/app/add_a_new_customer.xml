@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:wd-connector="http://www.mulesoft.org/schema/mule/wd-connector" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd http://www.mulesoft.org/schema/mule/wd-connector http://www.mulesoft.org/schema/mule/wd-connector/current/mule-wd-connector.xsd http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd">
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+    
+    <wd-connector:config doc:name="Workday: Basic" hostName="${wday.hostname}" name="Workday" password="${wday.password}" tenantName="${wday.tenant}" username="${wday.user}"/>    
+    
+    <flow name="add-customer-flow" processingStrategy="synchronous">
+        <http:listener allowedMethods="POST" config-ref="HTTP_Listener_Configuration" doc:name="Recieve HTTP requests" metadata:id="9979b2a0-cc76-49c5-8eb6-7c47a466178e" path="/"/>
+        <mulexml:xml-to-dom-transformer doc:name="XML to DOM"/>
+        <dw:transform-message doc:name="XML to Workday PutCustomerRequest XML" metadata:id="3208f62d-a329-491f-8d68-1d995c459ada">
+            <dw:input-payload doc:sample="root_1.xml"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/xml
+%namespace ns0 urn:com.workday/bsvc
+---
+{
+	ns0#Put_Customer_Request: {
+		ns0#Customer_Data: {
+			ns0#Customer_ID: payload.root.Account.CustomerName,
+			ns0#Customer_Reference_ID: payload.root.Account.CustomerName,
+			ns0#Customer_Name: payload.root.Account.CustomerName,
+			ns0#Business_Entity_Data: {
+				ns0#Business_Entity_Name : payload.root.Account.BusinessEntityName
+			},
+			ns0#Customer_Category_Reference: {
+				ns0#ID 
+				@(ns0#type: payload.root.Account.Customer_Category_Reference_Type)
+				: payload.root.Account.Customer_Category_Reference_Value
+			},
+			ns0#Customer_Status_Data: {
+				ns0#Customer_Status_Value_Reference: {
+					ns0#ID 
+					@(ns0#type: payload.root.Account.Customer_Status_Reference_Type)
+					: payload.root.Account.Customer_Status_Reference_Value
+				}
+			}
+		}
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+
+        <wd-connector:invoke config-ref="Workday" doc:name="Put Customer" type="Revenue_Management||Put_Customer"/>
+        <dw:transform-message doc:name="Extract Customer Name" metadata:id="7cf3504e-1ed0-49a0-8d39-1f5dd4de9677">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+%namespace ns0 urn:com.workday/bsvc
+---
+payload.ns0#Put_Customer_Response.ns0#Customer_Reference.@ns0#Descriptor]]></dw:set-payload>
+        </dw:transform-message>
+
+
+        <set-payload doc:name="Set Response" value="Added customer: #[payload]"/>
+
+    </flow>
+</mule>

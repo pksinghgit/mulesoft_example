@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:json="http://www.mulesoft.org/schema/mule/json"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+<db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="test" password="test" database="test" doc:name="MySQL Configuration"/>
+    <flow name="selectFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/select" doc:name="HTTP"/>
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <db:select config-ref="MySQL_Configuration" doc:name="Database">
+            <db:parameterized-query><![CDATA[select * from test;]]></db:parameterized-query>
+        </db:select>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+    <flow name="insertFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/insert" doc:name="HTTP"/>
+        <logger message="#[payload]" level="INFO" category="payload before each row" doc:name="Logger"/>
+        <foreach collection="#[json:info]" doc:name="For Each">
+            <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+            <db:insert config-ref="MySQL_Configuration" doc:name="Database">
+                <db:parameterized-query><![CDATA[INSERT INTO `test`.`test` (`name`, `age`, `address`) VALUES (#[json:name],#[json:age],#[json:address]);]]></db:parameterized-query>
+            </db:insert>
+            <logger message="#[payload]" level="INFO" category="payload after db" doc:name="Logger"/>
+        </foreach>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+    </flow>
+</mule>

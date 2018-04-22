@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+	xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:ord="http://orders.se.mulesoft.com/">
+   <soapenv:Header />
+   <soapenv:Body>
+      <ord:processOrder>
+         <order>
+            <orderId>12</orderId>
+            <customer>
+               <address>Main Street 123</address>
+               <firstName>John</firstName>
+               <lastName>Doe</lastName>
+            </customer>
+            <orderItems>
+               <item>
+                  <manufacturer>Samsung</manufacturer>
+                  <name>s-1</name>
+                  <productId>AX02</productId>
+                  <quantity>1</quantity>
+               </item>               
+            </orderItems>
+         </order>
+      </ord:processOrder>
+   </soapenv:Body>
+</soapenv:Envelope>

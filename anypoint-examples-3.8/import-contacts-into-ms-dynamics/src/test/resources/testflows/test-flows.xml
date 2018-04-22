@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dynamicscrm="http://www.mulesoft.org/schema/mule/dynamicscrm" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/dynamicscrm http://www.mulesoft.org/schema/mule/dynamicscrm/current/mule-dynamicscrm.xsd">
+    <sub-flow name="selectContactFromDynamics">
+        <dynamicscrm:retrieve-multiple-by-query config-ref="Microsoft_Dynamics_CRM__Legacy_Connection" doc:name="Microsoft Dynamics CRM" query="dsql:SELECT contactid,firstname,lastname FROM contact where emailaddress1 = '#[payload]'"/>
+        <expression-component doc:name="Iterator to Array"><![CDATA[list = new ArrayList();
+while (payload.hasNext()){
+	list.add(payload.next());
+}
+payload =list;]]></expression-component>
+    </sub-flow>
+    
+    <sub-flow name="deleteContactFromDynamics">
+    	<dynamicscrm:delete config-ref="Microsoft_Dynamics_CRM__Legacy_Connection" doc:name="Microsoft Dynamics CRM" logicalName="contact"/>
+    </sub-flow>
+</mule>

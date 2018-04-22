@@ -1,0 +1,73 @@
+<!--
+
+    $Id: LicenseManager.java 10480 2007-12-19 00:47:04Z moosa $
+    --------------------------------------------------------------------------------------
+    (c) 2003-2008 MuleSource, Inc. This software is protected under international copyright
+    law. All use of this software is subject to MuleSource's Master Subscription Agreement
+    (or other master license agreement) separately entered into in writing between you and
+    MuleSource. If such an agreement is not in place, you may not use the software.
+
+-->
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+   <title>$CLIENT_NAME | Login</title>
+
+   <!--[if lt IE 9]>
+   <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6/html5shiv.min.js"></script>
+   <![endif]-->
+
+   <link href="$CSS_HREF" rel="stylesheet">
+ </head>
+
+ <body class="val-tooltip">
+  <div class="page-container">
+    <div class="container">
+        <header>
+            <h1>$PROVIDER_NAME</h1>
+            <small>You can use your $PROVIDER_NAME account to sign-in to $CLIENT_NAME.</small>
+        </header>
+
+        <br/><br/><br/>
+
+        <div id="authorize-main" class="login">
+            <div id="login-block">
+                <h2>Authorize $CLIENT_NAME to use your account?</h2>
+                <form id="login-form" method="post" class="form-horizontal">
+                    <div class="control-group">
+                        <label for="username" class="control-label">Username</label>
+                        <div class="controls"><input id="username" name="username" type="text"></div>
+                    </div>
+                    <div class="control-group">
+                        <label for="password" class="control-label">Password</label>
+                        <div class="controls"><input id="password" name="password" type="password"></div>
+                    </div>
+                    #if( $SCOPE_SET )
+                    <div>
+                      <h3>This application will have the following rights:</h3>
+                      <ul>
+                          #foreach( $requested_scope in $SCOPE_SET )
+                          <li>$requested_scope</li>
+                          #end
+                      </ul>
+                      <br />
+                    </div>
+                    #end
+                    <div class="control-group">
+                        <div class="controls">
+                          <input id="login-button" class="btn btn-primary" value="Login and Authorize" type="submit">
+                          <a href="$REDIRECT_URI?error=access_denied&amp;error_description=User%20denied%20access"><button id="cancel-button" type="button" class="btn">Cancel</button></a>
+                        </div>
+                    </div>
+                    <input type="hidden" name="client_id" value="$CLIENT_ID">
+                    <input type="hidden" name="response_type" value="$RESPONSE_TYPE">
+                    <input type="hidden" name="redirect_uri" value="$REDIRECT_URI">
+                    <input type="hidden" name="scope" value="$!SCOPE">
+                </form>
+            </div>
+        </div>
+    </div>
+   </div>
+ </body>
+</html>

@@ -1,0 +1,8 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://predic8.com/wsdl/shop/1/">
+	<soapenv:Header/>
+	<soapenv:Body>
+	<ns:create>
+	<customerId>001</customerId>
+	</ns:create>
+	</soapenv:Body>
+</soapenv:Envelope>

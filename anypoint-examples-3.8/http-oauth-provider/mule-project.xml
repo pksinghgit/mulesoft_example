@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule-project runtimeId="org.mule.tooling.server.3.6.0.ee" schemaVersion="3.5.0.0" xmlns="http://www.mulesoft.com/tooling/project">
+    <name>http-oauth-provider</name>
+    <description/>
+    <muleExtension name="OAuth provider module" qualifier="org.mule.tooling.ui.contribution.oauth2-provider.3.5.0"/>
+</mule-project>

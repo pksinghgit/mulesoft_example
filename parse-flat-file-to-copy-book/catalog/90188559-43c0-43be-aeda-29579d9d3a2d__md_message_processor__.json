@@ -1,0 +1,11 @@
+{
+    "inputMessageMetadata": {},
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "ffd_file"
+        }
+    },
+    "id": "90188559-43c0-43be-aeda-29579d9d3a2d",
+    "version": "5.2.0.0"
+}

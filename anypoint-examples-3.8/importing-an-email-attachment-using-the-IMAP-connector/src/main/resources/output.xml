@@ -1,0 +1,8 @@
+<orders>
+    <order>
+        <orderId></orderId>
+        <name></name>
+        <units></units>
+	<pricePerUnit></pricePerUnit>
+    </order>
+</orders>

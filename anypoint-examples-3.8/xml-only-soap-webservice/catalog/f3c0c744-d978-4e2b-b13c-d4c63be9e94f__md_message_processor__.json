@@ -1,0 +1,22 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "findEpisodesRequest"
+        },
+        "flowVariables": {
+            "operation": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "String"
+            }
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "findEpisodesResponse"
+        }
+    },
+    "id": "f3c0c744-d978-4e2b-b13c-d4c63be9e94f",
+    "version": "5.2.0.0"
+}

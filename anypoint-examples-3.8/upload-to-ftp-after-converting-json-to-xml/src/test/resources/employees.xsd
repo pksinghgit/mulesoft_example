@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    MuleSoft Examples
+    Copyright 2014 MuleSoft, Inc.
+
+    This product includes software developed at
+    MuleSoft, Inc. (http://www.mulesoft.com/).
+
+-->
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="employees" type="employeesType"/>
+  <xs:complexType name="employeeType">
+    <xs:sequence>
+      <xs:element name="name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="John"/>
+            <xs:enumeration value="Jane"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="lastName"/>
+      <xs:element type="addressesType" name="addresses"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="employeesType">
+    <xs:sequence>
+      <xs:element type="employeeType" name="employee" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addressType">
+    <xs:sequence>
+      <xs:element name="street">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="123 Main Street"/>
+            <xs:enumeration value="987 Cypress Avenue"/>
+            <xs:enumeration value="345 Main Street"/>
+            <xs:enumeration value="654 Sunset Boulevard"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="zipCode">
+        <xs:simpleType>
+          <xs:restriction base="xs:short">
+            <xs:enumeration value="111"/>
+            <xs:enumeration value="222"/>
+            <xs:enumeration value="333"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addressesType">
+    <xs:sequence>
+      <xs:element type="addressType" name="address" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

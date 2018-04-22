@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:cxf="http://www.mulesoft.org/schema/mule/cxf" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/cxf http://www.mulesoft.org/schema/mule/cxf/current/mule-cxf.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+
+    <spring:beans>
+        <spring:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="property-placeholder">
+            <spring:property name="location" value="classpath:config.dev.properties"/>
+        </spring:bean>
+    </spring:beans>
+    
+    <mulexml:namespace-manager includeConfigNamespaces="true">
+        <mulexml:namespace prefix="soap" uri="http://schemas.xmlsoap.org/soap/envelope/"/>
+        <mulexml:namespace prefix="ns" uri="http://www.mule-health.com/SOA/message/1.0"/>
+        <mulexml:namespace prefix="ns1" uri="http://www.mule-health.com/SOA/model/1.0"/>
+    </mulexml:namespace-manager>
+    
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+    <http:request-config doc:name="HTTP Request Configuration" host="0.0.0.0" name="HTTP_Request_Configuration" port="${http.port}"/>
+    
+    <flow doc:description="AdmssionService SOAP Web service which accepts calls and processes request to perform pre-admissions activities in the hospital's systems." name="admitPatientService">
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="AdmissionService" path="AdmissionService"/>
+        <cxf:proxy-service doc:name="Proxy service" namespace="http://www.mule-health.com/SOA/service/admission/1.0" payload="envelope" port="AdmissionPort" service="AdmissionService" wsdlLocation="service/AdmissionService.wsdl"/>
+
+        <flow-ref doc:name="Upsert Patient" name="upsertPatient"/>
+        <flow-ref doc:name="Create Episode" name="createEpisode"/>
+        <dw:transform-message doc:name="createEpisodeResponse to admitSubjectResponse" metadata:id="9134b5db-eaf1-4b1a-a3f1-d28316e7bbf5">
+            <dw:set-payload><![CDATA[%dw 1.0
+%namespace ns0 http://www.mule-health.com/SOA/message/1.0
+%namespace ns1 http://www.mule-health.com/SOA/model/1.0
+%output application/xml
+---
+ns0#"admitSubjectResponse": {
+	ns1#"Episode": {
+		episodeId: payload.createEpisodeResponse.Episode.episodeId,
+	    ns1#PatientId: payload.createEpisodeResponse.Episode.PatientId,
+		admission: payload.createEpisodeResponse.Episode.admission,
+		(startDate: payload.createEpisodeResponse.Episode.startDate as :date) when payload.createEpisodeResponse.Episode.startDate?,
+		(endDate: (payload.createEpisodeResponse.Episode.endDate as :date) +|P5D|) when payload.createEpisodeResponse.Episode.endDate?,
+		care: payload.createEpisodeResponse.Episode.care
+	},
+	ns1#"Bill ": {
+		costPerNight: "100",
+		initialStateEstimate: "5",
+		runningTotal: "500",
+		status: "ADMITTED"
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    
+    <sub-flow doc:description="Uploads and inserts patient data into a hospital system." name="upsertPatient">
+        <dw:transform-message doc:name="admitSubject to upsertPatient" metadata:id="303505e1-22fe-41f1-b054-6128cbc167d2">
+            <dw:input-payload doc:sample="Envelope.xml"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%namespace ns0 http://www.mule-health.com/SOA/message/1.0
+%namespace ns1 http://www.mule-health.com/SOA/model/1.0
+%output application/xml
+---
+ns0#"upsertPatient": {
+	ns1#"Subject": payload.Envelope.Body.admitSubject.Subject
+}
+]]></dw:set-payload>
+        </dw:transform-message>
+        <flow-ref doc:name="Invoke Patient Service" name="invokePatientService"/>
+    </sub-flow>
+    
+    <sub-flow doc:description="Submits calls to the PatientService Web service." name="invokePatientService">
+        <cxf:proxy-client doc:name="Proxy client" payload="body"/>
+        <http:request config-ref="HTTP_Request_Configuration" doc:name="PatientService" method="POST" path="PatientService"/>
+
+    </sub-flow>
+    <sub-flow doc:description="Creates new episodes for patient pre-admission into the hospital systems." name="createEpisode">
+        <dw:transform-message doc:name="upsertPatientResponse to createEpisode" metadata:id="0ef1c948-e8a1-41c1-a9cd-4310121fd98d">
+            <dw:set-payload><![CDATA[%dw 1.0
+%namespace ns0 http://www.mule-health.com/SOA/message/1.0
+%namespace ns1 http://www.mule-health.com/SOA/model/1.0
+%output application/xml
+---
+ns0#"createEpisode": {
+	ns1#"PatientId": payload.upsertPatientResponse.ns1#PatientId
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <flow-ref doc:name="Invoke EHR Service" name="invokeEHRService"/>
+    </sub-flow>
+    
+    <sub-flow doc:description="Submits calls to the EHR Web service." name="invokeEHRService">
+        <cxf:proxy-client doc:name="Proxy client" payload="body"/>
+        <http:request config-ref="HTTP_Request_Configuration" doc:name="EHRService" method="POST" path="EHRService"/>
+    </sub-flow>
+
+</mule>

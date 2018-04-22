@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+    <munit:config doc:name="Munit configuration" mock-connectors="false" mock-inbounds="false"/>
+    <spring:beans>
+        <spring:import resource="classpath:api.xml"/>
+    </spring:beans>
+    <http:request-config name="HTTP_Request_Configuration" host="localhost" port="${http.port}" basePath="api" doc:name="HTTP Request Configuration">
+    </http:request-config>
+
+    <munit:test name="api-test-get" description="Test">
+        <munit:set payload="#['']" doc:name="Set Message"/>
+        <http:request config-ref="HTTP_Request_Configuration" path="/munit" method="GET" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-on-equals message="The HTTP Status code is not correct!" expectedValue="#[200]" actualValue="#[message.inboundProperties['http.status']]" doc:name="Assert Equals"/>
+        <munit:assert-payload-equals message="The response payload is not correct!" expectedValue="&quot;GET RESPONSE&quot;" doc:name="Assert Payload"/>
+    </munit:test>
+
+    <munit:test name="api-test-post" description="Test">
+        <munit:set payload="#['']" doc:name="Set Message"/>
+        <http:request config-ref="HTTP_Request_Configuration" path="/munit" method="POST" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-on-equals message="The HTTP Status code is not correct!" expectedValue="#[201]" actualValue="#[message.inboundProperties['http.status']]" doc:name="Assert Equals"/>
+        <munit:assert-payload-equals message="The response payload is not correct!" expectedValue="&quot;POST RESPONSE&quot;" doc:name="Assert Payload"/>
+    </munit:test>
+
+    <munit:test name="api-test-put" description="Test">
+        <munit:set payload="#['']" doc:name="Set Message"/>
+        <http:request config-ref="HTTP_Request_Configuration" path="/munit" method="PUT" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-on-equals message="The HTTP Status code is not correct!" expectedValue="#[201]" actualValue="#[message.inboundProperties['http.status']]" doc:name="Assert Equals"/>
+        <munit:assert-payload-equals message="The response payload is not correct!" expectedValue="&quot;PUT RESPONSE&quot;" doc:name="Assert Payload"/>
+    </munit:test>
+
+    <munit:test name="api-test-delete" description="Test">
+        <munit:set payload="#['']" doc:name="Set Message"/>
+        <http:request config-ref="HTTP_Request_Configuration" path="/munit" method="DELETE" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-on-equals message="The HTTP Status code is not correct!" expectedValue="#[200]" actualValue="#[message.inboundProperties['http.status']]" doc:name="Assert Equals"/>
+        <munit:assert-payload-equals message="The response payload is not correct!" expectedValue="&quot;DELETE RESPONSE&quot;" doc:name="Assert Payload"/>
+    </munit:test>
+</mule>

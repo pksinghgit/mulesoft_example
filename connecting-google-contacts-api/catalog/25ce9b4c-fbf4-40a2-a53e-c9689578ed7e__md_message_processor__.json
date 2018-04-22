@@ -1,0 +1,11 @@
+{
+    "inputMessageMetadata": {},
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "Google_Contacts",
+            "typeId": "org.mule.modules.google.contact.wrappers.GoogleContactEntry"
+        }
+    },
+    "id": "25ce9b4c-fbf4-40a2-a53e-c9689578ed7e",
+    "version": "5.2.0.0"
+}

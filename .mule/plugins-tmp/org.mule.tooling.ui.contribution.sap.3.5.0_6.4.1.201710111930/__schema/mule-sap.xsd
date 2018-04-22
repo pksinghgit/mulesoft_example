@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://www.mulesoft.org/schema/mule/sap"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:mule="http://www.mulesoft.org/schema/mule/core"
+            xmlns:schemadoc="http://www.mulesoft.org/schema/mule/schemadoc"
+            targetNamespace="http://www.mulesoft.org/schema/mule/sap"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:import namespace="http://www.mulesoft.org/schema/mule/core"
+                schemaLocation="http://www.mulesoft.org/schema/mule/core/3.1/mule.xsd" />
+    <xsd:import namespace = "http://www.mulesoft.org/schema/mule/schemadoc"
+                schemaLocation = "http://www.mulesoft.org/schema/mule/schemadoc/3.1/mule-schemadoc.xsd"/>
+
+    <xsd:annotation>
+        <xsd:documentation>The SAP transport provides connectivity to SAP systems through JCO to allow both RFC and IDOC inbound and outbound communication.</xsd:documentation>
+        <xsd:appinfo>
+            <schemadoc:short-name>SAP</schemadoc:short-name>
+            <schemadoc:page-title>SAP Transport</schemadoc:page-title>
+            <schemadoc:transport-features
+            receiveEvents="true" dispatchEvents="true" responseEvents="true"
+                                          requestEvents="true"
+                                          transactions="true" streaming="false">
+				<schemadoc:MEPs supported="one-way, request-response" default="request-response"/>                                          
+                <schemadoc:inboundMEPs in-only="true" in-optional-out="true" in-out="true"/>
+                <schemadoc:outboundMEPs out-only="true" out-in="true" out-optional-in="true"/>
+            </schemadoc:transport-features>
+        </xsd:appinfo>
+    </xsd:annotation>
+
+    <xsd:element name="connector" type="sapConnectorType" substitutionGroup="mule:abstract-connector">
+        <xsd:annotation>
+            <xsd:documentation>
+            	The SAP connector is used to configure the default behavior for SAP endpoints that reference the connector.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+
+    <xsd:complexType name="sapConnectorType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:connectorType">
+                <xsd:sequence>
+                    <xsd:element name="sld-config" type="sldConfigType" minOccurs="0" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                            Used to enable System Landscape Directory registration
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>            
+            
+              <xsd:attributeGroup ref="addressAttributes"/>
+              <xsd:attributeGroup ref="propertyAttributes"/>
+
+
+		      <xsd:attribute name="disableFunctionTemplateCache" type="mule:substitutableBoolean">
+		          <xsd:annotation>
+		              <xsd:documentation>
+		              A boolean representing whether function templates should be cached or not. Disabling
+		              the cache is only recommended for really special cases (for example during development)
+		              as disabling will affect performance. Each function (BAPI) call will require two
+		              hits to SAP server.
+		              </xsd:documentation>
+		          </xsd:annotation>
+		      </xsd:attribute>
+
+		      <xsd:attribute name="jcoTrace" type="mule:substitutableBoolean">
+		          <xsd:annotation>
+		              <xsd:documentation>
+		              A boolean representing whether trace will be enabled that will be used as the
+		              jco.client.trace JCO property. Default value is false.
+		              </xsd:documentation>
+		          </xsd:annotation>
+		      </xsd:attribute>
+		
+		      <xsd:attribute name="jcoTraceToLog" type="mule:substitutableBoolean">
+		          <xsd:annotation>
+		              <xsd:documentation>
+		              A boolean representing whether JCO trace will be sent to Mule ESB log files or to its own trace files.
+		              Setting this to true will override the behaviour of -Djco.trace_path=/path/to/trace
+		              </xsd:documentation>
+		          </xsd:annotation>
+		      </xsd:attribute>              
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="sldConfigType">
+		<xsd:attribute name="url" type="xsd:string" use="required">
+		    <xsd:annotation>
+		        <xsd:documentation>
+		        URL of the SLD server
+		        </xsd:documentation>
+		    </xsd:annotation>
+		</xsd:attribute>
+
+		<xsd:attribute name="user" type="xsd:string" use="required">
+		    <xsd:annotation>
+		        <xsd:documentation>
+		        User connecting to the SLD server
+		        </xsd:documentation>
+		    </xsd:annotation>
+		</xsd:attribute>
+
+		<xsd:attribute name="password" type="xsd:string" use="required">
+		    <xsd:annotation>
+		        <xsd:documentation>
+		        Password for the user
+		        </xsd:documentation>
+		    </xsd:annotation>
+		</xsd:attribute>
+
+		<xsd:attribute name="computerName" type="xsd:string">
+		    <xsd:annotation>
+		        <xsd:documentation>
+				The name of the host where your system is installed.
+				The value must be entered in lower case without any network domain.
+		        If not supplied then the computer hostname will be obtained from the OS.
+		        </xsd:documentation>
+		    </xsd:annotation>
+		</xsd:attribute>
+
+		<xsd:attribute name="localSystemName" type="xsd:string">
+		    <xsd:annotation>
+		        <xsd:documentation>
+		        Description of the application / system.
+		        </xsd:documentation>
+		    </xsd:annotation>
+		</xsd:attribute>
+
+    </xsd:complexType>
+
+    <!--
+    The following define endpoint elements for this transport. Attributes for the endpoint can be defined at the section
+    at the bottom
+    -->
+    <xsd:element name="inbound-endpoint" type="inboundEndpointType" substitutionGroup="mule:abstract-inbound-endpoint"/>
+    <xsd:complexType name="inboundEndpointType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:inboundEndpointType">
+                <xsd:sequence>
+                    <xsd:element ref="abstract-id-store" minOccurs="0" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                            Use to define the ID store to be used for tRFC and qRFC or Unit ID store
+                            to be used for bgRFC.
+                            </xsd:documentation>
+                        </xsd:annotation>                    
+                    </xsd:element>
+                </xsd:sequence>            
+                <xsd:attributeGroup ref="addressAttributes"/>
+                <xsd:attributeGroup ref="propertyAttributes"/>
+                <xsd:attributeGroup ref="endpointAttributes"/>
+                <xsd:attributeGroup ref="inboundEndpointAttributes"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:element name="outbound-endpoint" type="outboundEndpointType" substitutionGroup="mule:abstract-outbound-endpoint" />
+    <xsd:complexType name="outboundEndpointType" >
+        <xsd:complexContent>
+            <xsd:extension base="mule:outboundEndpointType">
+                <xsd:sequence>
+                    <xsd:element name="definition" type="definitionType" minOccurs="0" maxOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                            Use to embed XML definition XML for BAPIs or IDOCs
+                            </xsd:documentation>
+                        </xsd:annotation>
+                    </xsd:element>
+                </xsd:sequence>
+                <xsd:attributeGroup ref="addressAttributes"/>
+                <xsd:attributeGroup ref="propertyAttributes"/>
+                <xsd:attributeGroup ref="endpointAttributes"/>
+                <xsd:attributeGroup ref="outboundEndpointAttributes"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="definitionType">
+        <xsd:annotation>
+            <xsd:documentation>
+            XML template used as Function or IDoc definition.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string"/>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:element name="endpoint" type="globalEndpointType" substitutionGroup="mule:abstract-global-endpoint"/>
+    <xsd:complexType name="globalEndpointType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:globalEndpointType">
+		        <xsd:attribute name="type" use="optional">
+		            <xsd:annotation>
+		                <xsd:documentation>The type of JCo SAP object that will be called or received from the SAP server.</xsd:documentation>
+		            </xsd:annotation>
+		            <xsd:simpleType>
+		                <xsd:restriction base="xsd:NMTOKEN">
+		                    <xsd:enumeration value="function"/>
+		                    <xsd:enumeration value="idoc"/>
+		                    <xsd:enumeration value="function-metadata"/>
+		                    <xsd:enumeration value="idoc-metadata"/>
+		                </xsd:restriction>
+		            </xsd:simpleType>
+		        </xsd:attribute>              
+                <xsd:attributeGroup ref="addressAttributes"/>
+                <xsd:attributeGroup ref="propertyAttributes"/>
+                <xsd:attributeGroup ref="endpointAttributes"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:attributeGroup name="endpointAttributes">
+        <xsd:attribute name="rfcType" default="srfc" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>The type of RFC (sRFC, tRFC, qRFC). The default value is sRFC.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:NMTOKEN">
+                    <xsd:enumeration value="trfc"/>
+                    <xsd:enumeration value="qrfc"/>
+                    <xsd:enumeration value="srfc"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:attribute> 
+		<xsd:attribute name="outputXml" default="false" use="optional" type="mule:substitutableBoolean">
+			<xsd:annotation>
+				<xsd:documentation>
+				Whether the endpoint should set as payload the XML representation (String) of the SAP Object (Function or IDoc) or the SapObject wrapper itself.
+				Setting this flag to 'true' removes the need for the object-to-xml transformer.
+				</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+        <xsd:attributeGroup ref="xmlVersionAttributes"/>
+	</xsd:attributeGroup>
+
+	<xsd:attributeGroup name="outboundEndpointAttributes">
+        <xsd:attribute name="type" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>The type of JCo SAP object that will be requested or sent to the SAP server.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:NMTOKEN">
+                    <xsd:enumeration value="function"/>
+                    <xsd:enumeration value="idoc"/>
+                    <xsd:enumeration value="function-metadata"/>
+                    <xsd:enumeration value="idoc-metadata"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:attribute> 	
+		<xsd:attribute name="evaluateFunctionResponse" type="mule:substitutableBoolean" default="false">
+			<xsd:annotation>
+				<xsd:documentation>
+		            <![CDATA[
+				If set to true, then the function response will be parsed and if the answer has exceptions or executed with errors in SAP, then
+				an exception will be thrown in Mule ESB.
+				This attribute is only used if type is function.				
+				
+				So if the export structure RETURN has a type of "E" (Error) or "A" (Abort) then an exception will be raised
+				with the corresponding messages.
+
+                      <export>
+                          <RETURN type="structure">
+                          <TYPE/>
+                          <ID/>
+                          <NUMBER/>
+                          <MESSAGE/>
+                          <LOG_NO/>
+                          <LOG_MSG_NO/>
+                          <MESSAGE_V1/>
+                          <MESSAGE_V2/>
+                          <MESSAGE_V3>
+                          <MESSAGE_V4/>
+                          <PARAMETER/>
+                          <ROW/>
+                          <FIELD/>
+                          <SYSTEM/>
+                        </RETURN>
+                      </export>
+
+		            If there are exceptions, then these will be raised:
+		            
+					  <exceptions>
+					    <exception>MULE_EXCEPTION_01</exception>
+					    <exception>MULE_EXCEPTION_02</exception>
+					    <exception>MULE_EXCEPTION_03</exception>
+					  </exceptions>		            
+		            ]]>				
+                </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="idocVersion" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>
+				The IDoc version will be used to send the IDoc document to SAP. Possible values are 0 (IDOC_VERSION_DEFAULT), 2 (IDOC_VERSION_2), 3 (IDOC_VERSION_3) or 8 (IDOC_VERSION_QUEUED)
+                </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="queueName" use="optional" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>If rfcType is set to qrfc, then this will be used with this as the Queue Name</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>		             
+		<xsd:attribute name="functionName" use="optional" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>The name of the SAP object. If executing a function this will be the name of the BAPI. This value is not required if the BAPI names cames in the payload or in the nested element.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="bapiTransaction" default="false" use="optional" type="mule:substitutableBoolean">
+			<xsd:annotation>
+				<xsd:documentation>Whether BAPI_TRANSACTION_COMMIT or BAPI_TRANSACTION_ROLLBACK should be called after executing the function. This attribute is only used when executing functions (type=function).</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>		             
+		<xsd:attribute name="definitionFile" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>
+				The definition file for the Function or IDoc. The file can be on the classpath or local file system.
+                </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:attributeGroup>
+
+	<xsd:attributeGroup name="inboundEndpointAttributes">
+        <xsd:attribute name="type" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>The type of JCo SAP object that will be received from the SAP server.</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:NMTOKEN">
+                    <xsd:enumeration value="function"/>
+                    <xsd:enumeration value="idoc"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:attribute>   	
+		<xsd:attribute name="functionName" use="optional" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>If this is a RFC server then the name of the function that this server handles. If no value is provided then all functions will be handled.</xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="jcoGwHost" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>
+						Gateway host on which the server should be registered. This represents jco.server.gwhost the JCo server property.
+                </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="jcoGwService" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>
+					Gateway service, i.e. the port on which a registration can be done. This represents the jco.server.gwserv JCo server property.
+                </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="jcoProgramId" type="xsd:string">
+			<xsd:annotation>
+				<xsd:documentation>
+					The program ID with which the registration is done. This represents the jco.server.progid JCo server property.
+                </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="jcoConnectionCount" type="mule:substitutableInt">
+			<xsd:annotation>
+				<xsd:documentation>
+					The number of connections that should be registered at the gateway. This represents the jco.server.connection_count JCo server property.
+                </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+        <xsd:attribute name="jcoServerExtendedProperties-ref" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                    Reference to a Map that contains additional JCO server properties. This can be any of jco.server.* properties. Check JCo documentation to find out a complete list of properties.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute> 
+		<xsd:attribute name="operationTimeout" type="mule:substitutableInt" default="30">
+			<xsd:annotation>
+				<xsd:documentation>
+					An integer representing the timeout (in seconds) for JCO server operations to execute (for example start and stop).
+					The default value is 30 (thirty), which means that Mule will block for up to 30 seconds until the JCO server operations finish executing.
+                </xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>         		
+	</xsd:attributeGroup>
+	
+    <xsd:attributeGroup name="addressAttributes">
+        <xsd:attribute name="jcoAsHost" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                Identifies the SAP application server. Host name or IP address of a specific SAP application server (such as sap.mulesoft.com, localhost, or 192.168.0.1) that will be used as the
+                jco.client.ashost JCO logon property.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+
+        <xsd:attribute name="jcoUser" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                Specifies the login user ID for logging in to the SAP system. This is a string representing the user id that will be used as the
+                jco.client.user JCO logon property.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+
+        <xsd:attribute name="jcoPasswd" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                Password for logging in to the SAP system. This is a string representing the password that will be used as the
+                jco.client.passwd JCO logon property.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+    </xsd:attributeGroup>
+
+    <xsd:attributeGroup name="propertyAttributes">
+        <xsd:attribute name="jcoSysnr" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                Indicates the SAP system number.. This is a string (such as 00, 01, etc.) representing the SAP system number that will be used as the
+                jco.client.sysnr JCO logon property.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+
+        <xsd:attribute name="jcoClient" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                Specifies the SAP client. Three-digit client number; preserve leading zeros if they appear in the number. This is a string (such as 100, 001, etc.) representing the JCO client id that will be used as the
+                jco.client.client JCO logon property.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+            
+        <xsd:attribute name="jcoLang" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                Specifies a login language. ISO two-character language code (for example, EN, DE, FR), or SAP-specific single-character language code. This is a string (such as EN, ES ,etc.) representing the language that will be used as the
+                jco.client.lang JCO property. Default value is EN.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        
+        <xsd:attribute name="jcoPoolCapacity" type="mule:substitutableInt">
+            <xsd:annotation>
+                <xsd:documentation>
+                Maximum number of idle connections kept open by the destination. A value of 0 has the effect that there is no connection pooling.
+                This will be used as the jco.client.poolCapacity JCO property.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+
+        <xsd:attribute name="jcoPeakLimit" type="mule:substitutableInt">
+            <xsd:annotation>
+                <xsd:documentation>
+                Maximum number of active connections that can be created for a destination simultaneously. This will be used as the jco.destination.peak_limit JCO property.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        
+         <xsd:attribute name="jcoExpirationTime" type="mule:substitutableLong">
+            <xsd:annotation>
+                <xsd:documentation>
+                Time in ms after which the connections held by the internal pool can be closed. This will be used as the jco.destination.expiration_time JCO property.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>
+        
+        <xsd:attribute name="jcoClientExtendedProperties-ref" type="xsd:string">
+            <xsd:annotation>
+                <xsd:documentation>
+                    Reference to a Map that contains additional JCO client properties. This can be any of jco.client.* or jco.destination.*, etc. Check JCo documentation to find out a complete list of properties.
+                </xsd:documentation>
+            </xsd:annotation>
+        </xsd:attribute>        
+    <!--
+        Define more property attributes for this endpoint. These are properties that can configure the way the
+        transport behaves but are not used to create the endpoint address.
+        <xsd:attribute name="bar" type="xsd:string"/>
+    -->
+    </xsd:attributeGroup>
+
+    <xsd:attributeGroup name="xmlVersionAttributes">
+        <xsd:attribute name="xmlVersion" default="2" use="optional">
+            <xsd:annotation>
+                <xsd:documentation>
+                    <![CDATA[
+					The output XML version of the generated BAPI representation. If the source SAP object is an IDoc, then this argument is ignored as there is actually only one possible XML.
+					Only supported version is "2". This XML format provides simpler and full integration with DataMapper and DataWeave tools. The main difference from version "1" is that the name of the XML element is the name of the SAP function component (field, table, structure)
+					
+					NOTE: XML Version 1 has been DEPRECATED. This was the original XML format, whith elements <jco>, <field>, <table>, <structure> that had a name attribute.
+	            ]]>
+                </xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+                <xsd:restriction base="xsd:NMTOKEN">
+                	<xsd:enumeration value="1"/>
+                    <xsd:enumeration value="2"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:attribute>
+    </xsd:attributeGroup>
+
+    <!--==============================================================-->
+    <!--  Transformers                                                -->
+    <!--==============================================================-->
+
+    <xsd:element name="xml-to-function" type="xmlVersionType" substitutionGroup="mule:abstract-transformer">
+        <xsd:annotation>
+            <xsd:documentation>
+                The xml-to-function element configures a transformer that reads the XML representing a JCo function from java.io.InputStream, java.lang.String or byte[] to build the Sap Object expected by the SAP transport.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="xml-to-idoc" type="xmlVersionType" substitutionGroup="mule:abstract-transformer">
+        <xsd:annotation>
+            <xsd:documentation>
+                The xml-to-idoc element configures a transformer that reads the XML representing a IDoc document from java.io.InputStream, java.lang.String or byte[] to build the Sap Object expected by the SAP transport.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="object-to-xml" type="xmlVersionType" substitutionGroup="mule:abstract-transformer">
+        <xsd:annotation>
+            <xsd:documentation>
+                The object-to-xml element configures a transformer that transforms a Sap Object representing a JCo function or IDoc document into its XML representation.</xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:complexType name="xmlVersionType">
+        <xsd:complexContent>
+            <xsd:extension base="mule:abstractTransformerType">
+                <xsd:attributeGroup ref="xmlVersionAttributes"/>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <!--==============================================================-->
+    <!--  Transaction                                                 -->
+    <!--==============================================================-->
+    <xsd:element name="transaction" type="mule:baseTransactionType" substitutionGroup="mule:abstract-transaction">
+        <xsd:annotation>
+            <xsd:documentation>
+                The transaction element configures a transaction. Transactions allow a series of operations to be grouped together so that they can be rolled back if a failure occurs. Set the action (such as ALWAYS_BEGIN or JOIN_IF_POSSIBLE) and the timeout setting for the transaction.
+                In JCo the fact that there is a transaction means that all the interaction with the SAP server takes place in a stateful session (between the JCoContext.begin and JCoContext.end delimeter methods)
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <!--==============================================================-->
+    <!--  ID stores (TID & Unit ID)                                   -->
+    <!--==============================================================-->
+    <xsd:element name="abstract-id-store" abstract="true" type="abstractIdStoreType">
+        <xsd:annotation>
+            <xsd:documentation>
+                A placeholder for an ID store (TID or UnitID) that can be used by tRFC, qRFC or bgRFC transactions to maintain state.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+    <xsd:complexType name="abstractIdStoreType"/>
+
+	<!-- TID -->
+    <xsd:element name="default-in-memory-tid-store" type="defaultInMemoryTIdStoreType" substitutionGroup="abstract-id-store">
+        <xsd:annotation>
+            <xsd:documentation>
+                Default and basic in memory ID store (not persistent). Don't use this store if you need to share TID
+                information between different ESB instances.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+	<xsd:complexType name="defaultInMemoryTIdStoreType">
+		<xsd:complexContent>
+			<xsd:extension base="abstractIdStoreType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:element name="mule-object-store-tid-store" type="muleObjectStoreTIdStoreType" substitutionGroup="abstract-id-store">
+		<xsd:annotation>
+			<xsd:documentation>
+				ID store based on existing Mule ESB object stores. It holds a reference to a 
+				org.mule.api.store.ObjectStore instance implementing the real functionality.
+				If TIDs should be shared among different Mule ESB instances an
+				object store with that capability should be used (JDBC, SharedMemory)
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:complexType name="muleObjectStoreTIdStoreType">
+        <xsd:complexContent>
+            <xsd:extension base="abstractIdStoreType">
+                <xsd:sequence>
+                	<xsd:element ref="mule:abstract-object-store" maxOccurs="1" minOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                            Use to define the Mule Object Store
+                            </xsd:documentation>
+                        </xsd:annotation>                    
+                    </xsd:element>
+                </xsd:sequence>             
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+    <!-- TID -->
+
+    <!-- UNIT ID -->
+    <xsd:element name="default-in-memory-unitid-store" type="defaultInMemoryUnitIdStoreType" substitutionGroup="abstract-id-store">
+        <xsd:annotation>
+            <xsd:documentation>
+                Default and basic in memory Unit ID store (not persistent). Don't use this store if you need to share Unit
+                ID information between different ESB instances.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+
+	<xsd:complexType name="defaultInMemoryUnitIdStoreType">
+		<xsd:complexContent>
+			<xsd:extension base="abstractIdStoreType"/>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:element name="mule-object-store-unitid-store" type="muleObjectStoreUnitIdStoreType" substitutionGroup="abstract-id-store">
+		<xsd:annotation>
+			<xsd:documentation>
+				ID store based on existing Mule ESB object stores. It holds a reference to a 
+				org.mule.api.store.ObjectStore instance implementing the real functionality.
+				If Unit IDs should be shared among different Mule ESB instances an
+				object store with that capability should be used (JDBC, SharedMemory)
+			</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:complexType name="muleObjectStoreUnitIdStoreType">
+        <xsd:complexContent>
+            <xsd:extension base="abstractIdStoreType">
+                <xsd:sequence>
+                	<xsd:element ref="mule:abstract-object-store" maxOccurs="1" minOccurs="1">
+                        <xsd:annotation>
+                            <xsd:documentation>
+                            Use to define the Mule Object Store
+                            </xsd:documentation>
+                        </xsd:annotation>                    
+                    </xsd:element>
+                </xsd:sequence>             
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>    
+</xsd:schema>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<namespace xmlns="http://www.mulesoft.org/schema/mule/tooling.attributes" xmlns:mule="http://www.mulesoft.org/schema/mule/core" url="http://www.mulesoft.org/schema/mule/customonn" prefix="customonn">
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="Customonn" description="" icon="" localId="parentConfig" image="" abstract="true" extends="http://www.mulesoft.org/schema/mule/customonn/abstractCustomonnConnectorGeneric"></global-cloud-connector>
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="Customonn: Configuration" description="Global Configuration configuration information." icon="icons/theme.classic/customonn-connector-small.png" localId="config" image="icons/theme.classic/customonn-connector-large.png" abstract="false" extends="http://www.mulesoft.org/schema/mule/customonn/parentConfig" connectivityTesting="off" metaData="static" metaDataKeyDisplay="DISPLAY_NAME" supportsUserDefinedMetaData="false">
+    <attribute-category caption="General" description="Customonn configuration properties.">
+      <group id="customonnGenericProperties" caption="Basic Settings">
+        <name name="name" caption="Name" description="Give a name to this configuration so it can be later referenced by config-ref." required="true"></name>
+      </group>
+      <group id="general" caption="General">
+        <string defaultValue="Hello" name="greeting" caption="Greeting" description="Greeting message." supportsExpressions="false" required="false" javaType="java.lang.String"></string>
+        <string defaultValue="How are you?" name="reply" caption="Reply" description="Reply message." supportsExpressions="false" required="false" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </global-cloud-connector>
+  <cloud-connector caption="Abstractcustomonnconnectorgeneric" description="Interact with Customonn." icon="icons/theme.classic/customonn-connector-small.png" localId="abstractCustomonnConnectorGeneric" image="icons/theme.classic/customonn-connector-large.png" abstract="true">
+    <attribute-category caption="General" description="General.">
+      <group id="abstractCustomonnConnectorGeneric" caption="Basic Settings">
+        <globalRef requiredType="http://www.mulesoft.org/schema/mule/customonn/config" name="config-ref" caption="Connector Configuration" description="Specify which configuration to use for this invocation." required="true"></globalRef>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector versions="[3.5.0,8.0.0]" aliasId="org.mule.tooling.ui.modules.core.pattern.customonn" caption="Customonn" description="" icon="icons/theme.classic/customonn-connector-small.png" localId="customonn-connector" image="icons/theme.classic/customonn-connector-large.png" extends="http://www.mulesoft.org/schema/mule/customonn/abstractCustomonnConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="customonnConnectorGeneric" caption="Basic Settings">
+        <modeSwitch alwaysCombo="true" name="Customonn operations to execute" caption="Operation" description="Operation.">
+          <no-operation abstractElement="http://www.mulesoft.org/schema/mule/customonn/abstractCustomonnConnectorGeneric" versions="[3.5.0,8.0.0]" connector-name="processor"></no-operation>
+          <mode modeId="http://www.mulesoft.org/schema/mule/customonn/greet" modeLabel="Greet"></mode>
+        </modeSwitch>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.lang.String" caption="Greet" icon="icons/theme.classic/customonn-connector-small.png" localId="greet" image="icons/theme.classic/customonn-connector-large.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/customonn/abstractCustomonnConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="friend" caption="Friend" description="Name to be used to generate a greeting message." required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+</namespace>

@@ -1,0 +1,22 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "upsertPatient"
+        },
+        "flowVariables": {
+            "operation": {
+                "connectorName": "#_custom_mule_metadata_type_#",
+                "typeId": "String"
+            }
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "upsertPatientResponse"
+        }
+    },
+    "id": "2fde8ba3-f057-4a43-ab8d-912480d47dbf",
+    "version": "5.2.0.0"
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <sub-flow name="get_access_token_FirstStep">
+        <http:request config-ref="HTTP_Request_Configuration" path="/login/oauth/access_token" method="POST" doc:name="HTTP">
+            <http:request-builder>
+                <http:query-param paramName="client_id" value="2aa4844ff4be0aab915f"/>
+                <http:query-param paramName="client_secret" value="6ff32eb4b61427196c8c3a3780e845caefec3371"/>
+                <http:query-param paramName="redirect_uri" value="http://localhost:8083/callBackUrl"/>
+                <http:query-param paramName="grant_type" value="authorization_code"/>
+                <http:query-param paramName="code" value="fd435f5fec9eab21e9f3"/>
+            </http:request-builder>
+        </http:request>
+    </sub-flow>
+    <flow name="get_access_token_SecondStep">
+        <http:listener config-ref="api-httpListenerConfig" path="/callBackUrl" doc:name="HTTP"/>
+        <logger message="#[payload]" level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>

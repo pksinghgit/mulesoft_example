@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<Account>
+		<CustomerName>John Doe</CustomerName>
+		<BusinessEntityName>John Doe</BusinessEntityName>
+		<Customer_Category_Reference_Type>Customer_Category_ID</Customer_Category_Reference_Type>
+		<Customer_Category_Reference_Value>CUSTOMER_CATEGORY-5</Customer_Category_Reference_Value>
+		<Customer_Status_Reference_Type>Business_Entity_Status_Value_ID</Customer_Status_Reference_Type>
+		<Customer_Status_Reference_Value>ACTIVE</Customer_Status_Reference_Value>
+	</Account>
+</root>

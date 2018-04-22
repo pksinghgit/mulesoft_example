@@ -1,0 +1,10 @@
+form: COPYBOOK
+id: 'BOOK-RECORD'
+values: 
+- name: 'BOOK-KEY'
+  values: 
+  - { name: 'BOOK-ISBN', type: String, length: 10 }
+- { name: 'BOOK-TITLE', type: String, length: 32 }
+- { name: 'BOOK-AUTHOR', type: String, length: 32 }
+- { name: 'BOOK-CATEGORY', type: String, length: 10 }
+- { name: 'BOOK-STOCK', type: String, length: 5 }

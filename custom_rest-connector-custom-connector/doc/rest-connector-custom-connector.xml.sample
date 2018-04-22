@@ -1,0 +1,3 @@
+<!-- BEGIN_INCLUDE(rest-connector-custom:greet) -->
+    <rest-connector-custom:greet config-ref="" friend="#[map-payload:friend]" />
+<!-- END_INCLUDE(rest-connector-custom:greet) -->

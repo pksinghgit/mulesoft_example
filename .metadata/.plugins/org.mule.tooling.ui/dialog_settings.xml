@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="MMCExportWizard">
+		<item value="admin" key="User"/>
+		<item value="http://localhost:8585/mmc" key="URL"/>
+	</section>
+	<section name="MuleProjectExportWizard">
+	</section>
+	<section name="MavenProjectImportWizard">
+	</section>
+	<section name="MuleZippedProjectImportWizard">
+	</section>
+	<section name="MuleProjectImportWizard">
+	</section>
+</section>

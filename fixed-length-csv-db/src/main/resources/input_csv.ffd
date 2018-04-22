@@ -1,0 +1,31 @@
+form: FLATFILE
+
+name: 'flatFile'
+
+segments:
+
+- id: 'Product'
+
+  tag: '1'
+
+  name: Product Service
+
+  values:
+
+  - { name: 'Record Identifier', type: String, length: 1 }
+  - { name: 'Clearing Code', type: String, length: 16 }
+  - { name: 'Destination Account', type: String, length: 15 }
+  - { name: 'Txn flag', type: String, length: 1 }
+  - { name: 'Transaction Code', type: String, length: 3 }
+  - { name: 'Cheque Number', type: String, length: 6 }
+  - { name: 'Unique Sequence Number', type: String, length: 7 }
+  - { name: 'Amount in Cents', type: String, length: 13 }
+  - { name: 'Originator Sort Code', type: String, length: 16 }
+  - { name: 'Originating Bank Name', type: String, length: 40 }
+  - { name: 'Beneficiary Name', type: String, length: 35 }
+  - { name: 'Advised Account Number', type: String, length: 15 }
+  - { name: 'Remitter Account Number', type: String, length: 15 }
+  - { name: 'Remmitter reference', type: String, length: 59 }
+  - { name: 'Currency Code', type: String, length: 2 }
+  
+  

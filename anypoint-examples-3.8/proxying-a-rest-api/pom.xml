@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+<modelVersion>4.0.0</modelVersion>
+<groupId>org.mule.examples</groupId>
+<artifactId>proxying-a-rest-api</artifactId>
+<packaging>mule</packaging>
+
+    <parent>
+        <groupId>org.mule.examples</groupId>
+        <artifactId>examples-catalog</artifactId>
+        <version>1.4.2-SNAPSHOT</version>
+    </parent>
+	
+	
+	<dependencies>
+        <dependency>
+        	<groupId>org.mule.modules</groupId>
+        	<artifactId>mule-module-devkit-support</artifactId> 
+       		<version>${mule.version}</version>
+       		<scope>provided</scope>
+        </dependency>
+    	<dependency>
+	        <groupId>org.seleniumhq.selenium</groupId>
+	        <artifactId>selenium-java</artifactId>
+	        <version>2.41.0</version>
+	        <scope>test</scope>
+    	</dependency>     
+    	<dependency>
+			<groupId>com.github.detro.ghostdriver</groupId>
+			<artifactId>phantomjsdriver</artifactId>
+			<version>1.1.0</version>
+			<scope>test</scope>
+		</dependency>					
+	<dependency>
+            <groupId>org.mule.transports</groupId>
+            <artifactId>mule-transport-http</artifactId>
+            <version>${mule.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    <dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-module-http</artifactId>
+            <version>${mule.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    <dependency>
+            <groupId>org.mule.modules</groupId>
+            <artifactId>mule-module-spring-config</artifactId>
+            <version>${mule.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    <dependency>
+            <groupId>org.mule.transports</groupId>
+            <artifactId>mule-transport-ssl</artifactId>
+            <version>${mule.version}</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+	
+	<build>
+        <!-- PHANTOMJS INSTALLATION - PHANTOMJS PLUGIN -->
+		<!-- Needed for the integration tests -->
+		<plugins>
+            <plugin>
+			    <groupId>com.github.klieber</groupId>
+			    <artifactId>phantomjs-maven-plugin</artifactId>
+			    <version>0.3</version>
+			    	<executions>
+			    		<execution>
+			       			<phase>pre-integration-test</phase>
+			       			<goals>
+			            		<goal>install</goal>
+			          		</goals>
+			        	</execution>
+			      	</executions>
+			    <configuration>
+			        <version>1.9.2</version>
+			    </configuration>
+		    </plugin>
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-failsafe-plugin</artifactId>
+		        <version>2.16</version>
+		        <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+		        <configuration>
+		          	<systemPropertyVariables>
+			            <phantomjs.binary>${phantomjs.binary}</phantomjs.binary>
+			        </systemPropertyVariables>
+		        </configuration>
+      		</plugin>
+      		<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-surefire-plugin</artifactId>
+			    <version>2.16</version>
+			</plugin>
+		</plugins>
+	</build>		  
+</project>

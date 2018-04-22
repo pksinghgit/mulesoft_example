@@ -1,0 +1,16 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "Lead"
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "LeadSFDC"
+        }
+    },
+    "id": "7bff9652-407a-4479-9e4a-6f82f57ec3f6",
+    "version": "5.2.0.0"
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:encryption="http://www.mulesoft.org/schema/mule/encryption" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/encryption http://www.mulesoft.org/schema/mule/encryption/current/mule-encryption.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <encryption:config name="Encryption" defaultEncrypter="XML_ENCRYPTER" doc:name="Encryption"/>
+    <flow name="xml_encrp_decryp_appFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/xml_encrypt" doc:name="HTTP"/>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <encryption:encrypt config-ref="Encryption" input-ref="#[payload.toString()]" using="XML_ENCRYPTER" doc:name="Encryption">
+            <encryption:xml-encrypter key="test123412341234" algorithm="AES_128" xpath="users/user/name"/>
+        </encryption:encrypt>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <encryption:decrypt config-ref="Encryption" doc:name="Encryption">
+            <encryption:xml-encrypter key="test123412341234" xpath="/users/user/name" algorithm="AES_128"/>
+        </encryption:decrypt>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+    </flow>
+</mule>

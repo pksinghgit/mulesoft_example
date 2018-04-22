@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    MuleSoft Examples
+    Copyright 2014 MuleSoft, Inc.
+
+    This product includes software developed at
+    MuleSoft, Inc. (http://www.mulesoft.com/).
+
+-->
+
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="root" type="rootType"/>
+  <xs:complexType name="rootType">
+    <xs:sequence>
+      <xs:element type="AccountType" name="Account"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccountType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="CustomerName"/>
+      <xs:element type="xs:string" name="BusinessEntityName"/>
+      <xs:element type="xs:string" name="Customer_Category_Reference_Type"/>
+      <xs:element type="xs:string" name="Customer_Category_Reference_Value"/>
+      <xs:element type="xs:string" name="Customer_Status_Reference_Type"/>
+      <xs:element type="xs:string" name="Customer_Status_Reference_Value"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

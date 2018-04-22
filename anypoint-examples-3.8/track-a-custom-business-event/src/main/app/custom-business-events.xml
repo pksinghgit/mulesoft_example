@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+    <flow name="custom-business-eventsFlow1" tracking:enable-default-events="true">
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="Recieve HTTP requests" path="customBusinessEvents"/>
+        <json:json-to-object-transformer doc:name="Convert JSON to HashMap" returnClass="java.util.HashMap"/>
+        <tracking:custom-event doc:name="Track custom data" event-name="Price"> 
+          <tracking:meta-data key="item name" value="#[groovy:payload.&quot;item name&quot;]"/>
+          <tracking:meta-data key="item units" value="#[groovy:payload.&quot;item units&quot;]"/>
+          <tracking:meta-data key="item price per unit" value="#[groovy:payload.&quot;item price per unit&quot;]"/>
+        </tracking:custom-event>
+        <scripting:transformer doc:name="Calculate discount">
+            <scripting:script engine="jruby"><![CDATA[case $payload['item name']
+	when "shoes" 
+	$discount = 0.15
+	when "jeans" 
+	$discount = 0.2
+	when "jackets" 
+	$discount = 0.3
+end
+$payload['item price per unit'] = $payload['item price per unit'] * (1 - $discount)]]></scripting:script>
+        </scripting:transformer>
+        <object-to-string-transformer doc:name="Convert Discount to String"/>
+        <tracking:transaction id="custom-business-event-example-transaction"/>        
+    </flow>
+</mule>

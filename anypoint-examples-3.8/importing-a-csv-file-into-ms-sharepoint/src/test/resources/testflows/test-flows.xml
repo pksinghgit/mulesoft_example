@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.6.1" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:sharepoint="http://www.mulesoft.org/schema/mule/sharepoint" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/sharepoint http://www.mulesoft.org/schema/mule/sharepoint/current/mule-sharepoint.xsd">
+
+	<sub-flow name="getCsvFromSharepointFlow">
+		<sharepoint:file-get-content config-ref="Microsoft_SharePoint_2013__Online_Connection" doc:name="Get file content" fileServerRelativeUrl="/Shared Documents/${csvImportFolder}/contacts.csv"/>
+
+		<byte-array-to-string-transformer doc:name="Byte Array to String"/>
+	</sub-flow>
+
+	<sub-flow name="deleteFolderInSharepointFlow">
+		<sharepoint:folder-delete config-ref="Microsoft_SharePoint_2013__Online_Connection" doc:name="Delete folder" url="/Shared Documents/${csvImportFolder}"/>
+	</sub-flow>
+</mule>

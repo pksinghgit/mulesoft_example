@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+	<!-- Listen on server port 8081 -->
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HttpListenerConfig" port="${http.port}"/>
+    <http:request-config doc:name="HTTP Request Configuration" host="0.0.0.0" name="HttpRequestConfig" port="${http.port}"/>
+    <!-- Flow that provides the login HTML page -->
+    <flow name="GetLoginPageFlow">
+    	<!-- Listen only GET requests in uri /login. Hit this endpoint to put your credentials (mule/mule are valid) -->
+        <http:listener allowedMethods="GET" config-ref="HttpListenerConfig" doc:name="Login Page" path="/login"/>
+        <!-- Parse template just to retrieve a hardcoded html login page -->
+        <parse-template doc:name="Login Page Content" location="src/main/resources/login/index.html"/>
+    </flow>
+    <!-- Flow that manually validates the username and password. For a real use case use mule security -->
+    <flow name="DoLoginFlow">
+    	<!-- Listen only POST requests on uri /login  -->
+        <http:listener allowedMethods="POST" config-ref="HttpListenerConfig" doc:name="Do Login" path="/login"/>
+        <!-- The payload (HTTP request body) is a Map with the form fields. Lets write the username in the log. -->
+        <logger doc:name="Log username" level="INFO" message="User #[payload.username] is trying to login"/>
+        <!-- If username does not exist then fail and handle through exception strategy -->
+        <message-filter doc:name="Validate username and password" throwOnUnaccepted="true">
+            <expression-filter expression="#[payload.username == 'mule' &amp;&amp; payload.password == 'mule']"/>
+        </message-filter>
+        <!-- Convert the Map to a JSON format -->
+        <parse-template doc:name="User logged in successfully page" location="src/main/resources/login/loginSuccessful.html"/>
+        <set-property doc:name="Set content-type" encoding="UTF-8" mimeType="text/html" propertyName="Content-Type" value="text/html; charset=UTF-8"/>
+        <!-- Handle the exception -->
+        <catch-exception-strategy doc:name="Catch Exception Strategy">
+            <set-property doc:name="Set forbidden status code" propertyName="http.status" value="403"/>
+            <parse-template doc:name="User credentials are invalid page" location="src/main/resources/login/loginFailure.html"/>
+        </catch-exception-strategy>
+    </flow>
+    <!-- Flow that shows how to create an application/x-www-form-urlencoded request. It will hit the login flow with the right credentials -->
+    <flow name="CallLoginFlowUsingRequester">
+    	<!-- Listen every HTTP method requests on uri /requesterLogin  -->
+        <http:listener config-ref="HttpListenerConfig" doc:name="Login using HTTP request component" path="/requesterLogin"/>
+        <!-- Sets the payload to a Map. http:request will automatically set the Content-Type to application/x-www-form-urlencoded
+        	when the payload is a map and create the body with the map data. -->
+        <expression-component doc:name="Create map with form data"><![CDATA[payload = new HashMap();
+payload['username'] = 'mule';
+payload['password'] = 'mule';]]></expression-component>
+		<!-- Calls the login listener. The response get by this call will be send back to the client by the http:listener of this flow -->
+        <http:request config-ref="HttpRequestConfig" doc:name="DoLogin" method="POST" path="/login"/>
+    </flow>
+</mule>

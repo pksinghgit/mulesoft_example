@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:mulexml="http://www.mulesoft.org/schema/mule/xml" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/xml http://www.mulesoft.org/schema/mule/xml/current/mule-xml.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+	
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HttpListenerConfiguration" port="${http.port}"/>
+    <http:request-config doc:name="HTTP Request Configuration" host="0.0.0.0" name="HttpRequestConfig" port="8081"/>
+    <spring:beans>
+        <spring:bean class="java.util.HashMap" id="personDataStore" name="personDataStore" scope="singleton"/>
+        <spring:bean class="java.util.concurrent.atomic.AtomicInteger" id="personId" name="personId" scope="singleton"/>
+    </spring:beans>
+    <flow name="retrieveAllPersonsFlow">
+        <http:listener allowedMethods="GET" config-ref="HttpListenerConfiguration" doc:name="Retrieve all persons" path="/person"/>
+        <set-payload doc:name="Set payload with all persons" value="#[app.registry.'personDataStore'.values()]"/>
+        <json:object-to-json-transformer doc:name="Convert person list to JSON"/>
+	</flow>
+    <flow name="storePersonFlow">
+        <http:listener allowedMethods="POST" config-ref="HttpListenerConfiguration" doc:name="Store person" path="/person">
+            <http:response-builder statusCode="201">
+                <http:header headerName="Location" value="http://0.0.0.0:8081/person/#[personId]"/>
+            </http:response-builder>
+        </http:listener>
+        <json:json-to-object-transformer doc:name="Convert to person object" returnClass="org.mule.examples.Person"/>
+        <set-variable doc:name="Lookup next person id" value="#[app.registry.'personId'.incrementAndGet()]" variableName="personId"/>
+        <expression-component doc:name="Store person"><![CDATA[app.registry.'personDataStore'.put(personId, payload);]]></expression-component>
+        <set-payload doc:name="Set success response" value="{ &quot;status&quot;: &quot;success&quot;, &quot;statusDescription&quot;: &quot;person created successfully&quot;}"/>
+    </flow>
+    
+    <flow name="retrievePersonFlow">
+        <http:listener allowedMethods="GET" config-ref="HttpListenerConfiguration" doc:name="Retrieve person" path="/person/{personId}">
+            <http:error-response-builder reasonPhrase="#[errorReasonPhrase]" statusCode="#[errorStatusCode]"/>
+        </http:listener> 
+        <set-variable doc:name="Variable" value="#[Integer.valueOf(message.inboundProperties.'http.uri.params'.personId)]" variableName="personId"/>
+        <logger doc:name="Logger" level="ERROR" message="Person id is #[personId]"/>         
+        <message-filter doc:name="Fail if person does not exists" throwOnUnaccepted="true">
+            <expression-filter expression="#[app.registry.'personDataStore'.containsKey(personId)]"/>
+        </message-filter>
+        <set-payload doc:name="Lookup person and set as payload" value="#[app.registry.'personDataStore'.get(personId)]"/>
+        <choice-exception-strategy doc:name="Choice Exception Strategy">
+            <rollback-exception-strategy doc:name="Rollback Exception Strategy" when="#[exception.causedBy(org.mule.api.routing.filter.FilterUnacceptedException)]">
+                <set-variable doc:name="Set status code" value="404" variableName="errorStatusCode"/>
+                <set-variable doc:name="Set reason phrase" value="Not Found" variableName="errorReasonPhrase"/>
+            </rollback-exception-strategy>
+        </choice-exception-strategy>
+    </flow>
+</mule>

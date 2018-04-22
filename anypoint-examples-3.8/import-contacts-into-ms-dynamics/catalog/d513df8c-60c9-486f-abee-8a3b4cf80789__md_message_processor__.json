@@ -1,0 +1,16 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "ContactCSV"
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "Contact"
+        }
+    },
+    "id": "d513df8c-60c9-486f-abee-8a3b4cf80789",
+    "version": "5.2.0.0"
+}

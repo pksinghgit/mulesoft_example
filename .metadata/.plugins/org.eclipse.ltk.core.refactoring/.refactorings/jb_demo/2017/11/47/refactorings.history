@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;jb_demo/src/main/app/jb_demo.xml&apos; to &apos;exception.xml&apos;" description="Rename resource &apos;jb_demo.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/app/jb_demo.xml" name="exception.xml" stamp="1511189767033" updateReferences="true"/>
+</session>

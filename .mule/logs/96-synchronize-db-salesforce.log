@@ -1,0 +1,410 @@
+2017-12-01 07:26:08,673 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Initializing app '96-synchronize-db-salesforce'          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-01 07:26:09,170 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising RegistryBroker
+2017-12-01 07:26:09,467 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Starting discovery of extensions
+2017-12-01 07:26:09,752 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Discovered 1 extensions
+2017-12-01 07:26:09,753 [main] INFO  org.mule.module.extension.internal.manager.DefaultExtensionManager - Registering extension validation (version 3.9)
+2017-12-01 07:26:10,302 [main] INFO  org.mule.config.spring.MuleArtifactContext - Refreshing org.mule.config.spring.MuleArtifactContext@42210be1: startup date [Fri Dec 01 07:26:10 IST 2017]; root of context hierarchy
+2017-12-01 07:26:14,204 [main] INFO  org.mule.config.spring.processors.NoDevkitInjectorProcessor - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2017-12-01 07:26:15,342 [main] WARN  org.mule.expression.DefaultExpressionManager - Expression string is not an expression.  Use isExpression(String) to validate first
+2017-12-01 07:26:15,342 [main] WARN  org.mule.expression.DefaultExpressionManager - Expression string is not an expression.  Use isExpression(String) to validate first
+2017-12-01 07:26:15,342 [main] WARN  org.mule.expression.DefaultExpressionManager - Expression string is not an expression.  Use isExpression(String) to validate first
+2017-12-01 07:26:15,342 [main] WARN  org.mule.expression.DefaultExpressionManager - Expression string is not an expression.  Use isExpression(String) to validate first
+2017-12-01 07:26:17,234 [main] WARN  org.mule.module.ognl.expression.OgnlExpressionEvaluator - OGNL module is deprecated and will be removed in Mule 4.0. Use MEL expressions instead.
+2017-12-01 07:26:17,822 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\96-synchronize-db-salesforce\queue-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\96-synchronize-db-salesforce\queue-tx-log\tx2.log
+2017-12-01 07:26:17,860 [main] INFO  org.mule.util.journal.TransactionJournal - Using files for tx logs F:\workspace_mulesoft1\.mule\.\.mule\96-synchronize-db-salesforce\queue-xa-tx-log\tx1.log and F:\workspace_mulesoft1\.mule\.\.mule\96-synchronize-db-salesforce\queue-xa-tx-log\tx2.log
+2017-12-01 07:26:17,869 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising connector: connector.polling.mule.default
+2017-12-01 07:26:18,310 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising model: _muleSystemModel
+2017-12-01 07:26:18,318 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Initialising flow: 96-synchronize-db-salesforceFlow
+2017-12-01 07:26:18,318 [main] INFO  org.mule.exception.DefaultMessagingExceptionStrategy - Initialising exception listener: org.mule.exception.DefaultMessagingExceptionStrategy@25e8e59
+2017-12-01 07:26:19,674 [main] INFO  org.mule.config.spring.SpringXmlConfigurationBuilder - Configured Mule using "org.mule.config.spring.SpringXmlConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\96-synchronize-db-salesforce\96-synchronize-db-salesforce.xml'}]"
+2017-12-01 07:26:19,674 [main] INFO  org.mule.config.builders.AutoConfigurationBuilder - Configured Mule using "org.mule.config.builders.AutoConfigurationBuilder" with configuration resource(s): "[ConfigResource{resourceName='F:\workspace_mulesoft1\.mule\apps\96-synchronize-db-salesforce\96-synchronize-db-salesforce.xml'}]"
+2017-12-01 07:26:19,687 [main] INFO  org.mule.module.launcher.application.DefaultMuleApplication - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ Starting app '96-synchronize-db-salesforce'              +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-01 07:26:19,695 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Starting ResourceManager
+2017-12-01 07:26:19,695 [main] INFO  org.mule.util.queue.QueueXaResourceManager - Started ResourceManager
+2017-12-01 07:26:19,718 [main] INFO  org.mule.transport.polling.MessageProcessorPollingConnector - Connected: MessageProcessorPollingConnector
+{
+  name=connector.polling.mule.default
+  lifecycle=initialise
+  this=c5e69a5
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[polling]
+  serviceOverrides=<none>
+}
+
+2017-12-01 07:26:19,718 [main] INFO  org.mule.transport.polling.MessageProcessorPollingConnector - Starting: MessageProcessorPollingConnector
+{
+  name=connector.polling.mule.default
+  lifecycle=initialise
+  this=c5e69a5
+  numberOfConcurrentTransactedReceivers=4
+  createMultipleTransactedReceivers=true
+  connected=true
+  supportedProtocols=[polling]
+  serviceOverrides=<none>
+}
+
+2017-12-01 07:26:19,720 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting connector: connector.polling.mule.default
+2017-12-01 07:26:19,728 [main] INFO  org.mule.modules.oauth2.provider.agents.DefaultSplashScreenAgent - 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ DevKit Extensions (1) used in this application 
+Salesforce 8.4.0 (DevKit     +
++ 3.9.0 Build UNNAMED.2793.f49b6c7)+
+                                          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2017-12-01 07:26:19,731 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting model: _muleSystemModel
+2017-12-01 07:26:19,740 [main] INFO  org.mule.construct.FlowConstructLifecycleManager - Starting flow: 96-synchronize-db-salesforceFlow
+2017-12-01 07:26:19,866 [main] INFO  org.mule.transport.polling.MessageProcessorPollingConnector - Registering listener: 96-synchronize-db-salesforceFlow on endpointUri: polling://-1912630717
+2017-12-01 07:26:19,932 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising: 'null'. Object is: MessageProcessorPollingMessageReceiver
+2017-12-01 07:26:19,985 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Initialising Bean: polling://96-synchronize-db-salesforceFlow/860408199
+2017-12-01 07:26:19,987 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting Bean: polling://96-synchronize-db-salesforceFlow/860408199
+2017-12-01 07:26:19,988 [main] INFO  org.mule.transport.polling.MessageProcessorPollingMessageReceiver - Connecting clusterizable message receiver
+2017-12-01 07:26:19,990 [main] INFO  org.mule.lifecycle.AbstractLifecycleManager - Starting: 'null'. Object is: MessageProcessorPollingMessageReceiver
+2017-12-01 07:26:19,990 [main] INFO  org.mule.transport.polling.MessageProcessorPollingMessageReceiver - Starting clusterizable message receiver
+2017-12-01 07:26:20,003 [main] INFO  org.mule.module.management.agent.WrapperManagerAgent - This JVM hasn't been launched by the wrapper, the agent will not run.
+2017-12-01 07:26:22,196 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:24,767 [pool-14-thread-1] WARN  org.mule.modules.salesforce.config.AbstractConfig - API version 37.0 is lower than the recommended 40.0 version
+2017-12-01 07:26:28,787 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:28,812 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:29,157 [main] INFO  org.mule.module.management.agent.AbstractJmxAgent - Attempting to register service with name: Mule.96-synchronize-db-salesforce:type=Endpoint,service="96-synchronize-db-salesforceFlow",connector=connector.polling.mule.default,name="endpoint.polling.1912630717"
+2017-12-01 07:26:29,158 [main] INFO  org.mule.module.management.agent.AbstractJmxAgent - Registered Endpoint Service with name: Mule.96-synchronize-db-salesforce:type=Endpoint,service="96-synchronize-db-salesforceFlow",connector=connector.polling.mule.default,name="endpoint.polling.1912630717"
+2017-12-01 07:26:29,162 [main] INFO  org.mule.module.management.agent.AbstractJmxAgent - Registered Connector Service with name Mule.96-synchronize-db-salesforce:type=Connector,name="connector.polling.mule.default"
+2017-12-01 07:26:29,171 [main] INFO  org.mule.DefaultMuleContext - 
+**********************************************************************
+* Application: 96-synchronize-db-salesforce                          *
+* OS encoding: \, Mule encoding: UTF-8                               *
+*                                                                    *
+* Agents Running:                                                    *
+*   Batch module default engine                                      *
+*   JMX Agent                                                        *
+*   DevKit Extension Information                                     *
+*   Wrapper Manager                                                  *
+**********************************************************************
+2017-12-01 07:26:29,755 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:29,791 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:30,698 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:30,737 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:31,322 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:31,353 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:31,896 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:31,927 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:32,869 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:32,882 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:33,796 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:33,824 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:34,732 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:34,759 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:35,674 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:35,707 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:36,638 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:36,667 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:37,611 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:37,641 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:38,200 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:38,217 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:39,143 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:39,172 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:40,052 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:40,068 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:40,647 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:40,666 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:41,241 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:41,263 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:41,850 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:41,874 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:42,453 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:42,489 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:43,037 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:43,065 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:43,646 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:43,669 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:44,609 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:44,623 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:45,500 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:45,515 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:46,420 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:46,448 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:46,989 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:47,006 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:47,568 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:47,588 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:48,511 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:48,525 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:49,092 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:49,123 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:50,028 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:50,055 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:50,612 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:50,625 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:51,175 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:51,199 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:52,136 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:52,160 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:52,728 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:52,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:53,900 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:53,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:54,890 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:55,024 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:55,622 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:56,014 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:56,947 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:57,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:57,968 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:57,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:58,807 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:26:58,997 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:26:59,924 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:00,000 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:00,552 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:01,000 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:01,892 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:02,013 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:02,955 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:03,014 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:03,917 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:04,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:04,578 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:04,997 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:05,899 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:06,001 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:07,007 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:07,032 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:07,628 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:08,013 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:08,595 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:09,002 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:09,553 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:10,013 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:10,978 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:11,006 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:11,592 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:12,006 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:12,910 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:13,014 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:13,889 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:14,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:14,548 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:15,009 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:15,560 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:16,010 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:16,555 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:17,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:17,560 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:18,001 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:18,903 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:19,010 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:19,907 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:20,010 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:20,921 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:21,015 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:21,566 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:22,002 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:22,907 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:23,000 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:23,521 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:24,015 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:24,581 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:25,030 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:26,007 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:26,617 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:27,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:27,572 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:28,008 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:28,893 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:29,011 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:30,370 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:30,392 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:30,950 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:31,000 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:31,557 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:32,015 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:32,560 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:33,002 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:33,550 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:33,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:34,918 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:34,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:35,548 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:35,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:36,912 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:37,002 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:37,541 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:38,013 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:38,917 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:39,001 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:39,907 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:39,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:40,867 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:41,015 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:41,578 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:42,010 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:42,918 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:43,008 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:43,903 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:44,007 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:44,542 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:45,011 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:45,921 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:46,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:46,921 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:47,010 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:47,540 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:47,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:48,911 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:49,014 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:49,577 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:49,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:50,563 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:51,002 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:51,936 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:51,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:52,577 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:53,000 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:53,529 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:53,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:54,549 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:55,001 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:55,559 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:56,002 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:57,175 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:57,188 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:58,103 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:58,114 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:58,696 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:27:59,013 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:27:59,602 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:00,006 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:01,454 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:01,480 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:02,017 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:02,033 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:02,586 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:02,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:05,222 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:05,235 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:06,156 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:06,167 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:07,094 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:07,118 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:08,020 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:08,046 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:08,987 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:09,010 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:09,982 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:09,993 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:10,868 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:10,877 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:11,797 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:11,819 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:12,373 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:12,389 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:12,927 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:12,996 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:13,551 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:14,009 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:14,581 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:15,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:15,909 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:16,009 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:16,897 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:17,015 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:17,916 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:17,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:18,578 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:19,010 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:19,893 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:20,011 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:20,551 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:21,008 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:21,911 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:22,010 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:22,544 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:23,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:23,938 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:23,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:24,884 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:25,017 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:25,938 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:26,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:26,940 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:27,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:27,583 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:28,015 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:28,549 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:29,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:29,923 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:29,996 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:30,764 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:30,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:31,996 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:32,009 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:32,945 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:32,997 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:33,896 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:33,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:34,558 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:35,009 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:35,562 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:36,000 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:36,540 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:37,001 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:37,576 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:37,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:38,882 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:38,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:39,541 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:40,003 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:40,957 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:41,003 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:41,916 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:41,997 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:42,898 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:43,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:43,546 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:44,010 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:44,559 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:44,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:45,579 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:45,996 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:46,871 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:46,999 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:47,946 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:48,012 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:48,922 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:48,997 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:49,885 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:50,009 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:50,552 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:50,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:51,527 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:52,002 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:52,869 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:53,003 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:53,565 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:53,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:54,571 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:55,014 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:55,928 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:55,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:56,885 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:57,001 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:57,880 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:58,010 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:58,547 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:28:58,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:28:59,543 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:29:00,011 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:29:00,541 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:29:00,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:29:01,547 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:29:02,003 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.
+2017-12-01 07:29:02,980 [pool-14-thread-1] INFO  org.mule.transport.polling.watermark.Watermark - Watermark value will not be updated since poll processor returned no results
+2017-12-01 07:29:02,998 [pool-14-thread-1] INFO  com.mulesoft.weave.mule.utils.MuleWeaveFactory$ - MimeType was not resolved '*/*' delegating to Java.

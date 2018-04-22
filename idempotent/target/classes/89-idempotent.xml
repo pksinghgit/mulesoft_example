@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <flow name="89-idempotentFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/idemptent" doc:name="HTTP"/>
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <idempotent-message-filter idExpression="#[json:id]" throwOnUnaccepted="true" doc:name="Idempotent Message">
+            <simple-text-file-store name="IdempStore11" maxEntries="6000" entryTTL="120" expirationInterval="60000" directory="src/test/resources"/>
+        </idempotent-message-filter>
+        <set-payload value="#[payload]" doc:name="Set Payload"/>
+        <catch-exception-strategy doc:name="Catch Exception Strategy">
+            <set-payload value="#['duplicate id']" doc:name="Set Payload"/>
+        </catch-exception-strategy>
+    </flow>
+</mule>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8083" doc:name="HTTP Listener Configuration"/>
+    <spring:beans>
+    <spring:bean class="com.mathoperation.Calculator" name="math"></spring:bean>
+    </spring:beans>
+    <flow name="90-invoke-javaFlow">
+    	
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/mathOperation" doc:name="HTTP"/>
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <set-variable variableName="operationType" value="#[message.inboundProperties['http.query.params'].operationType]" doc:name="Variable"/>
+        <choice doc:name="Choice">
+            <when expression="flowVars.operationType=='add'">
+                <invoke object-ref="math" method="add" methodArguments="#[json:one],#[json:two]" doc:name="add"/>
+            </when>
+            <when expression="flowVars.operationType=='subtraction'">
+                <invoke object-ref="math" method="subtraction" methodArguments="#[json:one],#[json:two]" doc:name="sub"/>
+            </when>
+            <when expression="flowVars.operationType=='multiplication'">
+                <invoke object-ref="math" method="multiplication" methodArguments="#[json:one],#[json:two]" doc:name="mul"/>
+            </when>
+            <when expression="flowVars.operationType=='division'">
+                <invoke object-ref="math" method="division" methodArguments="#[json:one],#[json:two]" doc:name="div"/>
+            </when>
+            <otherwise>
+                <set-payload value="#['please set operation type']" doc:name="Set Payload"/>
+            </otherwise>
+        </choice>
+        <object-to-string-transformer doc:name="Object to String"/>
+    </flow>
+</mule>

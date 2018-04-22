@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<namespace xmlns="http://www.mulesoft.org/schema/mule/tooling.attributes" xmlns:mule="http://www.mulesoft.org/schema/mule/core" prefix="google-contacts" url="http://www.mulesoft.org/schema/mule/google-contacts">
+  <global-cloud-connector metaData="static" connectivityTesting="disabled" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="" localId="parentConfig" icon="" description="" caption="Google Contacts" versions="[3.5.0,8.0.0]"></global-cloud-connector>
+  <global-cloud-connector metaData="static" connectivityTesting="disabled" extends="http://www.mulesoft.org/schema/mule/google-contacts/parentConfig" abstract="false" image="icons/large/google-contacts-connector-48x32.png" localId="config-with-oauth" icon="icons/small/google-contacts-connector-24x16.png" description="Global Google Contacts configuration information." caption="Google Contacts" versions="[3.5.0,8.0.0]">
+    <attribute-category description="Google-contacts configuration properties." caption="General">
+      <group caption="Generic" id="google-contactsGenericProperties">
+        <name required="true" description="Give a name to this configuration so it can be later referenced by config-ref." caption="Name" name="name"></name>
+      </group>
+      <group caption="General" id="general">
+        <enum allowsCustom="false" defaultValue="EXCEPTION" description="Action to take when no token is found." caption="On No Token" xsdType="string" name="onNoToken">
+          <option value="EXCEPTION"></option>
+          <option value="STOP_FLOW"></option>
+        </enum>
+        <string defaultValue="Mule-GoogleContactsConnector/1.0" javaType="java.lang.String" required="false" description="Application name registered on Google API console." caption="Application Name" name="applicationName"></string>
+        <string javaType="java.lang.String" required="true" description="The OAuth2 consumer key." caption="Consumer Key" name="consumerKey"></string>
+        <string javaType="java.lang.String" required="true" description="The OAuth2 consumer secret." caption="Consumer Secret" name="consumerSecret"></string>
+        <string defaultValue="https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.google.com/m8/feeds" javaType="java.lang.String" required="false" description="The OAuth2 scopes you want to request." caption="Scope" name="scope"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="OAuth." caption="Oauth">
+      <group caption="Oauth Callback Config" id="oauthCallbackConfigGroup">
+        <childElement inplace="true" description="" caption="" name="http://www.mulesoft.org/schema/mule/google-contacts/oauth-callback-config"></childElement>
+      </group>
+      <group caption="Oauth Object Store Config" id="oauthStoreConfigGroup">
+        <childElement inplace="true" description="" caption="" name="http://www.mulesoft.org/schema/mule/google-contacts/oauth-store-config"></childElement>
+      </group>
+    </attribute-category>
+  </global-cloud-connector>
+  <cloud-connector abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="abstractGoogle-contactsConnectorGeneric" icon="icons/small/google-contacts-connector-24x16.png" description="Interact with Google-contacts." caption="Abstractgoogle-contactsconnectorgeneric">
+    <attribute-category description="General." caption="General">
+      <group caption="Generic" id="abstractGoogle-contactsConnectorGeneric">
+        <globalRef requiredType="http://www.mulesoft.org/schema/mule/google-contacts/config-with-oauth" required="true" description="Specify which configuration to use for this invocation." caption="Config Reference" name="config-ref"></globalRef>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" image="icons/large/google-contacts-connector-48x32.png" localId="google-contacts-connector" icon="icons/small/google-contacts-connector-24x16.png" description="Cloud connector for the Google Contacts API v3 using OAuth2 for initialization.
+Uses OAuth2 for authentication." caption="Google Contacts" aliasId="org.mule.tooling.ui.modules.core.pattern.google-contacts" versions="[3.5.0,8.0.0]">
+    <attribute-category description="General." caption="General">
+      <group caption="Generic" id="google-contactsConnectorGeneric">
+        <modeSwitch alwaysCombo="true" description="Operation." caption="Operation" name="Google-contacts operations to execute">
+          <mode modeLabel="Authorize" modeId="http://www.mulesoft.org/schema/mule/google-contacts/authorize"></mode>
+          <mode modeLabel="Unauthorize" modeId="http://www.mulesoft.org/schema/mule/google-contacts/unauthorize"></mode>
+          <mode modeLabel="Add group" modeId="http://www.mulesoft.org/schema/mule/google-contacts/add-group"></mode>
+          <mode modeLabel="Batch contacts" modeId="http://www.mulesoft.org/schema/mule/google-contacts/batch-contacts"></mode>
+          <mode modeLabel="Batch delete" modeId="http://www.mulesoft.org/schema/mule/google-contacts/batch-delete"></mode>
+          <mode modeLabel="Batch groups" modeId="http://www.mulesoft.org/schema/mule/google-contacts/batch-groups"></mode>
+          <mode modeLabel="Batch insert" modeId="http://www.mulesoft.org/schema/mule/google-contacts/batch-insert"></mode>
+          <mode modeLabel="Batch update" modeId="http://www.mulesoft.org/schema/mule/google-contacts/batch-update"></mode>
+          <mode modeLabel="Create group" modeId="http://www.mulesoft.org/schema/mule/google-contacts/create-group"></mode>
+          <mode modeLabel="Delete contact" modeId="http://www.mulesoft.org/schema/mule/google-contacts/delete-contact"></mode>
+          <mode modeLabel="Delete contact by id" modeId="http://www.mulesoft.org/schema/mule/google-contacts/delete-contact-by-id"></mode>
+          <mode modeLabel="Delete contact photo" modeId="http://www.mulesoft.org/schema/mule/google-contacts/delete-contact-photo"></mode>
+          <mode modeLabel="Delete contact photo by id" modeId="http://www.mulesoft.org/schema/mule/google-contacts/delete-contact-photo-by-id"></mode>
+          <mode modeLabel="Delete group" modeId="http://www.mulesoft.org/schema/mule/google-contacts/delete-group"></mode>
+          <mode modeLabel="Delete group by id" modeId="http://www.mulesoft.org/schema/mule/google-contacts/delete-group-by-id"></mode>
+          <mode modeLabel="Download photo" modeId="http://www.mulesoft.org/schema/mule/google-contacts/download-photo"></mode>
+          <mode modeLabel="Download photo by id" modeId="http://www.mulesoft.org/schema/mule/google-contacts/download-photo-by-id"></mode>
+          <mode modeLabel="Get contact by id" modeId="http://www.mulesoft.org/schema/mule/google-contacts/get-contact-by-id"></mode>
+          <mode modeLabel="Get contacts" modeId="http://www.mulesoft.org/schema/mule/google-contacts/get-contacts"></mode>
+          <mode modeLabel="Get group by id" modeId="http://www.mulesoft.org/schema/mule/google-contacts/get-group-by-id"></mode>
+          <mode modeLabel="Get group by name" modeId="http://www.mulesoft.org/schema/mule/google-contacts/get-group-by-name"></mode>
+          <mode modeLabel="Get groups" modeId="http://www.mulesoft.org/schema/mule/google-contacts/get-groups"></mode>
+          <mode modeLabel="Insert contact" modeId="http://www.mulesoft.org/schema/mule/google-contacts/insert-contact"></mode>
+          <mode modeLabel="Update contact" modeId="http://www.mulesoft.org/schema/mule/google-contacts/update-contact"></mode>
+          <mode modeLabel="Update contact photo" modeId="http://www.mulesoft.org/schema/mule/google-contacts/update-contact-photo"></mode>
+          <mode modeLabel="Update group" modeId="http://www.mulesoft.org/schema/mule/google-contacts/update-group"></mode>
+        </modeSwitch>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.modules.google.contact.wrappers.GoogleContactEntry" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="add-group" icon="icons/small/google-contacts-connector-24x16.png" caption="Add Group">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="#[payload]" javaType="org.mule.modules.google.contact.wrappers.GoogleContactEntry" required="false" description="An instance of  representing the contact to be updated." caption="Contact Reference" name="contact-ref"></string>
+        <string javaType="java.lang.String" required="true" description="The id of the group." caption="Group Id" name="groupId"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="authorize" icon="icons/small/google-contacts-connector-24x16.png" caption="Authorize">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string required="false" description="Any value that you wish to be sent with the callback." caption="State" name="state"></string>
+        <string required="false" description="The URL defined by the Service Provider to obtain an access token." caption="Access Token Url" name="accessTokenUrl"></string>
+        <string required="false" description="The URL defined by the Service Provider where the resource owner will be redirected to grant authorization to the connector." caption="Authorization Url" name="authorizationUrl"></string>
+      </group>
+      <group caption="Additional Authorization Parameters" id="additionalAuthorizationParameters">
+        <enum allowsCustom="true" javaType="org.mule.modules.google.AccessType" required="false" supportsExpressions="true" description="Access_type." caption="Access_type" name="access_type">
+          <option value="offline"></option>
+          <option value="online"></option>
+        </enum>
+        <enum allowsCustom="true" javaType="org.mule.modules.google.ForcePrompt" required="false" supportsExpressions="true" description="Force_prompt." caption="Force_prompt" name="force_prompt">
+          <option value="auto"></option>
+          <option value="force"></option>
+        </enum>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.util.List&lt;org.mule.modules.google.api.domain.BatchResult&gt;" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="batch-contacts" icon="icons/small/google-contacts-connector-24x16.png" caption="Batch Contacts">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="false" description="An id to identify the batch." caption="Batch Id" name="batchId"></string>
+        <element-controller-list listName="operations" defaultValue="#[payload]" itemName="operation" localName="batch-contacts-operations" javaType="java.util.List&lt;org.mule.api.NestedProcessor&gt;" required="false" description="A list with instances of  representing the operations to be performed in the batch." caption="Operations"></element-controller-list>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="batch-delete" icon="icons/small/google-contacts-connector-24x16.png" caption="Batch Delete">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="Id to identify this particular operation inside the batch." caption="Operation Id" name="operationId"></string>
+        <string defaultValue="#[payload]" javaType="java.util.Collection&lt;org.mule.modules.google.contact.wrappers.GoogleContactBaseEntity&lt;?&gt;&gt;" required="false" description="A collection with instances of  to be batch updated." caption="Entries Reference" name="entries-ref"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.util.List&lt;org.mule.modules.google.api.domain.BatchResult&gt;" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="batch-groups" icon="icons/small/google-contacts-connector-24x16.png" caption="Batch Groups">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="false" description="An id to identify the batch." caption="Batch Id" name="batchId"></string>
+        <element-controller-list listName="operations" defaultValue="#[payload]" itemName="operation" localName="batch-groups-operations" javaType="java.util.List&lt;org.mule.api.NestedProcessor&gt;" required="false" description="A list with instances of  representing the operations to be performed in the batch." caption="Operations"></element-controller-list>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="batch-insert" icon="icons/small/google-contacts-connector-24x16.png" caption="Batch Insert">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="Id to identify this particular operation inside the batch." caption="Operation Id" name="operationId"></string>
+        <string defaultValue="#[payload]" javaType="java.util.Collection&lt;org.mule.modules.google.contact.wrappers.GoogleContactBaseEntity&lt;?&gt;&gt;" required="false" description="A collection with instances of  to be batch inserted." caption="Entries Reference" name="entries-ref"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="batch-update" icon="icons/small/google-contacts-connector-24x16.png" caption="Batch Update">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="Id to identify this particular operation inside the batch." caption="Operation Id" name="operationId"></string>
+        <string defaultValue="#[payload]" javaType="java.util.Collection&lt;org.mule.modules.google.contact.wrappers.GoogleContactBaseEntity&lt;?&gt;&gt;" required="false" description="A collection with instances of  to be batch updated." caption="Entries Reference" name="entries-ref"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.modules.google.contact.wrappers.GoogleContactGroupEntry" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="create-group" icon="icons/small/google-contacts-connector-24x16.png" caption="Create Group">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="#[payload]" javaType="org.mule.modules.google.contact.wrappers.GoogleContactGroupEntry" required="false" description="An instance of  representing the group to be inserted." caption="Group Reference" name="group-ref"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="delete-contact" icon="icons/small/google-contacts-connector-24x16.png" caption="Delete Contact">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="#[payload]" javaType="org.mule.modules.google.contact.wrappers.GoogleContactEntry" required="false" description="The contact to be deleted." caption="Entry Reference" name="entry-ref"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="delete-contact-by-id" icon="icons/small/google-contacts-connector-24x16.png" caption="Delete Contact By Id">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="The id of the contact to be deleted." caption="Contact Id" name="contactId"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="delete-contact-photo" icon="icons/small/google-contacts-connector-24x16.png" caption="Delete Contact Photo">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="#[payload]" javaType="org.mule.modules.google.contact.wrappers.GoogleContactEntry" required="false" description="An instance of  representing the contact whose photo we want deleted." caption="Contact Reference" name="contact-ref"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="delete-contact-photo-by-id" icon="icons/small/google-contacts-connector-24x16.png" caption="Delete Contact Photo By Id">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="The id of the contact whose photo we want to delete." caption="Contact Id" name="contactId"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="delete-group" icon="icons/small/google-contacts-connector-24x16.png" caption="Delete Group">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="#[payload]" javaType="org.mule.modules.google.contact.wrappers.GoogleContactGroupEntry" required="false" description="An instance of  representing the group to be deleted." caption="Group Reference" name="group-ref"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="delete-group-by-id" icon="icons/small/google-contacts-connector-24x16.png" caption="Delete Group By Id">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="The id of the group to be deleted." caption="Group Id" name="groupId"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.io.InputStream" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="download-photo" icon="icons/small/google-contacts-connector-24x16.png" caption="Download Photo">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="#[payload]" javaType="org.mule.modules.google.contact.wrappers.GoogleContactEntry" required="false" description="The contact whose photo we want." caption="Contact Reference" name="contact-ref"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.io.InputStream" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="download-photo-by-id" icon="icons/small/google-contacts-connector-24x16.png" caption="Download Photo By Id">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="The id of the contact whose photo we want." caption="Id" name="id"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.modules.google.contact.wrappers.GoogleContactEntry" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="get-contact-by-id" icon="icons/small/google-contacts-connector-24x16.png" caption="Get Contact By Id">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="The id of the contact." caption="Id" name="id"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.util.List&lt;org.mule.modules.google.contact.wrappers.GoogleContactEntry&gt;" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="get-contacts" icon="icons/small/google-contacts-connector-24x16.png" caption="Get Contacts">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="yyyy-MM-dd'T'HH:mm:ss'Z'" javaType="java.lang.String" required="false" description="The pattern to be used for parsing updatedMin and updatedMax." caption="Datetime Format" name="datetimeFormat"></string>
+        <string javaType="java.lang.String" required="false" description="Sets the full text query string that will be used for the query." caption="Full Text Query" name="fullTextQuery"></string>
+        <string javaType="java.lang.String" required="false" description="Only show contacts from a given group." caption="Group Id" name="groupId"></string>
+        <string javaType="java.lang.String" required="false" description="Sets the maximum updated timestamp used for the query.  Only entries with an updated timestamp earlier than the specified timestamp will be returned." caption="Updated Max" name="updatedMax"></string>
+        <string javaType="java.lang.String" required="false" description="Sets the minimum updated timestamp used for the query.  Only entries with an updated timestamp equal to or later than the specified timestamp will be returned." caption="Updated Min" name="updatedMin"></string>
+        <enum allowsCustom="true" defaultValue="NONE" javaType="com.google.gdata.client.contacts.ContactQuery.OrderBy" required="false" supportsExpressions="true" description="The field to be used when sorting. Valid values are NONE, LAST_MODIFIED and EDITED." caption="Order By" name="orderBy">
+          <option value="EDITED"></option>
+          <option value="LAST_MODIFIED"></option>
+          <option value="NONE"></option>
+        </enum>
+        <enum allowsCustom="true" defaultValue="NONE" javaType="com.google.gdata.client.contacts.ContactQuery.SortOrder" required="false" supportsExpressions="true" description="Valid values are NONE, ASCENDING and DESCENDING." caption="Sort Order" name="sortOrder">
+          <option value="ASCENDING"></option>
+          <option value="DESCENDING"></option>
+          <option value="NONE"></option>
+        </enum>
+        <boolean defaultValue="false" javaType="java.lang.Boolean" required="false" supportsExpressions="true" description="Wether to show deleted entries or not." caption="Show Deleted" name="showDeleted"></boolean>
+      </group>
+      <group caption="Paging" id="paging">
+        <string defaultValue="100" javaType="java.lang.String" required="false" description="The amount of items to fetch on each invocation to the data source." caption="Fetch Size" name="fetchSize"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.modules.google.contact.wrappers.GoogleContactGroupEntry" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="get-group-by-id" icon="icons/small/google-contacts-connector-24x16.png" caption="Get Group By Id">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="The id of the group to be returned." caption="Id" name="id"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.modules.google.contact.wrappers.GoogleContactGroupEntry" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="get-group-by-name" icon="icons/small/google-contacts-connector-24x16.png" caption="Get Group By Name">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="The name of the group you want." caption="Group Name" name="groupName"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="java.util.List&lt;org.mule.modules.google.contact.wrappers.GoogleContactGroupEntry&gt;" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="get-groups" icon="icons/small/google-contacts-connector-24x16.png" caption="Get Groups">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="yyyy-MM-dd'T'HH:mm:ss'Z'" javaType="java.lang.String" required="false" description="The date pattern used to parse updatedMin and updatedMax." caption="Datetime Format" name="datetimeFormat"></string>
+        <string javaType="java.lang.String" required="false" description="Sets the maximum updated timestamp used for the query.  Only entries with an updated timestamp earlier than the specified timestamp will be returned." caption="Updated Max" name="updatedMax"></string>
+        <string javaType="java.lang.String" required="false" description="Sets the minimum updated timestamp used for the query.  Only entries with an updated timestamp equal to or later than the specified timestamp will be returned." caption="Updated Min" name="updatedMin"></string>
+      </group>
+      <group caption="Paging" id="paging">
+        <string defaultValue="100" javaType="java.lang.String" required="false" description="The amount of items to fetch on each invocation to the data source." caption="Fetch Size" name="fetchSize"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.modules.google.contact.wrappers.GoogleContactEntry" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="insert-contact" icon="icons/small/google-contacts-connector-24x16.png" caption="Insert Contact">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="#[payload]" javaType="org.mule.modules.google.contact.wrappers.GoogleContactEntry" required="false" description="An instance of  representing the contact to be inserted." caption="Contact Reference" name="contact-ref"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="unauthorize" icon="icons/small/google-contacts-connector-24x16.png" caption="Unauthorize">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.modules.google.contact.wrappers.GoogleContactEntry" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="update-contact" icon="icons/small/google-contacts-connector-24x16.png" caption="Update Contact">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="#[payload]" javaType="org.mule.modules.google.contact.wrappers.GoogleContactEntry" required="false" description="An instance of  representing the contact to be updated." caption="Contact Reference" name="contact-ref"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="update-contact-photo" icon="icons/small/google-contacts-connector-24x16.png" caption="Update Contact Photo">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string javaType="java.lang.String" required="true" description="The id of the contact whose photo we want to update." caption="Contact Id" name="contactId"></string>
+        <string defaultValue="#[payload]" javaType="java.io.InputStream" required="false" description="A  with the photo's binary content." caption="In Reference" name="in-ref"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="org.mule.modules.google.contact.wrappers.GoogleContactGroupEntry" metaData="static" extends="http://www.mulesoft.org/schema/mule/google-contacts/abstractGoogle-contactsConnectorGeneric" abstract="true" image="icons/large/google-contacts-connector-48x32.png" localId="update-group" icon="icons/small/google-contacts-connector-24x16.png" caption="Update Group">
+    <attribute-category description="General." caption="General">
+      <group caption="General" id="general">
+        <string defaultValue="#[payload]" javaType="org.mule.modules.google.contact.wrappers.GoogleContactGroupEntry" required="false" description="An instance of  with the group's new state." caption="Group Reference" name="group-ref"></string>
+      </group>
+    </attribute-category>
+    <attribute-category description="Connection" caption="Connection">
+      <group caption="Connection" id="connection">
+        <string javaType="java.lang.String" required="false" description="The id of the access token that will be used to authenticate the call." caption="Access Token Id" name="accessTokenId"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <nested abstract="true" localId="oauth-callback-config" description="" caption="">
+    <string description="The domain name to use when setting up the callback endpoint." caption="Domain" name="domain"></string>
+    <string description="The local port to use when setting up the callback endpoint." caption="Local Port" name="localPort"></string>
+    <string description="The remote port is the port used to build the external callback URL." caption="Remote Port" name="remotePort"></string>
+    <string description="The path to use when setting up the callback endpoint." caption="Path" name="path"></string>
+    <string description="The Http Connector to use when setting up the callback endpoint." caption="Http Connector Reference" name="connector-ref"></string>
+    <string description="A Mule Expression to use as access token id." caption="Default Access Token Id" name="defaultAccessTokenId"></string>
+    <boolean defaultValue="false" fillLine="true" description="Async." caption="Async" name="async"></boolean>
+  </nested>
+  <nested abstract="true" localId="oauth-store-config" description="Configuration element for storage of access tokens" caption="">
+    <string description="Object store reference." caption="Object Store Reference" name="objectStore-ref"></string>
+  </nested>
+</namespace>

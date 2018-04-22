@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd">
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <flow name="63-parse-flat-file-to-copy-bookFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/copybook" doc:name="HTTP" metadata:id="90188559-43c0-43be-aeda-29579d9d3a2d"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="91a19d84-46cc-43c1-9f65-b5b85ac3f302">
+            <dw:input-payload doc:sample="sample_data\list_flatfile.flatfile" mimeType="text/plain">
+                <dw:reader-property name="schemaPath" value="book.ffd"/>
+                <dw:reader-property name="segmentIdent" value="Book"/>
+            </dw:input-payload>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+	employees: payload map {
+		title: $.title,
+		author:$.author,
+		amount:$.amount
+	} 
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <file:outbound-endpoint path="C:\Users\kavya\Desktop\XMLTEST\Destination" responseTimeout="10000" doc:name="File"/>
+    </flow>
+</mule>

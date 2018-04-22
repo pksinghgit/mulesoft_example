@@ -1,0 +1,10 @@
+----------------------------------------------------------------
+Wed Aug 20 08:44:30 CEST 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.9.1.0 - (1344872): instance a816c00e-0147-f228-dbff-00001067f1c8 
+on database directory memory:C:\studio-examples-repo\querying-a-mysql-database\company  with class loader sun.misc.Launcher$AppClassLoader@6e68d505 
+Loaded from file:/C:/Anypoint%20Studio%20New/plugins/org.mule.tooling.server.3.5.0.ee_3.5.0.201407101856/mule/lib/opt/derby-10.9.1.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_60-b19
+user.dir=C:\studio-examples-repo\querying-a-mysql-database
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

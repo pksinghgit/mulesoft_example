@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule version="EE-3.8.3" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd">
+    <http:listener-config doc:name="HTTP Listener Configuration" host="0.0.0.0" name="HTTP_Listener_Configuration" port="${http.port}"/>
+    <flow name="filteringFlow1">
+        <http:listener allowedMethods="POST" config-ref="HTTP_Listener_Configuration" doc:name="HTTP" path="/">
+            <http:response-builder statusCode="200"/>
+        </http:listener>
+
+        <and-filter doc:name="Filter by Payload Type and HTTP method">
+        	<payload-type-filter doc:name="Payload" expectedType="org.glassfish.grizzly.utils.BufferInputStream"/>
+        	<message-property-filter caseSensitive="false" doc:name="Message Property" pattern="http.method=post" scope="inbound"/>
+        </and-filter>
+        
+        <json:json-to-object-transformer doc:name="Convert JSON to HashMap" returnClass="java.util.HashMap"/>
+        <custom-filter class="org.mule.examples.filters.FreeMembershipDiscountFilter" doc:name="Perform custom filtering"/>
+        <set-payload doc:name="Set Payload to the filtering outcome message" value="the discount was granted."/>
+        <logger doc:name="Logg the filtering outcome" level="INFO" message="#[payload]"/>
+
+    </flow>
+</mule>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;bpm_drool_impl_app&apos; to &apos;drool_impl_app&apos;&#x0D;&#x0A;- Original element: &apos;bpm_drool_impl_app&apos;&#x0D;&#x0A;- Renamed element: &apos;bpm_drool_impl_app&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;bpm_drool_impl_app&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=bpm_drool_impl_app" name="drool_impl_app" references="true" stamp="1521952730305" version="1.0"/>
+</session>

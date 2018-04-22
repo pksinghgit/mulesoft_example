@@ -1,0 +1,16 @@
+{
+    "inputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "ffd_file"
+        }
+    },
+    "outputMessageMetadata": {
+        "messagePayload": {
+            "connectorName": "#_custom_mule_metadata_type_#",
+            "typeId": "copy-book"
+        }
+    },
+    "id": "91a19d84-46cc-43c1-9f65-b5b85ac3f302",
+    "version": "5.2.0.0"
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<namespace xmlns="http://www.mulesoft.org/schema/mule/tooling.attributes" xmlns:mule="http://www.mulesoft.org/schema/mule/core" url="http://www.mulesoft.org/schema/mule/rest-connector-custom" prefix="rest-connector-custom">
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="RestConnectorCustom" description="" icon="" localId="parentConfig" image="" abstract="true" extends="http://www.mulesoft.org/schema/mule/rest-connector-custom/abstractRest-connector-customConnectorGeneric"></global-cloud-connector>
+  <global-cloud-connector versions="[3.5.0,8.0.0]" caption="RestConnectorCustom: Configuration" description="Global Configuration configuration information." icon="icons/theme.classic/rest-connector-custom-connector-small.png" localId="config" image="icons/theme.classic/rest-connector-custom-connector-large.png" abstract="false" extends="http://www.mulesoft.org/schema/mule/rest-connector-custom/parentConfig" connectivityTesting="off" metaData="static" metaDataKeyDisplay="DISPLAY_NAME" supportsUserDefinedMetaData="false">
+    <attribute-category caption="General" description="Rest-connector-custom configuration properties.">
+      <group id="rest-connector-customGenericProperties" caption="Basic Settings">
+        <name name="name" caption="Name" description="Give a name to this configuration so it can be later referenced by config-ref." required="true"></name>
+      </group>
+      <group id="general" caption="General">
+        <string defaultValue="Hello" name="greeting" caption="Greeting" description="Greeting message." supportsExpressions="false" required="false" javaType="java.lang.String"></string>
+        <string defaultValue="How are you?" name="reply" caption="Reply" description="Reply message." supportsExpressions="false" required="false" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </global-cloud-connector>
+  <cloud-connector caption="Abstractrest-connector-customconnectorgeneric" description="Interact with Rest-connector-custom." icon="icons/theme.classic/rest-connector-custom-connector-small.png" localId="abstractRest-connector-customConnectorGeneric" image="icons/theme.classic/rest-connector-custom-connector-large.png" abstract="true">
+    <attribute-category caption="General" description="General.">
+      <group id="abstractRest-connector-customConnectorGeneric" caption="Basic Settings">
+        <globalRef requiredType="http://www.mulesoft.org/schema/mule/rest-connector-custom/config" name="config-ref" caption="Connector Configuration" description="Specify which configuration to use for this invocation." required="true"></globalRef>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector versions="[3.5.0,8.0.0]" aliasId="org.mule.tooling.ui.modules.core.pattern.rest-connector-custom" caption="RestConnectorCustom" description="" icon="icons/theme.classic/rest-connector-custom-connector-small.png" localId="rest-connector-custom-connector" image="icons/theme.classic/rest-connector-custom-connector-large.png" extends="http://www.mulesoft.org/schema/mule/rest-connector-custom/abstractRest-connector-customConnectorGeneric">
+    <attribute-category caption="General" description="General.">
+      <group id="rest-connector-customConnectorGeneric" caption="Basic Settings">
+        <modeSwitch alwaysCombo="true" name="Rest-connector-custom operations to execute" caption="Operation" description="Operation.">
+          <no-operation abstractElement="http://www.mulesoft.org/schema/mule/rest-connector-custom/abstractRest-connector-customConnectorGeneric" versions="[3.5.0,8.0.0]" connector-name="processor"></no-operation>
+          <mode modeId="http://www.mulesoft.org/schema/mule/rest-connector-custom/greet" modeLabel="Greet"></mode>
+        </modeSwitch>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+  <cloud-connector returnType="void" caption="Greet" icon="icons/theme.classic/rest-connector-custom-connector-small.png" localId="greet" image="icons/theme.classic/rest-connector-custom-connector-large.png" abstract="true" extends="http://www.mulesoft.org/schema/mule/rest-connector-custom/abstractRest-connector-customConnectorGeneric" metaData="static">
+    <attribute-category caption="General" description="General.">
+      <group id="general" caption="General">
+        <string name="friend" caption="Friend" description="Name of a friend we want to greet." required="true" javaType="java.lang.String"></string>
+      </group>
+    </attribute-category>
+  </cloud-connector>
+</namespace>

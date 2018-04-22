@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:objectstore="http://www.mulesoft.org/schema/mule/objectstore" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:google-contacts="http://www.mulesoft.org/schema/mule/google-contacts" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/google-contacts http://www.mulesoft.org/schema/mule/google-contacts/current/mule-google-contacts.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/objectstore http://www.mulesoft.org/schema/mule/objectstore/current/mule-objectstore.xsd
+http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <google-contacts:config-with-oauth name="Google_Contacts" consumerKey="509576403774-f3akd4pt9olutuhbr137h87vdv0etc9n.apps.googleusercontent.com" consumerSecret="AgULVw_iTilZS53OBwZJiLA3" doc:name="Google Contacts">
+        <google-contacts:oauth-callback-config domain="localhost" localPort="8084" remotePort="8084" path="oauth2test"/>
+    </google-contacts:config-with-oauth>
+    <http:listener-config name="HTTP_Listener_Configuration" host="localhost" port="8085" doc:name="HTTP Listener Configuration"/>
+    <objectstore:config name="ObjectStore__Connector" partition="storeToken" entryTtl="120" expirationInterval="3600000" maxEntries="3000" doc:name="ObjectStore: Connector"/>
+    <db:mysql-config name="MySQL_Configuration" host="localhost" port="3306" user="test" password="test" database="test" doc:name="MySQL Configuration"/>
+    <flow name="generateTokenGoogleContacts">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/generateToken" doc:name="HTTP"/>
+        <logger message="App Initialized" level="INFO" doc:name="Logger"/>
+        <google-contacts:authorize config-ref="Google_Contacts" doc:name="Google Contacts"/>
+        <objectstore:store config-ref="ObjectStore__Connector" key="googleContactsToken" value-ref="#[flowVars['OAuthAccessTokenId']]" doc:name="ObjectStore"/>
+        <logger message="You are authenticated" level="INFO" doc:name="Logger"/>
+    </flow>
+    <flow name="GetGoogleContacts">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/getContacts" doc:name="HTTP"/>
+        <objectstore:retrieve config-ref="ObjectStore__Connector" key="googleContactsToken" doc:name="ObjectStore"/>
+        <set-variable variableName="tokenId" value="#[payload]" doc:name="Variable"/>
+        <google-contacts:get-contacts config-ref="Google_Contacts" accessTokenId="#[flowVars.tokenId]" doc:name="Google Contacts"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="25ce9b4c-fbf4-40a2-a53e-c9689578ed7e">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/json
+---
+{
+	Contacts:payload map
+	{
+		name:$.fullName,
+		familyName:$.familyName,
+		PhoneNumbers:$.phoneNumbers map
+		{
+			phonenumber:$.phonenumber
+		},
+		EmailAddress:$.emailAddresses map
+		{
+			Email:$.address,
+			Label:$.label,
+			Primary:$.primary
+		}
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+    </flow>
+    <flow name="create_contacts">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/create" doc:name="HTTP"/>
+        <byte-array-to-string-transformer doc:name="Byte Array to String"/>
+        <dw:transform-message doc:name="Transform Message" metadata:id="46d32bb4-26af-4479-abe9-7d737ffa50a6">
+            <dw:input-payload mimeType="application/json"/>
+            <dw:input-variable variableName="email"/>
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	emailAddresses: [{
+			address: payload.email  as :string,
+			label: "email contact" as :string
+			
+		
+	}],
+	fullName: payload.name as :string
+} as :object {
+	class : "org.mule.modules.google.contact.wrappers.GoogleContactEntry"
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <google-contacts:insert-contact config-ref="Google_Contacts" doc:name="Google Contacts"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+        <set-payload value="Data Inserted Successfully
+
+" doc:name="Set Payload"/>
+
+    </flow>
+</mule>

@@ -1,0 +1,12 @@
+package test;
+
+public class Test {
+
+	public static void main(String[] args) {
+		String str="P43011           00002500744180144960000000018061000003258620501096           B2B Head Office Finance                 HALLS EQUATORIAL LIMITED           000025007441801000025007441801B2B Finance-HALLS EQUATORIAL LIMITED                       00";
+		
+		System.out.println(str.length());
+		
+	}
+
+}

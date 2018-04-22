@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:netsuite="http://www.mulesoft.org/schema/mule/netsuite" xmlns:context="http://www.springframework.org/schema/context" xmlns:dw="http://www.mulesoft.org/schema/mule/ee/dw" xmlns:core="http://www.mulesoft.org/schema/mule/core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/netsuite http://www.mulesoft.org/schema/mule/netsuite/current/mule-netsuite.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/ee/dw http://www.mulesoft.org/schema/mule/ee/dw/current/dw.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+    <context:property-placeholder location="mule.test.properties"/>
+    <munit:config mock-connectors="false" mock-inbounds="false" doc:name="Munit configuration"/>
+    <spring:beans>
+        <spring:import resource="classpath:netsuite-api.xml"/>
+    </spring:beans>
+    <http:request-config name="HTTP_Request_Configuration" host="localhost" port="8081" basePath="/api" connectionIdleTimeout="3000000" doc:name="HTTP Request Configuration">
+        <http:raml-api-configuration location="netsuite-api.raml"/>
+    </http:request-config>
+    <munit:test name="netsuite-api-test-suite-get:/customers:netsuite-api-configTest" description="Test">
+        <flow-ref name="createCustomerInNetsuite" doc:name="Call createCustomerInNetsuite"/>
+        <http:request config-ref="HTTP_Request_Configuration" path="/customers" method="GET" doc:name="HTTP">
+            <http:request-builder>
+                <http:query-param paramName="name" value="${nets.customer.companyName}"/>
+            </http:request-builder>
+        </http:request>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-true message="The HTTP Status code is not correct!" condition="#[messageInboundProperty('http.status').is(eq(200))]" doc:name="Assert that http.status eq 200"/>
+        <munit:assert-not-null message="Payload is null!" doc:name="Assert Not Null Payload"/>
+        <munit:assert-true message="The testing company name should be included in the response!" condition="#[payload.contains(&quot;\&quot;companyName\&quot;: \&quot;&quot; + '${nets.customer.companyName}' + &quot;\&quot;&quot;)]" doc:name="Assert that payload contains testing company name"/>
+        <flow-ref name="deleteCustomerInNetsuite" doc:name="Call deleteCustomerInNetsuite"/>
+    </munit:test>
+    <munit:test name="netsuite-api-test-suite-get:/opportunities:netsuite-api-configTest" description="Test">
+        <http:request config-ref="HTTP_Request_Configuration" path="/opportunities" method="GET" responseTimeout="1000000" doc:name="HTTP">
+            <http:request-builder>
+                <http:query-param paramName="title" value="${nets.opportunity.title}"/>
+            </http:request-builder>
+        </http:request>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-true message="The HTTP Status code is not correct!" condition="#[messageInboundProperty('http.status').is(eq(200))]" doc:name="Assert that http.status eq 200"/>
+        <munit:assert-not-null message="Payload is null!" doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <munit:test name="netsuite-api-test-suite-get:/items:netsuite-api-configTest" description="Test">
+        <http:request config-ref="HTTP_Request_Configuration" path="/items" method="GET" responseTimeout="1000000" doc:name="HTTP">
+            <http:request-builder>
+                <http:query-param paramName="quantity" value="${nets.item.quantity}"/>
+            </http:request-builder>
+        </http:request>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <munit:assert-true message="The HTTP Status code is not correct!" condition="#[messageInboundProperty('http.status').is(eq(200))]" doc:name="Assert that http.status eq 200"/>
+        <munit:assert-not-null message="Payload is null!" doc:name="Assert Not Null Payload"/>
+    </munit:test>
+    <sub-flow name="createCustomerInNetsuite">
+        <dw:transform-message doc:name="Create testing customer">
+            <dw:set-payload><![CDATA[%dw 1.0
+%output application/java
+---
+{
+	companyName : p('nets.customer.companyName'),
+	subsidiary 		: {
+		internalId 	: p('nets.customer.subsidiary.internalId'),
+		type 		: 'SUBSIDIARY'
+	}
+}]]></dw:set-payload>
+        </dw:transform-message>
+        <netsuite:add-record config-ref="NetSuite__Login_Authentication" recordType="CUSTOMER" doc:name="NetSuite"/>
+        <set-variable variableName="customerId" value="#[payload.internalId]" doc:name="Set the customer ID into variable"/>
+        <logger message="Test customer created with ID: #[flowVars.customerId]" level="INFO" doc:name="Log the customer creation"/>
+    </sub-flow>
+    <sub-flow name="deleteCustomerInNetsuite">
+        <netsuite:delete-record config-ref="NetSuite__Login_Authentication" doc:name="NetSuite">
+            <netsuite:record-ref internalId="#[flowVars.customerId]" type="CUSTOMER"/>
+        </netsuite:delete-record>
+        <logger message="Test customer with ID #[flowVars.customerId] was deleted." level="INFO" doc:name="Log the customer deletion"/>
+    </sub-flow>
+</mule>

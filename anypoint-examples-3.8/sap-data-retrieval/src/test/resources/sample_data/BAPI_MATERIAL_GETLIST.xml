@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<BAPI_MATERIAL_GETLIST>
+  
+  <tables>
+     
+    <MATNRLIST>
+      <row>
+        <MATERIAL>M001</MATERIAL>
+        <MATL_DESC>TestMaterial</MATL_DESC>
+        <MATERIAL_EXTERNAL>MatEXT</MATERIAL_EXTERNAL>
+        <MATERIAL_GUID>MatGUID</MATERIAL_GUID>
+        <MATERIAL_VERSION>MatVersion</MATERIAL_VERSION>
+      </row>
+    </MATNRLIST>    
+  </tables>
+</BAPI_MATERIAL_GETLIST>

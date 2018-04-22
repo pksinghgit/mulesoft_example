@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:oauth2="http://www.mulesoft.org/schema/mule/oauth2" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/oauth2 http://www.mulesoft.org/schema/mule/oauth2/current/mule-oauth2.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd">
+
+    <oauth2:token-manager-config doc:name="Token Manager Config" name="Token_Manager_Config"/>    
+    <http:request-config basePath="/2.0" doc:name="HTTP Request Configuration" host="api.box.com" name="HTTP_Request_Configuration_HTTPS" port="443" protocol="HTTPS"> 
+        <oauth2:authorization-code-grant-type clientId="${box.id}" clientSecret="${box.secret}" redirectionUrl="https://localhost:8082/redirectUrl" tlsContext-ref="TLS_Context" tokenManager-ref="Token_Manager_Config"> 
+            <oauth2:authorization-request authorizationUrl="https://account.box.com/api/oauth2/authorize" localAuthorizationUrl="https://localhost:8082/authorization"> 
+                <oauth2:custom-parameters>
+                    <oauth2:custom-parameter paramName="box_device_id" value="1"/>
+                    <oauth2:custom-parameter paramName="box_device_name" value="device1"/>
+                </oauth2:custom-parameters>  
+            </oauth2:authorization-request>  
+            <oauth2:token-request tokenUrl="https://api.box.com/oauth2/token"> 
+                <oauth2:token-response>
+                    <oauth2:custom-parameter-extractor paramName="token_type" value="#[json:token_type]"/>  
+                </oauth2:token-response>  
+            </oauth2:token-request>  
+        </oauth2:authorization-code-grant-type>  
+    </http:request-config>
+    
+    <tls:context doc:name="TLS Context" name="TLS_Context"> 
+        <tls:key-store keyPassword="${keystore.keyPassword}" password="${keystore.password}" path="keystore.jks"/>    
+    </tls:context>
+    
+    <http:listener-config doc:name="HTTP Listener Configuration" host="localhost" name="HTTP_Listener_Configuration" port="8081"/>
+    <flow name="boxUserLoginFlow"> 
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="Box User Login" path="web"> 
+            <http:response-builder statusCode="302">
+                <http:header headerName="Location" value="https://localhost:8082/authorization?onCompleteRedirectTo=http://localhost:8081/web/loginDone"/>
+
+            </http:response-builder>  
+        </http:listener>  
+        <logger doc:name="Logger" level="INFO" message="Redirecting user to Box login page"/>  
+    </flow>
+    
+    <flow name="userLoginDoneFlow"> 
+
+        <http:listener config-ref="HTTP_Listener_Configuration" doc:name="User Login Done" path="web/loginDone"/>
+        <http:request config-ref="HTTP_Request_Configuration_HTTPS" doc:name="Query user resource using token" method="GET" path="/search">
+            <http:request-builder>
+                <http:query-param paramName="query" value="mule"/>
+
+            </http:request-builder>
+        </http:request>
+        <object-to-string-transformer doc:name="Object to String"/>
+        <set-payload doc:name="Set response" value="The user successfully authorized access to the resource. Searching for files containing &quot;mule&quot;: #[payload]"/>  
+    </flow>
+    
+</mule>

@@ -1,0 +1,38 @@
+{
+"employees": {
+"employee": [
+  {
+    "name": "John",
+    "lastName": "Doe",
+    "addresses": {
+      "address": [
+        {
+          "street": "123 Main Street",
+          "zipCode": "111"
+        },
+        {
+          "street": "987 Cypress Avenue",
+          "zipCode": "222"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Jane",
+    "lastName": "Doe",
+    "addresses": {
+      "address": [
+        {
+          "street": "345 Main Street",
+          "zipCode": "111"
+        },
+        {
+          "street": "654 Sunset Boulevard",
+          "zipCode": "333"
+        }
+      ]
+    }
+  }
+]
+}
+}

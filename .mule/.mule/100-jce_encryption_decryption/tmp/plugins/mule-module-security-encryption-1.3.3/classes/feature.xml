@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><feature id="org.mule.tooling.ui.extension.security-encryption.3.5.4" label="Encryption Module (Mule 3.5.4+)" provider-name="Mulesoft, Inc." version="1.3.3.201604191726"><license>
+
+(c) 2003-2012 MuleSoft, Inc. This software is protected under international
+copyright law. All use of this software is subject to MuleSoft's Master
+Subscription Agreement (or other Terms of Service) separately entered
+into between you and MuleSoft. If such an agreement is not in
+place, you may not use the software.
+
+</license><plugin download-size="0" id="org.mule.tooling.ui.contribution.encryption.3.5.4" install-size="0" unpack="true" version="1.3.3.201604191726"/></feature>
